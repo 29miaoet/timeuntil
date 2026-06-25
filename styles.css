@@ -1,0 +1,86 @@
+:root {
+  --font-color-black: #03324d;
+  --font-color-white: #eeefff;
+  --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
+  --bg-countdown: #5095eb;
+  --light-blue: #e0f0ff;
+
+  --radius-classic: 10px;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  margin: 0;
+  color: var(--font-color-white);
+  background: var(--bg-grad);
+  min-height: 100vh;
+}
+
+h1 {
+  color: var(--font-color-black);
+}
+
+h2 {
+  color: var(--font-color-white);
+}
+
+.countdown-container {
+  margin: 20px;
+  padding: 20px 0;
+  background-color: var(--bg-countdown);
+  width: 65%;
+  border: none;
+  border-radius: var(--radius-classic);
+  box-shadow: 0 0 20px rgba(0, 10, 100, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.school-time {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: var(--radius-classic);
+  flex-wrap: wrap;
+}
+
+.timebox {
+  padding: 5px 40px;
+  margin: 10px;
+  background-color: var(--light-blue);
+  border-radius: var(--radius-classic);
+  color: var(--font-color-black);
+  flex: 1 1 0;
+  min-width: 0;
+  box-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
+}
+
+.timelabel {
+  padding: 5px 10px;
+  margin: 10px 0;
+  font-size: 18px;
+  color: var(--font-color-white);
+}
+
+.timeunit {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+  
+
+
