@@ -4,9 +4,11 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
+  --progress-bar-bg: #ff4d6d;
   --info-bg-grad: linear-gradient(to bottom, #eeeeee, #f2f2f2);
 
   --radius-classic: 10px;
+  --radius-bar: 4px;
 }
 
 * {
@@ -98,24 +100,47 @@ hr {
 
 .day-info {
   background: var(--info-bg-grad);
-  height: 500px;
   box-shadow: 0 0 20px rgba(100, 100, 100, 0.5);
   color: var(--font-color-black);
 }
 
+.day-info hr {
+  width: 100%;
+  margin: 10px auto;
+}
+
+.status-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .progress-bar {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: var(--font-color-black);
   background : var(--light-blue);
   box-shadow: 0 0 20px rgba(0, 10, 100, 0.5);
 }
 
 .bar {
   height: 20px;
+  width: 100%;
+  border-radius: var(--radius-bar);
+  background: transparent;
+}
+
+.progress {
+  height: 100%;
   width: 50%;
-  border-radius: var(--radius-classic);
-  background-color: var(--font-color-black);
+  border-radius: var(--radius-bar) 0 0 var(--radius-bar);
+  background-color: var(--progress-bar-bg);
+}
+
+.bar:hover {
+  transform: scaleY(1.05);
 }
 
 footer {
