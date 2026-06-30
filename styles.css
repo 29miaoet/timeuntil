@@ -5,7 +5,9 @@
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
   --progress-bar-bg: #ff4d6d;
+  --progress-bar-hover: #ee3c5c;
   --info-bg-grad: linear-gradient(to bottom, #eeeeee, #f2f2f2);
+  --card-border: #cfcfcf;
 
   --radius-classic: 10px;
   --radius-bar: 4px;
@@ -42,12 +44,13 @@ h2 {
   padding: 20px;
   width: 85%;
   border: none;
-  border-radius: var(--radius-classic);
 }
 
 
 .countdown-container {
   background-color: var(--bg-countdown);
+  border-radius: var(--radius-classic) var(--radius-classic) 0 0;
+  margin-bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,10 +102,24 @@ hr {
 }
 
 .day-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 0;
   background: var(--info-bg-grad);
   box-shadow: 0 0 20px rgba(100, 100, 100, 0.5);
   color: var(--font-color-black);
+  border-radius: 0 0 var(--radius-classic) var(--radius-classic);
 }
+
+.day-card {
+  border: none;
+  padding: 10px;
+  border-radius: var(--radius-classic);
+  text-align: center;
+}
+
 
 .day-info hr {
   width: 100%;
@@ -116,6 +133,7 @@ hr {
 }
 
 .progress-bar {
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -139,8 +157,34 @@ hr {
   background-color: var(--progress-bar-bg);
 }
 
-.bar:hover {
+.progress:hover {
   transform: scaleY(1.05);
+  background-color: var(--progress-bar-hover);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-content {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.menu {
+  width: 100%;
+  height: 50%;
+  padding: 15px;
+  font-size: 26px;
+}
+
+.settings {
+  float: left;
+}
+
+.github-icon {
+  float: right;
 }
 
 footer {
