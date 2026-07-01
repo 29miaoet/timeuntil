@@ -4,9 +4,10 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
-  --progress-bar-bg: #ff4d6d;
+  --progress-bg: #ff4d6d;
   --progress-bar-hover: #ee3c5c;
-  --info-bg-grad: linear-gradient(to bottom, #eeeeee, #f2f2f2);
+  --progress-bar-bg: #b1d7ff;
+  --info-bg: #e7f3ff;
   --card-border: #cfcfcf;
 
   --radius-classic: 10px;
@@ -38,14 +39,54 @@ h2 {
   color: var(--font-color-white);
 }
 
-.card {
-  margin: 15px;
-  max-width: 900px;
-  padding: 20px;
+.card-container {
+  margin: 10px;
+  padding: 0;
   width: 85%;
+  max-width: 900px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-classic);
+  box-shadow: 5px 5px 20px rgba(100, 100, 120, 0.5);
+}
+
+.card {
+  padding: 20px;
+  width: 100%;
   border: none;
 }
 
+.abs-time {
+  width: 75%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.times {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: stretch;
+  flex: 4;
+}
+
+.timelabels {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  align-items: left;
+  justify-content: left;
+  text-align: left;
+  flex: 1;
+}
+
+.abs-time .times .timebox {
+  margin-left: 10%;
+  align-items: stretch;
+  text-align: left;
+}
 
 .countdown-container {
   background-color: var(--bg-countdown);
@@ -56,7 +97,6 @@ h2 {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  box-shadow: 0 0 20px rgba(0, 10, 100, 0.5);
 }
 
 hr {
@@ -107,8 +147,7 @@ hr {
   justify-content: space-around;
   align-items: center;
   margin-top: 0;
-  background: var(--info-bg-grad);
-  box-shadow: 0 0 20px rgba(100, 100, 100, 0.5);
+  background-color: var(--info-bg);
   color: var(--font-color-black);
   border-radius: 0 0 var(--radius-classic) var(--radius-classic);
 }
@@ -139,8 +178,7 @@ hr {
   align-items: center;
   justify-content: center;
   color: var(--font-color-black);
-  background : var(--light-blue);
-  box-shadow: 0 0 20px rgba(0, 10, 100, 0.5);
+  background : var(--progress-bar-bg);
 }
 
 .bar {
@@ -154,7 +192,7 @@ hr {
   height: 100%;
   width: 50%;
   border-radius: var(--radius-bar) 0 0 var(--radius-bar);
-  background-color: var(--progress-bar-bg);
+  background-color: var(--progress-bg);
 }
 
 .progress:hover {
@@ -208,7 +246,7 @@ hr {
 }
 
 footer {
-  padding: 15px;
+  padding: 20px;
   opacity: 0.75;
   color: var(--font-color-black);
   font-style: italic;
@@ -246,6 +284,10 @@ footer {
   .timebox {
     padding-left: 27%;
     flex: 1;
+  }
+
+  .abs-time .times .timebox {
+    margin-left: 25%;
   }
 }
 
