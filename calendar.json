@@ -1,0 +1,2557 @@
+{
+  "2026-09-01": {
+    "date": "2026-09-01",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Office Open"
+    ]
+  },
+  "2026-09-02": {
+    "date": "2026-09-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Office Open"
+    ]
+  },
+  "2026-09-03": {
+    "date": "2026-09-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Office Open"
+    ]
+  },
+  "2026-09-04": {
+    "date": "2026-09-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Office Open"
+    ]
+  },
+  "2026-09-05": {
+    "date": "2026-09-05",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-06": {
+    "date": "2026-09-06",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-07": {
+    "date": "2026-09-07",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [
+      "Labour Day"
+    ],
+    "dayInfo": []
+  },
+  "2026-09-08": {
+    "date": "2026-09-08",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-09": {
+    "date": "2026-09-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "SAS Day / First Day of Classes",
+      "School Photos"
+    ]
+  },
+  "2026-09-10": {
+    "date": "2026-09-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-11": {
+    "date": "2026-09-11",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-12": {
+    "date": "2026-09-12",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-13": {
+    "date": "2026-09-13",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-14": {
+    "date": "2026-09-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-15": {
+    "date": "2026-09-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-16": {
+    "date": "2026-09-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-17": {
+    "date": "2026-09-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-18": {
+    "date": "2026-09-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-19": {
+    "date": "2026-09-19",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-20": {
+    "date": "2026-09-20",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-21": {
+    "date": "2026-09-21",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-22": {
+    "date": "2026-09-22",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2026-09-23": {
+    "date": "2026-09-23",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-24": {
+    "date": "2026-09-24",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-25": {
+    "date": "2026-09-25",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-26": {
+    "date": "2026-09-26",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-27": {
+    "date": "2026-09-27",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-28": {
+    "date": "2026-09-28",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-29": {
+    "date": "2026-09-29",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-09-30": {
+    "date": "2026-09-30",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "National Day for Truth and Reconciliation"
+    ],
+    "dayInfo": []
+  },
+  "2026-10-01": {
+    "date": "2026-10-01",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-02": {
+    "date": "2026-10-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-03": {
+    "date": "2026-10-03",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-04": {
+    "date": "2026-10-04",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-05": {
+    "date": "2026-10-05",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-06": {
+    "date": "2026-10-06",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-07": {
+    "date": "2026-10-07",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-08": {
+    "date": "2026-10-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-09": {
+    "date": "2026-10-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-10": {
+    "date": "2026-10-10",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-11": {
+    "date": "2026-10-11",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-12": {
+    "date": "2026-10-12",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Thanksgiving Day"
+    ],
+    "dayInfo": []
+  },
+  "2026-10-13": {
+    "date": "2026-10-13",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-14": {
+    "date": "2026-10-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-15": {
+    "date": "2026-10-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-16": {
+    "date": "2026-10-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-17": {
+    "date": "2026-10-17",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-18": {
+    "date": "2026-10-18",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-19": {
+    "date": "2026-10-19",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-20": {
+    "date": "2026-10-20",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-21": {
+    "date": "2026-10-21",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-22": {
+    "date": "2026-10-22",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-23": {
+    "date": "2026-10-23",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-24": {
+    "date": "2026-10-24",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-25": {
+    "date": "2026-10-25",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-26": {
+    "date": "2026-10-26",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-27": {
+    "date": "2026-10-27",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2026-10-28": {
+    "date": "2026-10-28",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-29": {
+    "date": "2026-10-29",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-30": {
+    "date": "2026-10-30",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-10-31": {
+    "date": "2026-10-31",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-01": {
+    "date": "2026-11-01",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-02": {
+    "date": "2026-11-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-03": {
+    "date": "2026-11-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-04": {
+    "date": "2026-11-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-05": {
+    "date": "2026-11-05",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-06": {
+    "date": "2026-11-06",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-07": {
+    "date": "2026-11-07",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-08": {
+    "date": "2026-11-08",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-09": {
+    "date": "2026-11-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-10": {
+    "date": "2026-11-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-11": {
+    "date": "2026-11-11",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Remembrance Day"
+    ],
+    "dayInfo": []
+  },
+  "2026-11-12": {
+    "date": "2026-11-12",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-13": {
+    "date": "2026-11-13",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-14": {
+    "date": "2026-11-14",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-15": {
+    "date": "2026-11-15",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-16": {
+    "date": "2026-11-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-17": {
+    "date": "2026-11-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-18": {
+    "date": "2026-11-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Report Cards Posted"
+    ]
+  },
+  "2026-11-19": {
+    "date": "2026-11-19",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-20": {
+    "date": "2026-11-20",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-21": {
+    "date": "2026-11-21",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-22": {
+    "date": "2026-11-22",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-23": {
+    "date": "2026-11-23",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-24": {
+    "date": "2026-11-24",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2026-11-25": {
+    "date": "2026-11-25",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-26": {
+    "date": "2026-11-26",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "SAS Day & Parent Conferences"
+    ]
+  },
+  "2026-11-27": {
+    "date": "2026-11-27",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-28": {
+    "date": "2026-11-28",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-29": {
+    "date": "2026-11-29",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-11-30": {
+    "date": "2026-11-30",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-01": {
+    "date": "2026-12-01",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-02": {
+    "date": "2026-12-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-03": {
+    "date": "2026-12-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-04": {
+    "date": "2026-12-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-05": {
+    "date": "2026-12-05",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-06": {
+    "date": "2026-12-06",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-07": {
+    "date": "2026-12-07",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-08": {
+    "date": "2026-12-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-09": {
+    "date": "2026-12-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-10": {
+    "date": "2026-12-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-11": {
+    "date": "2026-12-11",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-12": {
+    "date": "2026-12-12",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-13": {
+    "date": "2026-12-13",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-14": {
+    "date": "2026-12-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-15": {
+    "date": "2026-12-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-16": {
+    "date": "2026-12-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-17": {
+    "date": "2026-12-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-18": {
+    "date": "2026-12-18",
+    "hasSchool": false,
+    "timeSlot": "Early Dismissal",
+    "status": "No School",
+    "holidays": [
+      "Last day of classes before Winter Break"
+    ],
+    "dayInfo": [
+      "Last day of classes before Winter Break"
+    ]
+  },
+  "2026-12-19": {
+    "date": "2026-12-19",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-20": {
+    "date": "2026-12-20",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2026-12-21": {
+    "date": "2026-12-21",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-22": {
+    "date": "2026-12-22",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-23": {
+    "date": "2026-12-23",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-24": {
+    "date": "2026-12-24",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-25": {
+    "date": "2026-12-25",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Christmas Day",
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-26": {
+    "date": "2026-12-26",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Boxing Day",
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-27": {
+    "date": "2026-12-27",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-28": {
+    "date": "2026-12-28",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-29": {
+    "date": "2026-12-29",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-30": {
+    "date": "2026-12-30",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2026-12-31": {
+    "date": "2026-12-31",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-01-01": {
+    "date": "2027-01-01",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "New Year's Day",
+      "Winter Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-01-02": {
+    "date": "2027-01-02",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-03": {
+    "date": "2027-01-03",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-04": {
+    "date": "2027-01-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "School Reopens"
+    ]
+  },
+  "2027-01-05": {
+    "date": "2027-01-05",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-06": {
+    "date": "2027-01-06",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-07": {
+    "date": "2027-01-07",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-08": {
+    "date": "2027-01-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-09": {
+    "date": "2027-01-09",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-10": {
+    "date": "2027-01-10",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-11": {
+    "date": "2027-01-11",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-12": {
+    "date": "2027-01-12",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-13": {
+    "date": "2027-01-13",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-14": {
+    "date": "2027-01-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-15": {
+    "date": "2027-01-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-16": {
+    "date": "2027-01-16",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-17": {
+    "date": "2027-01-17",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-18": {
+    "date": "2027-01-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-19": {
+    "date": "2027-01-19",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-20": {
+    "date": "2027-01-20",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-21": {
+    "date": "2027-01-21",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-22": {
+    "date": "2027-01-22",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-23": {
+    "date": "2027-01-23",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-24": {
+    "date": "2027-01-24",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-25": {
+    "date": "2027-01-25",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-26": {
+    "date": "2027-01-26",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2027-01-27": {
+    "date": "2027-01-27",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-28": {
+    "date": "2027-01-28",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-29": {
+    "date": "2027-01-29",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-30": {
+    "date": "2027-01-30",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-01-31": {
+    "date": "2027-01-31",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-01": {
+    "date": "2027-02-01",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-02": {
+    "date": "2027-02-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-03": {
+    "date": "2027-02-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Transition Day - Grade 8 Tours"
+    ]
+  },
+  "2027-02-04": {
+    "date": "2027-02-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Transition Day - Grade 8 Tours"
+    ]
+  },
+  "2027-02-05": {
+    "date": "2027-02-05",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": [
+      "End of Semester One"
+    ]
+  },
+  "2027-02-06": {
+    "date": "2027-02-06",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-07": {
+    "date": "2027-02-07",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-08": {
+    "date": "2027-02-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Musical",
+      "Semester Two Begins"
+    ]
+  },
+  "2027-02-09": {
+    "date": "2027-02-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Musical"
+    ]
+  },
+  "2027-02-10": {
+    "date": "2027-02-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Musical"
+    ]
+  },
+  "2027-02-11": {
+    "date": "2027-02-11",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Musical"
+    ]
+  },
+  "2027-02-12": {
+    "date": "2027-02-12",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-13": {
+    "date": "2027-02-13",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-14": {
+    "date": "2027-02-14",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-15": {
+    "date": "2027-02-15",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Louis Riel Day"
+    ],
+    "dayInfo": []
+  },
+  "2027-02-16": {
+    "date": "2027-02-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-17": {
+    "date": "2027-02-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-18": {
+    "date": "2027-02-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-19": {
+    "date": "2027-02-19",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-20": {
+    "date": "2027-02-20",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-21": {
+    "date": "2027-02-21",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-22": {
+    "date": "2027-02-22",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-23": {
+    "date": "2027-02-23",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "SAS Day",
+      "Staff Meeting"
+    ]
+  },
+  "2027-02-24": {
+    "date": "2027-02-24",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-25": {
+    "date": "2027-02-25",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-26": {
+    "date": "2027-02-26",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-27": {
+    "date": "2027-02-27",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-02-28": {
+    "date": "2027-02-28",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-01": {
+    "date": "2027-03-01",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-02": {
+    "date": "2027-03-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-03": {
+    "date": "2027-03-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-04": {
+    "date": "2027-03-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-05": {
+    "date": "2027-03-05",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-06": {
+    "date": "2027-03-06",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-07": {
+    "date": "2027-03-07",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-08": {
+    "date": "2027-03-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-09": {
+    "date": "2027-03-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-10": {
+    "date": "2027-03-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-11": {
+    "date": "2027-03-11",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-12": {
+    "date": "2027-03-12",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-13": {
+    "date": "2027-03-13",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-14": {
+    "date": "2027-03-14",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-15": {
+    "date": "2027-03-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-16": {
+    "date": "2027-03-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-17": {
+    "date": "2027-03-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-18": {
+    "date": "2027-03-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-19": {
+    "date": "2027-03-19",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-20": {
+    "date": "2027-03-20",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-21": {
+    "date": "2027-03-21",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-22": {
+    "date": "2027-03-22",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-23": {
+    "date": "2027-03-23",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2027-03-24": {
+    "date": "2027-03-24",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-25": {
+    "date": "2027-03-25",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Last day of classes before Spring Break"
+    ],
+    "dayInfo": [
+      "Last day of classes before Spring Break"
+    ]
+  },
+  "2027-03-26": {
+    "date": "2027-03-26",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [
+      "Good Friday"
+    ],
+    "dayInfo": []
+  },
+  "2027-03-27": {
+    "date": "2027-03-27",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-28": {
+    "date": "2027-03-28",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-03-29": {
+    "date": "2027-03-29",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Spring Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-03-30": {
+    "date": "2027-03-30",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Spring Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-03-31": {
+    "date": "2027-03-31",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Spring Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-04-01": {
+    "date": "2027-04-01",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Spring Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-04-02": {
+    "date": "2027-04-02",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Spring Break"
+    ],
+    "dayInfo": []
+  },
+  "2027-04-03": {
+    "date": "2027-04-03",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-04": {
+    "date": "2027-04-04",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-05": {
+    "date": "2027-04-05",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "School Reopens"
+    ]
+  },
+  "2027-04-06": {
+    "date": "2027-04-06",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-07": {
+    "date": "2027-04-07",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-08": {
+    "date": "2027-04-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-09": {
+    "date": "2027-04-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-10": {
+    "date": "2027-04-10",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-11": {
+    "date": "2027-04-11",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-12": {
+    "date": "2027-04-12",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-13": {
+    "date": "2027-04-13",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Report Cards Posted"
+    ]
+  },
+  "2027-04-14": {
+    "date": "2027-04-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-15": {
+    "date": "2027-04-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "SAS Day & Parent Conferences"
+    ]
+  },
+  "2027-04-16": {
+    "date": "2027-04-16",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-17": {
+    "date": "2027-04-17",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-18": {
+    "date": "2027-04-18",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-19": {
+    "date": "2027-04-19",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-20": {
+    "date": "2027-04-20",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-21": {
+    "date": "2027-04-21",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-22": {
+    "date": "2027-04-22",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-23": {
+    "date": "2027-04-23",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-24": {
+    "date": "2027-04-24",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-25": {
+    "date": "2027-04-25",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-26": {
+    "date": "2027-04-26",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-27": {
+    "date": "2027-04-27",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2027-04-28": {
+    "date": "2027-04-28",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-29": {
+    "date": "2027-04-29",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-04-30": {
+    "date": "2027-04-30",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-01": {
+    "date": "2027-05-01",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-02": {
+    "date": "2027-05-02",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-03": {
+    "date": "2027-05-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-04": {
+    "date": "2027-05-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-05": {
+    "date": "2027-05-05",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-06": {
+    "date": "2027-05-06",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-07": {
+    "date": "2027-05-07",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-08": {
+    "date": "2027-05-08",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-09": {
+    "date": "2027-05-09",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-10": {
+    "date": "2027-05-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-11": {
+    "date": "2027-05-11",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-12": {
+    "date": "2027-05-12",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-13": {
+    "date": "2027-05-13",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-14": {
+    "date": "2027-05-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-15": {
+    "date": "2027-05-15",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-16": {
+    "date": "2027-05-16",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-17": {
+    "date": "2027-05-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-18": {
+    "date": "2027-05-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-19": {
+    "date": "2027-05-19",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-20": {
+    "date": "2027-05-20",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-21": {
+    "date": "2027-05-21",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-22": {
+    "date": "2027-05-22",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-23": {
+    "date": "2027-05-23",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-24": {
+    "date": "2027-05-24",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [
+      "Victoria Day"
+    ],
+    "dayInfo": []
+  },
+  "2027-05-25": {
+    "date": "2027-05-25",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "Staff Meeting"
+    ]
+  },
+  "2027-05-26": {
+    "date": "2027-05-26",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-27": {
+    "date": "2027-05-27",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-28": {
+    "date": "2027-05-28",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-29": {
+    "date": "2027-05-29",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-30": {
+    "date": "2027-05-30",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-05-31": {
+    "date": "2027-05-31",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-01": {
+    "date": "2027-06-01",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-02": {
+    "date": "2027-06-02",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-03": {
+    "date": "2027-06-03",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-04": {
+    "date": "2027-06-04",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-05": {
+    "date": "2027-06-05",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-06": {
+    "date": "2027-06-06",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-07": {
+    "date": "2027-06-07",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-08": {
+    "date": "2027-06-08",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-09": {
+    "date": "2027-06-09",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-10": {
+    "date": "2027-06-10",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-11": {
+    "date": "2027-06-11",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-12": {
+    "date": "2027-06-12",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-13": {
+    "date": "2027-06-13",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-14": {
+    "date": "2027-06-14",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-15": {
+    "date": "2027-06-15",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-16": {
+    "date": "2027-06-16",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-17": {
+    "date": "2027-06-17",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-18": {
+    "date": "2027-06-18",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-19": {
+    "date": "2027-06-19",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-20": {
+    "date": "2027-06-20",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-21": {
+    "date": "2027-06-21",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Last Day of Classes"
+    ]
+  },
+  "2027-06-22": {
+    "date": "2027-06-22",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Course Schedule Changes"
+    ]
+  },
+  "2027-06-23": {
+    "date": "2027-06-23",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Course Schedule Changes"
+    ]
+  },
+  "2027-06-24": {
+    "date": "2027-06-24",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Grade 9 Run Through"
+    ]
+  },
+  "2027-06-25": {
+    "date": "2027-06-25",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Convocation"
+    ]
+  },
+  "2027-06-26": {
+    "date": "2027-06-26",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-27": {
+    "date": "2027-06-27",
+    "hasSchool": false,
+    "timeSlot": "Regular",
+    "status": "No School",
+    "holidays": [],
+    "dayInfo": []
+  },
+  "2027-06-28": {
+    "date": "2027-06-28",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Grad Banquet"
+    ]
+  },
+  "2027-06-29": {
+    "date": "2027-06-29",
+    "hasSchool": true,
+    "timeSlot": "Regular",
+    "status": "Normal School Day",
+    "holidays": [],
+    "dayInfo": [
+      "Convocation",
+      "Report Cards Posted"
+    ]
+  },
+  "2027-06-30": {
+    "date": "2027-06-30",
+    "hasSchool": true,
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
+    "holidays": [],
+    "dayInfo": [
+      "SAS Day"
+    ]
+  }
+}
