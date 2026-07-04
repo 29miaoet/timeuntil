@@ -62,14 +62,8 @@ class Calendar {
   }
 
   getAbsoluteTimeTo(timeStamp: number) {
-    const timeObj = new Date(timeStamp - this.now);
-    const absoluteTime = {
-      days: timeObj.getDay(),
-      hours: timeObj.getHours(),
-      minutes: timeObj.getMinutes(),
-      seconds: timeObj.getSeconds()
-    }
-    return absoluteTime;
+    const absTime: number = timeStamp - this.now;
+    return absTime/1000/60/60/24;
   }
 
   floorTimestamp(timeUnit: string, timeStamp: number) {
@@ -154,7 +148,7 @@ class Calendar {
           }
       }
 
-      if (this.calendar[currentDate].timeSlot === "Late Start") {
+      if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
         if (this.earlyDismissalTime[0] < hoursAfterMidnight &&
             hoursAfterMidnight < this.earlyDismissalTime[1]) {
             // Subtract one day
@@ -168,7 +162,7 @@ class Calendar {
           }
       }
     }
-    return new Date(milliSeconds);
+    return milliSeconds/1000/60/60/24;
   }
 
   getDateAt(dateStamp: string) {
@@ -182,8 +176,11 @@ class Calendar {
 async function start() {
   const cal = new Calendar("calendar.json", 0, 0);
   await cal.loadData();
-  cal.now = Date.now() + 360*24*60*60*1000;
-  console.log(cal.getSchoolTimeTo(58*365*24*60*60*1000));
+  const tempdate = new Date(2026, 11, 15, 15, 40);
+  const tempnow = new Date(2026, 10, 12, 11, 22, 32);
+  cal.now = tempnow.getTime();
+  console.log(cal.getSchoolTimeTo(tempdate.getTime()));
+  console.log(cal.getAbsoluteTimeTo(tempdate.getTime()));
 }
 
 throw new Error("You need to fix the getSchoolTimeTo method!!!!");
