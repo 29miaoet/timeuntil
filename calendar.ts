@@ -88,38 +88,20 @@ class Calendar {
     return timeObj.getTime();
   }
 
-
   modTimestamp(timeUnit: string, timeStamp: number) {
-    const timeObj = new Date(timeStamp);
-    let returnTime: number = 0;
-    if (timeUnit === "second") {
-      returnTime += timeObj.getMilliseconds();
-    } else if (timeUnit === "minute") {
-      returnTime += timeObj.getMilliseconds();
-      returnTime += timeObj.getSeconds();
-    } else if (timeUnit === "hour") {
-      returnTime += timeObj.getMilliseconds();
-      returnTime += timeObj.getSeconds();
-      returnTime += timeObj.getMinutes();
-    } else if (timeUnit === "day") {
-      returnTime += timeObj.getMilliseconds();
-      returnTime += timeObj.getSeconds();
-      returnTime += timeObj.getMinutes();
-      returnTime += timeObj.getHours();
-    } else {
-      throw new TypeError(`Unknown time measurement unit ${timeUnit}`);
-    }
-    return timeObj.getTime();
+    return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
   }
 
   getSchoolTimeTo(timeStamp: number) {
     const currentDate: string = this.strftime(this.now);
     const endingDate: string = this.strftime(timeStamp);
     const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
+    const hoursLastDay: number = this.modTimestamp("day", timeStamp);
+    
     let milliSeconds: number = 0;
 
     for (const date in this.calendar) {
-      // Smaller or equal to
+      // Smaller or equal to & greater than or equal to
       if (date < currentDate || date > endingDate) {
         continue;
       } else {
@@ -133,36 +115,78 @@ class Calendar {
       }
     }
 
+    // Correct the time remaining for the first day counted
     if (this.calendar[currentDate].hasSchool) {
       if (this.calendar[currentDate].timeSlot === "Regular") {
-        if (this.regularSchoolDayTime[0] < hoursAfterMidnight &&
+        // If there is school right now
+        if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
             hoursAfterMidnight < this.regularSchoolDayTime[1]) {
-            // Subtract one day
+            // Subtract one day since it was already calculated above
             milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-            milliSeconds += (hoursAfterMidnight - this.regularSchoolDayTime[0]);
+            // Add on the time that is still remaining today
+            milliSeconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
           } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+            // Extra day already calculated
+            // Do nothing
+          } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
             // Subtract extra counted day
             milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-          } else if (hoursAfterMidnight > this.regularSchoolDayTime[1]) {
+          }
+      }
+
+      // Same thing as above except for early dismissal
+      if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
+        if (this.earlyDismissalTime[0] <= hoursAfterMidnight &&
+            hoursAfterMidnight < this.earlyDismissalTime[1]) {
+            // Subtract one day
+            milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
+            milliSeconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
+          } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+            // Do nothing
+          } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+            // Subtract extra counted day
+            milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
+          }
+      }
+    }
+
+
+    // Correct the time remaining for the last day counted
+    if (this.calendar[endingDate].hasSchool) {
+      if (this.calendar[endingDate].timeSlot === "Regular") {
+        // If there is school right now
+        if (this.regularSchoolDayTime[0] <= hoursLastDay &&
+            hoursLastDay < this.regularSchoolDayTime[1]) {
+            // Subtract one day since it was already calculated above
+            milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
+            // Add on the time that has passed today
+            milliSeconds += (hoursLastDay - this.regularSchoolDayTime[0]);
+          } else if (hoursLastDay < this.regularSchoolDayTime[0]) {
+            // Subtract extra counted day
+            milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
+          } else if (hoursLastDay >= this.regularSchoolDayTime[1]) {
+            // Extra day already calculated
             // Do nothing
           }
       }
 
-      if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-        if (this.earlyDismissalTime[0] < hoursAfterMidnight &&
-            hoursAfterMidnight < this.earlyDismissalTime[1]) {
+      // Same thing as above except for early dismissal
+      if (this.calendar[endingDate].timeSlot === "Early Dismissal") {
+        if (this.earlyDismissalTime[0] <= hoursLastDay &&
+            hoursLastDay < this.earlyDismissalTime[1]) {
             // Subtract one day
             milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-            milliSeconds += (hoursAfterMidnight - this.earlyDismissalTime[0]);
-          } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+            milliSeconds += (hoursLastDay - this.earlyDismissalTime[0]);
+          } else if (hoursLastDay < this.earlyDismissalTime[0]) {
             // Subtract extra counted day
             milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-          } else if (hoursAfterMidnight > this.earlyDismissalTime[1]) {
+          } else if (hoursLastDay >= this.earlyDismissalTime[1]) {
             // Do nothing
           }
+        
       }
     }
-    return milliSeconds/1000/60/60/24;
+    return milliSeconds/1000/60/60;
   }
 
   getDateAt(dateStamp: string) {
@@ -176,12 +200,12 @@ class Calendar {
 async function start() {
   const cal = new Calendar("calendar.json", 0, 0);
   await cal.loadData();
-  const tempdate = new Date(2026, 11, 15, 15, 40);
-  const tempnow = new Date(2026, 10, 12, 11, 22, 32);
+  const tempdate = new Date(2026, 8, 22, 18, 0);
+  const tempnow = new Date(2026, 8, 22, 9, 0);
   cal.now = tempnow.getTime();
   console.log(cal.getSchoolTimeTo(tempdate.getTime()));
   console.log(cal.getAbsoluteTimeTo(tempdate.getTime()));
 }
 
-throw new Error("You need to fix the getSchoolTimeTo method!!!!");
+// throw new Error("You need to fix the getSchoolTimeTo method!!!!");
 start();
