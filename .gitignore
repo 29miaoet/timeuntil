@@ -1,4 +1,3 @@
 node_modules/
-package.json
-# Compiled js files from tsc
 *.js
+dist/
