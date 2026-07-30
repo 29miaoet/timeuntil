@@ -1,3 +1,13 @@
+/**
+ * Handles calendar operations.
+ *
+ * This module contains the Calendar class, which provides methods
+ * for operating on a calendar JSON file. The file must first be 
+ * loaded with calendar.loadData(), the file path must be 
+ * provided in the constructor.
+ */
+
+
 interface DayInfo {
   date: string;
   hasSchool: boolean;
@@ -12,7 +22,7 @@ interface CalendarObject {
   [date: string]: DayInfo;
 }
 
-class Calendar {
+export default class Calendar {
   public calendar!: CalendarObject;
   private dbPath: string;
   private startTime: number;
@@ -186,7 +196,7 @@ class Calendar {
         
       }
     }
-    return milliSeconds/1000/60/60;
+    return milliSeconds;
   }
 
   getDateAt(dateStamp: string) {
@@ -197,6 +207,7 @@ class Calendar {
   }
 }
 
+/*
 async function start() {
   const cal = new Calendar("calendar.json", 0, 0);
   await cal.loadData();
@@ -207,5 +218,5 @@ async function start() {
   console.log(cal.getAbsoluteTimeTo(tempdate.getTime()));
 }
 
-// throw new Error("You need to fix the getSchoolTimeTo method!!!!");
 start();
+*/
