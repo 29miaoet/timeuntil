@@ -73,7 +73,7 @@ export default class Calendar {
 
   getAbsoluteTimeTo(timeStamp: number) {
     const absTime: number = timeStamp - this.now;
-    return absTime/1000/60/60/24;
+    return absTime;
   }
 
   floorTimestamp(timeUnit: string, timeStamp: number) {
