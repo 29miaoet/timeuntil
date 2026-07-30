@@ -1,3 +1,5 @@
+import "./styles.css";
+
 import Calendar from "./calendar";
 
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
