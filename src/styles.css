@@ -106,7 +106,7 @@ hr {
   width: 60%;
 }
 
-.school-time {
+.remaining-time {
   display: flex;
   flex-direction: row;
   justify-content: center;
