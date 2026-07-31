@@ -8,6 +8,7 @@ const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .time
 
 let schoolTimeRemaining: number;
 let totalTimeRemaining: number;
+let schoolDates: number;
 
 const calendar = new Calendar("calendar.json", 0, 0);
 const tempdate = new Date(2026, 9, 9, 18, 0);
@@ -19,15 +20,18 @@ async function start() {
 
   updateTimer();
   populateAbsoluteTimes(schoolTimeRemaining);
-  populateDateTimes(schoolTimeRemaining, schoolTimes);
-  populateDateTimes(totalTimeRemaining, totalTimes);
+  populateTotalTimes(totalTimeRemaining);
+  populateSchoolDates(schoolDates);
 
   setInterval(() => {
     updateTimer();
     populateAbsoluteTimes(schoolTimeRemaining);
-    populateDateTimes(schoolTimeRemaining, schoolTimes);
-    populateDateTimes(totalTimeRemaining, totalTimes);
+    populateTotalTimes(totalTimeRemaining);
+    populateSchoolDates(schoolDates);
   }, 100);
+}
+
+function updateDOM() {
 }
 
 function updateTimer() {
@@ -36,9 +40,11 @@ function updateTimer() {
   // so that it makes the timer change.
 
   calendar.now = Date.now() + 2*31*24*60*60*1000 - 5*60*60*1000;
+  // console.log(new Date(calendar.now));
 
   schoolTimeRemaining = calendar.getSchoolTimeTo(tempdate);
   totalTimeRemaining = calendar.getAbsoluteTimeTo(tempdate);
+  schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(tempdate));
 }
 
 
@@ -58,7 +64,7 @@ function populateSchoolTimes(schoolTimeRemaining: number) {
 }
 
 
-function daterize(timeRemaining: number) {
+function populateTotalTimes(timeRemaining: number) {
   // See calendar.ts for function usage
   
   // Worst code I have ever written, MUST fix later
@@ -67,14 +73,16 @@ function daterize(timeRemaining: number) {
   const minutesLeft: number = Math.floor((timeRemaining - daysLeft*1000*60*60*24 - hoursLeft*1000*60*60)/1000/60);
   const secondsLeft: number = Math.floor((timeRemaining - daysLeft*1000*60*60*24 - hoursLeft*1000*60*60 - minutesLeft*1000*60)/1000);
 
-  return [daysLeft, hoursLeft, minutesLeft, secondsLeft];
+  totalTimes[0].textContent = daysLeft;
+  totalTimes[1].textContent = hoursLeft;
+  totalTimes[2].textContent = minutesLeft;
+  totalTimes[3].textContent = secondsLeft;
 }
 
-function populateDateTimes(TimeRemaining: number, domElements) {
-  const dateTimes = daterize(TimeRemaining);
+function populateSchoolDates(schoolDates: Array<number>) {
   for (let i=0; i<4; i++) {
-    domElements[i].textContent = dateTimes[i];
-  };
+    schoolTimes[i].textContent = schoolDates[i];
+  }
 }
 
 start();
