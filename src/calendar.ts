@@ -193,11 +193,80 @@ export default class Calendar {
           } else if (hoursLastDay >= this.earlyDismissalTime[1]) {
             // Do nothing
           }
-        
       }
+
     }
     return milliSeconds;
   }
+
+  /**
+   * This method does not support a timeStamp argument,
+   * only full dates, it should be updated in the 
+   * future to support more accurate timing.
+   */
+  getSchoolTimeAsDate(endingDate: string) {
+    type schoolDateTuple = [number, number, number, number, number];
+    let schoolDateRemaining: schoolDateTuple = [0, 0, 0, 0, 0];
+    let milliseconds = 0;
+
+    const currentDate: string = this.strftime(this.now);
+    const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
+
+    for (const date in this.calendar) {
+      // The current date should not be counted but the ending Date should be
+      if (date <= currentDate || date > endingDate) {
+        continue;
+      } else {
+        if (!this.calendar[date].hasSchool) {
+          continue;
+        } else {
+          schoolDateRemaining[0]++;
+        }
+      }
+    }
+
+    // Fix current day
+    if (this.calendar[currentDate].timeSlot === "Regular") {
+      if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
+          hoursAfterMidnight < this.regularSchoolDayTime[1]) {
+          milliseconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
+
+        } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+          milliSeconds += (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
+
+        } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
+          // Do nothing
+        }
+    }
+
+    if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
+      if (this.earlyDismissalTime[0] <= hoursAfterMidnight &&
+          hoursAfterMidnight < this.earlyDismissalTime[1]) {
+          milliseconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
+
+        } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+          milliSeconds += (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
+
+        } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+          // Do nothing
+        }
+    }
+
+    // Format milliseconds into array
+    const hours = Math.floor(milliseconds/1000/60/60);
+    const minutes = Math.floor((milliseconds - hours*1000*60*60)/1000/60);
+    const seconds = Math.floor((milliseconds - hours*1000*60*60 - minutes*1000*60)/1000);
+    const milliseconds2 = milliseconds - hours*1000*60*60 - minutes*1000*60 - seconds*1000;
+
+    schoolDateRemaining[1] = hours;
+    schoolDateRemaining[2] = minutes;
+    schoolDateRemaining[3] = seconds;
+    schoolDateRemaining[4] = milliseconds2;
+
+    return schoolDateRemaining;
+
+  }
+
 
   getDateAt(dateStamp: string) {
     if (!this.calendar[dateStamp]) {
