@@ -71,9 +71,26 @@ export default class Calendar {
     this.now = Date.now();
   }
 
+  contains(schoolDate: number) {
+    try {
+      this.getDateAt(this.strftime(schoolDate));
+      return true;
+    } catch (RangeError) {
+      return false;
+    }
+  }
+
   getAbsoluteTimeTo(timeStamp: number) {
     const absTime: number = timeStamp - this.now;
     return absTime;
+  }
+
+  getDayInfo(dateStamp: string) {
+    return {
+      daystatus: this.calendar[dateStamp]["status"],
+      feature: this.calendar[dateStamp]["holidays"],
+      event: this.calendar[dateStamp]["dayInfo"]
+    }
   }
 
   floorTimestamp(timeUnit: string, timeStamp: number) {
@@ -100,6 +117,28 @@ export default class Calendar {
 
   modTimestamp(timeUnit: string, timeStamp: number) {
     return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
+  }
+
+  getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number) {
+    const timeToElapse: number = endingTimeStamp - startingTimeStamp;
+
+    // Basic safety test
+    if (timeToElapse < 0) {
+      throw new RangeError(`Invalid range ${startingTimeStamp}-${endingTimeStamp}`);
+    }
+
+    if (startingTimeStamp > this.now) return 0;
+    if (endingTimeStamp < this.now) return 1;
+
+    if (this.contains(this.now)) {
+      // Use schoolTime
+      const timeElapsed = timeToElapse - this.getSchoolTimeTo(endingTimeStamp);
+      return timeElapsed / timeToElapse;
+    } else {
+      // Use absoluteTime
+      const timeElapsed = timeToElapse - this.getAbsoluteTimeTo(endingTimeStamp);
+      return timeElapsed / timeToElapse;
+    }
   }
 
   getSchoolTimeTo(timeStamp: number) {
