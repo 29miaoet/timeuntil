@@ -12,6 +12,10 @@
 
   --radius-classic: 10px;
   --radius-bar: 4px;
+
+  --warning-text-color: #78350f;
+  --warning-border-color: #a41502;
+  --warning-bg-color: #f59e0b;
 }
 
 * {
@@ -134,7 +138,6 @@ hr {
   font-size: 18px;
   color: var(--font-color-white);
 }
-
 .timeunit {
   display: flex;
   flex-direction: row;
@@ -186,6 +189,18 @@ hr {
   width: 100%;
   border-radius: var(--radius-bar);
   background: transparent;
+}
+
+/* Styles for failed fetch */
+.warning-box {
+  text-align: center;
+  border: 2px solid var(--warning-border-color);
+  background-color: var(--warning-bg-color);
+  color: var(--warning-text-color);
+  padding: 0 30px;
+  border-radius: var(--radius-classic);
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .progress {
@@ -272,7 +287,6 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    padding-left: 25%;
   }
 
   .timelabel, .timebox {
@@ -282,7 +296,6 @@ footer {
   }
 
   .timebox {
-    padding-left: 27%;
     flex: 1;
   }
 
