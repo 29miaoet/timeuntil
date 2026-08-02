@@ -6,8 +6,12 @@ const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .tim
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
 const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info .day-card .card-content");
+
 const progressBar = document.getElementById<HTMLDivElement>("progress-bar-element");
 const progressText = document.getElementById<HTMLDivElement>("percentage");
+
+const absoluteTimeContainer = document.getElementById<HTML>("abs-time-remaining");
+const schoolTimeContainer = document.getElementById<HTML>("school-time-remaining");
 
 let schoolTimeRemaining: number;
 let totalTimeRemaining: number;
@@ -17,9 +21,13 @@ const calendar = new Calendar("calendar.json", 0, 0);
 const tempdate = new Date(2026, 9, 9, 18, 0);
 
 async function start() {
-  // const absoluteTimes: Element[] = document.querySelector(".abs-time .times .timebox");
 
   await calendar.loadData();
+
+  if (!calendar.contains(calendar.strftime(calendar.now))) {
+    console.warn("Outside of calendar time frame, school time unavailable.");
+  }
+
 
   updateDOM();
   setInterval(() => {
@@ -40,18 +48,17 @@ function updateDOM() {
 
 
 function updateTimer() {
-  // calendar.freeze();
+  calendar.freeze();
   // Add 2 months for testing, and a random amount of time,
   // so that it makes the timer change.
 
-  calendar.now = Date.now() + 2*31*24*60*60*1000 - 5*60*60*1000;
+  // calendar.now = Date.now() + 2*31*24*60*60*1000 - 5*60*60*1000;
   // console.log(new Date(calendar.now));
 
   try{
     schoolTimeRemaining = calendar.getSchoolTimeTo(tempdate);
     schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(tempdate));
   } catch (Error) {
-    console.warn("Outside of calendar time frame, school time unavailable.");
     schoolTimeRemaining = null;
     schoolDates = null;
   }
@@ -61,6 +68,20 @@ function updateTimer() {
 
 
 function populateAbsoluteTimes(schoolTimeRemaining: number) {
+  if (!schoolTimeRemaining) {
+
+    // Cancel hard width declaration and add top padding
+    absoluteTimeContainer.style.width = "auto";
+    absoluteTimeContainer.style.paddingTop = "20px";
+
+    absoluteTimeContainer.innerHTML = `
+      <div class="warning-box">
+        <p>Unable to fetch absolute times</p>
+      </div> `
+
+    return;
+  }
+
   absoluteTimes[0].textContent = schoolTimeRemaining/1000/60/60/24;
   absoluteTimes[1].textContent = schoolTimeRemaining/1000/60/60;
   absoluteTimes[2].textContent = schoolTimeRemaining/1000/60;
@@ -92,6 +113,16 @@ function populateTotalTimes(timeRemaining: number) {
 }
 
 function populateSchoolDates(schoolDates: Array<number>) {
+  if (!schoolDates) {
+    // Cancel default stretch style
+    schoolTimeContainer.style.alignItems = "center";
+    schoolTimeContainer.innerHTML = `
+      <div class="warning-box">
+        <p>Unable to fetch school time</p>
+      </div> `
+    return;
+  }
+
   for (let i = 0; i < 4; i++) {
     schoolTimes[i].textContent = schoolDates[i];
   }
@@ -112,16 +143,16 @@ function updateDayInfos() {
 
   let feature;
   if (dayInfos.feature.length !== 0) {
-    feature = "<p>" + dayInfos.feature.join("<br>") + "</p>";
+    feature = '<p class="card-content">' + dayInfos.feature.join("<br>") + "</p>";
   } else {
-    feature = "<p>Nothing Interesting</p>";
+    feature = '<p class="card-content">Nothing Interesting</p>';
   }
 
   let event;
   if (dayInfos.event.length !== 0) {
-    event = "<p>" + dayInfos.event.join("<br>") + "</p>";
+    event = '<p class="card-content">' + dayInfos.event.join("<br>") + "</p>";
   } else {
-    event = "<p>No Events</p>";
+    event = '<p class="card-content">No Events</p>';
   }
 
   dayStatuses[0].textContent = daystatus;
