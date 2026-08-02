@@ -67,7 +67,7 @@ export default class Calendar {
   }
 
   // Snapshot the current time to prevent mismatches between displays
-  snapshot() {
+  freeze() {
     this.now = Date.now();
   }
 
@@ -265,30 +265,32 @@ export default class Calendar {
     }
 
     // Fix current day
-    if (this.calendar[currentDate].timeSlot === "Regular") {
-      if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
-          hoursAfterMidnight < this.regularSchoolDayTime[1]) {
-          milliseconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
+    if (this.calendar[hasSchool]) {
+      if (this.calendar[currentDate].timeSlot === "Regular") {
+        if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
+            hoursAfterMidnight < this.regularSchoolDayTime[1]) {
+            milliseconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
 
-        } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
-          milliSeconds += (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
+          } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+            milliSeconds += (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
 
-        } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
-          // Do nothing
-        }
-    }
+          } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
+            // Do nothing
+          }
+      }
 
-    if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-      if (this.earlyDismissalTime[0] <= hoursAfterMidnight &&
-          hoursAfterMidnight < this.earlyDismissalTime[1]) {
-          milliseconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
+      if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
+        if (this.earlyDismissalTime[0] <= hoursAfterMidnight &&
+            hoursAfterMidnight < this.earlyDismissalTime[1]) {
+            milliseconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
 
-        } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
-          milliSeconds += (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
+          } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+            milliSeconds += (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
 
-        } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
-          // Do nothing
-        }
+          } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+            // Do nothing
+          }
+      }
     }
 
     // Format milliseconds into array
