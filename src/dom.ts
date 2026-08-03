@@ -12,13 +12,14 @@ const progressText = document.getElementById<HTMLDivElement>("percentage");
 
 const absoluteTimeContainer = document.getElementById<HTML>("abs-time-remaining");
 const schoolTimeContainer = document.getElementById<HTML>("school-time-remaining");
+const dayInfoContainer = document.getElementById<HTML>("day-information");
 
 let schoolTimeRemaining: number;
 let totalTimeRemaining: number;
 let schoolDates: number;
 
 const calendar = new Calendar("calendar.json", 0, 0);
-const tempdate = new Date(2026, 9, 9, 18, 0);
+let endDate = new Date(2027, 5, 21, 15, 40);
 
 async function start() {
 
@@ -52,18 +53,19 @@ function updateTimer() {
   // Add 2 months for testing, and a random amount of time,
   // so that it makes the timer change.
 
+  // Uncomment these 2 lines for testing
   // calendar.now = Date.now() + 2*31*24*60*60*1000 - 5*60*60*1000;
   // console.log(new Date(calendar.now));
 
   try{
-    schoolTimeRemaining = calendar.getSchoolTimeTo(tempdate);
-    schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(tempdate));
+    schoolTimeRemaining = calendar.getSchoolTimeTo(endDate);
+    schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(endDate));
   } catch (Error) {
     schoolTimeRemaining = null;
     schoolDates = null;
   }
 
-  totalTimeRemaining = calendar.getAbsoluteTimeTo(tempdate);
+  totalTimeRemaining = calendar.getAbsoluteTimeTo(endDate);
 }
 
 
@@ -130,7 +132,11 @@ function populateSchoolDates(schoolDates: Array<number>) {
 
 function updateProgressBar() {
   const start = new Date(2026, 5, 19, 15, 40);
-  const end = new Date(2026, 10, 9, 8, 30);
+
+  // Uncomment when school actually starts
+  // const start = new Date(2026, 8, 9, 8, 30);
+  
+  const end = endDate;
   const fractionPercentage: number = calendar.getPercentCompletion(start.getTime(), end.getTime());
   const percentFinished: string = `${fractionPercentage*100}%`;
   progressBar.style.width = percentFinished;
@@ -138,6 +144,14 @@ function updateProgressBar() {
 }
 
 function updateDayInfos() {
+  if (!calendar.contains(calendar.strftime(calendar.now))) {
+    dayInfoContainer.innerHTML = `
+      <div class="warning-box">
+        <p>Unable to fetch school day information</p>
+      </div> `
+      return;
+  }
+
   const dayInfos = calendar.getDayInfo(calendar.strftime(calendar.now));
   const daystatus = dayInfos.daystatus;
 
