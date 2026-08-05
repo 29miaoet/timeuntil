@@ -246,7 +246,7 @@ export default class Calendar {
   getSchoolTimeAsDate(endingDate: string) {
     type schoolDateTuple = [number, number, number, number, number];
     let schoolDateRemaining: schoolDateTuple = [0, 0, 0, 0, 0];
-    let milliseconds = 0;
+    let milliseconds: number = 0;
 
     const currentDate: string = this.strftime(this.now);
     const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
@@ -265,14 +265,14 @@ export default class Calendar {
     }
 
     // Fix current day
-    if (this.calendar[hasSchool]) {
+    if (this.calendar[currentDate].hasSchool) {
       if (this.calendar[currentDate].timeSlot === "Regular") {
         if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
             hoursAfterMidnight < this.regularSchoolDayTime[1]) {
             milliseconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
 
           } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
-            milliSeconds += (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
+            milliseconds += (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
 
           } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
             // Do nothing
@@ -285,7 +285,7 @@ export default class Calendar {
             milliseconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
 
           } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
-            milliSeconds += (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
+            milliseconds += (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
 
           } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
             // Do nothing
