@@ -7,16 +7,16 @@ const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeu
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
 const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info .day-card .card-content");
 
-const progressBar = document.getElementById<HTMLDivElement>("progress-bar-element");
-const progressText = document.getElementById<HTMLDivElement>("percentage");
+const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
+const progressText = document.getElementById("percentage") as HTMLDivElement | null;
 
-const absoluteTimeContainer = document.getElementById<HTML>("abs-time-remaining");
-const schoolTimeContainer = document.getElementById<HTML>("school-time-remaining");
-const dayInfoContainer = document.getElementById<HTML>("day-information");
+const absoluteTimeContainer = document.getElementById("abs-time-remaining") as HTMLDivElement | null;
+const schoolTimeContainer = document.getElementById("school-time-remaining") as HTMLDivElement | null;
+const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
 
-let schoolTimeRemaining: number;
+let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
-let schoolDates: number;
+let schoolDates: Array<number> | null;
 
 const calendar = new Calendar("calendar.json", 0, 0);
 let endDate = new Date(2027, 5, 21, 15, 40);
@@ -25,7 +25,7 @@ async function start() {
 
   await calendar.loadData();
 
-  if (!calendar.contains(calendar.strftime(calendar.now))) {
+  if (!calendar.contains(calendar.now)) {
     console.warn("Outside of calendar time frame, school time unavailable.");
   }
 
@@ -58,19 +58,23 @@ function updateTimer() {
   // console.log(new Date(calendar.now));
 
   try{
-    schoolTimeRemaining = calendar.getSchoolTimeTo(endDate);
-    schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(endDate));
+    schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());
+    schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(endDate.getTime()));
   } catch (Error) {
     schoolTimeRemaining = null;
     schoolDates = null;
   }
 
-  totalTimeRemaining = calendar.getAbsoluteTimeTo(endDate);
+  totalTimeRemaining = calendar.getAbsoluteTimeTo(endDate.getTime());
 }
 
 
-function populateAbsoluteTimes(schoolTimeRemaining: number) {
+function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   if (!schoolTimeRemaining) {
+    if (!absoluteTimeContainer) {
+      console.error("Absolute times container not found.");
+      return;
+    }
 
     // Cancel hard width declaration and add top padding
     absoluteTimeContainer.style.width = "auto";
@@ -84,18 +88,18 @@ function populateAbsoluteTimes(schoolTimeRemaining: number) {
     return;
   }
 
-  absoluteTimes[0].textContent = schoolTimeRemaining/1000/60/60/24;
-  absoluteTimes[1].textContent = schoolTimeRemaining/1000/60/60;
-  absoluteTimes[2].textContent = schoolTimeRemaining/1000/60;
-  absoluteTimes[3].textContent = schoolTimeRemaining/1000;
+  absoluteTimes[0].textContent = String(schoolTimeRemaining/1000/60/60/24);
+  absoluteTimes[1].textContent = String(schoolTimeRemaining/1000/60/60);
+  absoluteTimes[2].textContent = String(schoolTimeRemaining/1000/60);
+  absoluteTimes[3].textContent = String(schoolTimeRemaining/1000);
 }
 
 function populateSchoolTimes(schoolTimeRemaining: number) {
   // See calendar.ts for function usage
-  schoolTimes[0].textContent = calendar.floorTimestamp("day", schoolTimeRemaining)/1000/60/60/24;
-  schoolTimes[1].textContent = calendar.floorTimestamp("hour", schoolTimeRemaining)/1000/60/60;
-  schoolTimes[2].textContent = calendar.modTimestamp("minute", schoolTimeRemaining)/1000/60;
-  schoolTimes[3].textContent = calendar.modTimestamp("second", schoolTimeRemaining)/1000;
+  schoolTimes[0].textContent = String(calendar.floorTimestamp("day", schoolTimeRemaining)/1000/60/60/24);
+  schoolTimes[1].textContent = String(calendar.floorTimestamp("hour", schoolTimeRemaining)/1000/60/60);
+  schoolTimes[2].textContent = String(calendar.modTimestamp("minute", schoolTimeRemaining)/1000/60);
+  schoolTimes[3].textContent = String(calendar.modTimestamp("second", schoolTimeRemaining)/1000);
 }
 
 
@@ -108,14 +112,19 @@ function populateTotalTimes(timeRemaining: number) {
   const minutesLeft: number = Math.floor((timeRemaining - daysLeft*1000*60*60*24 - hoursLeft*1000*60*60)/1000/60);
   const secondsLeft: number = Math.floor((timeRemaining - daysLeft*1000*60*60*24 - hoursLeft*1000*60*60 - minutesLeft*1000*60)/1000);
 
-  totalTimes[0].textContent = daysLeft;
-  totalTimes[1].textContent = hoursLeft;
-  totalTimes[2].textContent = minutesLeft;
-  totalTimes[3].textContent = secondsLeft;
+  totalTimes[0].textContent = daysLeft.toString();
+  totalTimes[1].textContent = hoursLeft.toString();
+  totalTimes[2].textContent = minutesLeft.toString();
+  totalTimes[3].textContent = secondsLeft.toString();
 }
 
-function populateSchoolDates(schoolDates: Array<number>) {
+function populateSchoolDates(schoolDates: Array<number> | null) {
   if (!schoolDates) {
+    if (!schoolTimeContainer) {
+      console.error("School times container not found.");
+      return;
+    }
+
     // Cancel default stretch style
     schoolTimeContainer.style.alignItems = "center";
     schoolTimeContainer.innerHTML = `
@@ -126,7 +135,7 @@ function populateSchoolDates(schoolDates: Array<number>) {
   }
 
   for (let i = 0; i < 4; i++) {
-    schoolTimes[i].textContent = schoolDates[i];
+    schoolTimes[i].textContent = schoolDates[i].toString();
   }
 }
 
@@ -139,12 +148,27 @@ function updateProgressBar() {
   const end = endDate;
   const fractionPercentage: number = calendar.getPercentCompletion(start.getTime(), end.getTime());
   const percentFinished: string = `${fractionPercentage*100}%`;
-  progressBar.style.width = percentFinished;
-  progressText.textContent = percentFinished;
+  
+  if (progressBar) {
+    progressBar.style.width = percentFinished;
+  } else {
+    console.error("Progress bar not found");
+  }
+
+  if (progressText) {
+    progressText.textContent = percentFinished;
+  } else {
+    console.error("Progress text not found");
+  }
 }
 
 function updateDayInfos() {
-  if (!calendar.contains(calendar.strftime(calendar.now))) {
+  if (!calendar.contains(calendar.now)) {
+    if (!dayInfoContainer) {
+      console.error("Day info container not found.");
+      return;
+    }
+
     dayInfoContainer.innerHTML = `
       <div class="warning-box">
         <p>Unable to fetch school day information</p>
