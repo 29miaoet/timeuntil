@@ -43,6 +43,11 @@ async function start() {
 }
 
 function handleTime() {
+  if (!timeToggleButton || !timeMenu) {
+    console.error("Time toggle menu nonfunctional.");
+    return;
+  }
+
   timeToggleButton.addEventListener("click", (e) => {
     if (timeMenu.hidden) {
       timeMenu.hidden = false;
@@ -54,7 +59,9 @@ function handleTime() {
   });
 
   document.addEventListener("click", (e) => {
-      if (!timeMenu.contains(e.target) && !timeToggleButton.contains(e.target)) {
+      // Stop tsc from complaining
+      const target = e.target as Node;
+      if (!timeMenu.contains(target) && !timeToggleButton.contains(target)) {
           timeMenu.hidden = true;
           timeToggleButton.classList.remove("open");
       }
