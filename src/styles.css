@@ -162,7 +162,6 @@ hr {
   text-align: center;
 }
 
-
 .day-info hr {
   width: 100%;
   margin: 10px auto;
@@ -181,7 +180,7 @@ hr {
   align-items: center;
   justify-content: center;
   color: var(--font-color-black);
-  background : var(--progress-bar-bg);
+  background: var(--progress-bar-bg);
 }
 
 .bar {
@@ -267,10 +266,10 @@ footer {
   font-style: italic;
   font-size: 12px;
 }
-  
 
 @media (max-width: 1120px) {
-  .timelabel, .timebox {
+  .timelabel,
+  .timebox {
     margin-left: 5px;
     margin-right: 5px;
   }
@@ -279,7 +278,6 @@ footer {
     padding-left: 20px;
     padding-right: 20px;
   }
-
 }
 
 @media (max-width: 820px) {
@@ -289,7 +287,8 @@ footer {
     align-items: left;
   }
 
-  .timelabel, .timebox {
+  .timelabel,
+  .timebox {
     margin-left: 10px;
     margin-right: 10px;
     flex: 1;
@@ -312,10 +311,11 @@ footer {
   .school-time {
     flex-direction: column;
     justify-content: center;
-    align-items:  left;
+    align-items: left;
   }
 
-  .timelabel, .timebox {
+  .timelabel,
+  .timebox {
     margin-left: 10px;
     margin-right: 10px;
     flex: 1;

@@ -2,11 +2,10 @@
  * Handles calendar operations.
  *
  * This module contains the Calendar class, which provides methods
- * for operating on a calendar JSON file. The file must first be 
- * loaded with calendar.loadData(), the file path must be 
+ * for operating on a calendar JSON file. The file must first be
+ * loaded with calendar.loadData(), the file path must be
  * provided in the constructor.
  */
-
 
 interface DayInfo {
   date: string;
@@ -16,7 +15,6 @@ interface DayInfo {
   holidays: Array<string>;
   dayInfo: Array<string>;
 }
-
 
 interface CalendarObject {
   [date: string]: DayInfo;
@@ -36,9 +34,9 @@ export default class Calendar {
     this.startTime = startTime;
     this.endTime = endTime;
     // 8:30 to 14:30
-    this.earlyDismissalTime = [8.5*60*60*1000, 14.5*60*60*1000];
+    this.earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
     // 8:30 to 15:40
-    this.regularSchoolDayTime = [8.5*60*60*1000, (15*60 + 40)*60*1000];
+    this.regularSchoolDayTime = [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000];
     this.now = Date.now();
   }
 
@@ -59,10 +57,10 @@ export default class Calendar {
   }
 
   strftime(timeStamp: number) {
-    const date = new Date(timeStamp)
+    const date = new Date(timeStamp);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
 
@@ -89,8 +87,8 @@ export default class Calendar {
     return {
       daystatus: this.calendar[dateStamp]["status"],
       feature: this.calendar[dateStamp]["holidays"],
-      event: this.calendar[dateStamp]["dayInfo"]
-    }
+      event: this.calendar[dateStamp]["dayInfo"],
+    };
   }
 
   floorTimestamp(timeUnit: string, timeStamp: number) {
@@ -146,7 +144,7 @@ export default class Calendar {
     const endingDate: string = this.strftime(timeStamp);
     const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
     const hoursLastDay: number = this.modTimestamp("day", timeStamp);
-    
+
     let milliSeconds: number = 0;
 
     for (const date in this.calendar) {
@@ -168,79 +166,73 @@ export default class Calendar {
     if (this.calendar[currentDate].hasSchool) {
       if (this.calendar[currentDate].timeSlot === "Regular") {
         // If there is school right now
-        if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
-            hoursAfterMidnight < this.regularSchoolDayTime[1]) {
-            // Subtract one day since it was already calculated above
-            milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-            // Add on the time that is still remaining today
-            milliSeconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
-          } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
-            // Extra day already calculated
-            // Do nothing
-          } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
-            // Subtract extra counted day
-            milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-          }
+        if (this.regularSchoolDayTime[0] <= hoursAfterMidnight && hoursAfterMidnight < this.regularSchoolDayTime[1]) {
+          // Subtract one day since it was already calculated above
+          milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
+          // Add on the time that is still remaining today
+          milliSeconds += this.regularSchoolDayTime[1] - hoursAfterMidnight;
+        } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+          // Extra day already calculated
+          // Do nothing
+        } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
+          // Subtract extra counted day
+          milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
+        }
       }
 
       // Same thing as above except for early dismissal
       if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-        if (this.earlyDismissalTime[0] <= hoursAfterMidnight &&
-            hoursAfterMidnight < this.earlyDismissalTime[1]) {
-            // Subtract one day
-            milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-            milliSeconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
-          } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
-            // Do nothing
-          } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
-            // Subtract extra counted day
-            milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-          }
+        if (this.earlyDismissalTime[0] <= hoursAfterMidnight && hoursAfterMidnight < this.earlyDismissalTime[1]) {
+          // Subtract one day
+          milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
+          milliSeconds += this.earlyDismissalTime[1] - hoursAfterMidnight;
+        } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+          // Do nothing
+        } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+          // Subtract extra counted day
+          milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
+        }
       }
     }
-
 
     // Correct the time remaining for the last day counted
     if (this.calendar[endingDate].hasSchool) {
       if (this.calendar[endingDate].timeSlot === "Regular") {
         // If there is school right now
-        if (this.regularSchoolDayTime[0] <= hoursLastDay &&
-            hoursLastDay < this.regularSchoolDayTime[1]) {
-            // Subtract one day since it was already calculated above
-            milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-            // Add on the time that has passed today
-            milliSeconds += (hoursLastDay - this.regularSchoolDayTime[0]);
-          } else if (hoursLastDay < this.regularSchoolDayTime[0]) {
-            // Subtract extra counted day
-            milliSeconds -= (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-          } else if (hoursLastDay >= this.regularSchoolDayTime[1]) {
-            // Extra day already calculated
-            // Do nothing
-          }
+        if (this.regularSchoolDayTime[0] <= hoursLastDay && hoursLastDay < this.regularSchoolDayTime[1]) {
+          // Subtract one day since it was already calculated above
+          milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
+          // Add on the time that has passed today
+          milliSeconds += hoursLastDay - this.regularSchoolDayTime[0];
+        } else if (hoursLastDay < this.regularSchoolDayTime[0]) {
+          // Subtract extra counted day
+          milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
+        } else if (hoursLastDay >= this.regularSchoolDayTime[1]) {
+          // Extra day already calculated
+          // Do nothing
+        }
       }
 
       // Same thing as above except for early dismissal
       if (this.calendar[endingDate].timeSlot === "Early Dismissal") {
-        if (this.earlyDismissalTime[0] <= hoursLastDay &&
-            hoursLastDay < this.earlyDismissalTime[1]) {
-            // Subtract one day
-            milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-            milliSeconds += (hoursLastDay - this.earlyDismissalTime[0]);
-          } else if (hoursLastDay < this.earlyDismissalTime[0]) {
-            // Subtract extra counted day
-            milliSeconds -= (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-          } else if (hoursLastDay >= this.earlyDismissalTime[1]) {
-            // Do nothing
-          }
+        if (this.earlyDismissalTime[0] <= hoursLastDay && hoursLastDay < this.earlyDismissalTime[1]) {
+          // Subtract one day
+          milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
+          milliSeconds += hoursLastDay - this.earlyDismissalTime[0];
+        } else if (hoursLastDay < this.earlyDismissalTime[0]) {
+          // Subtract extra counted day
+          milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
+        } else if (hoursLastDay >= this.earlyDismissalTime[1]) {
+          // Do nothing
+        }
       }
-
     }
     return milliSeconds;
   }
 
   /**
    * This method does not support a timeStamp argument,
-   * only full dates, it should be updated in the 
+   * only full dates, it should be updated in the
    * future to support more accurate timing.
    */
   getSchoolTimeAsDate(endingDate: string) {
@@ -267,37 +259,31 @@ export default class Calendar {
     // Fix current day
     if (this.calendar[currentDate].hasSchool) {
       if (this.calendar[currentDate].timeSlot === "Regular") {
-        if (this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
-            hoursAfterMidnight < this.regularSchoolDayTime[1]) {
-            milliseconds += (this.regularSchoolDayTime[1] - hoursAfterMidnight);
-
-          } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
-            milliseconds += (this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0]);
-
-          } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
-            // Do nothing
-          }
+        if (this.regularSchoolDayTime[0] <= hoursAfterMidnight && hoursAfterMidnight < this.regularSchoolDayTime[1]) {
+          milliseconds += this.regularSchoolDayTime[1] - hoursAfterMidnight;
+        } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+          milliseconds += this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
+        } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
+          // Do nothing
+        }
       }
 
       if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-        if (this.earlyDismissalTime[0] <= hoursAfterMidnight &&
-            hoursAfterMidnight < this.earlyDismissalTime[1]) {
-            milliseconds += (this.earlyDismissalTime[1] - hoursAfterMidnight);
-
-          } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
-            milliseconds += (this.earlyDismissalTime[1] - this.earlyDismissalTime[0]);
-
-          } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
-            // Do nothing
-          }
+        if (this.earlyDismissalTime[0] <= hoursAfterMidnight && hoursAfterMidnight < this.earlyDismissalTime[1]) {
+          milliseconds += this.earlyDismissalTime[1] - hoursAfterMidnight;
+        } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+          milliseconds += this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
+        } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+          // Do nothing
+        }
       }
     }
 
     // Format milliseconds into array
-    const hours = Math.floor(milliseconds/1000/60/60);
-    const minutes = Math.floor((milliseconds - hours*1000*60*60)/1000/60);
-    const seconds = Math.floor((milliseconds - hours*1000*60*60 - minutes*1000*60)/1000);
-    const milliseconds2 = milliseconds - hours*1000*60*60 - minutes*1000*60 - seconds*1000;
+    const hours = Math.floor(milliseconds / 1000 / 60 / 60);
+    const minutes = Math.floor((milliseconds - hours * 1000 * 60 * 60) / 1000 / 60);
+    const seconds = Math.floor((milliseconds - hours * 1000 * 60 * 60 - minutes * 1000 * 60) / 1000);
+    const milliseconds2 = milliseconds - hours * 1000 * 60 * 60 - minutes * 1000 * 60 - seconds * 1000;
 
     schoolDateRemaining[1] = hours;
     schoolDateRemaining[2] = minutes;
@@ -305,9 +291,7 @@ export default class Calendar {
     schoolDateRemaining[4] = milliseconds2;
 
     return schoolDateRemaining;
-
   }
-
 
   getDateAt(dateStamp: string) {
     if (!this.calendar[dateStamp]) {

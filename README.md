@@ -8,7 +8,6 @@
 
 🎉 Welcome to [**timeuntil**](https://29miaoet.github.io/timeuntil)!
 
-
 ## Structure
 
 <pre><code>
@@ -35,27 +34,24 @@ timeuntil/
 └── README.md
 </code></pre>
 
-
 ## Attributes
 
 - ✅ Responsive UI layout
 - ✅ Modern HTML, CSS and TypeScript code
 - ✅ Modern npm build stack
 
-
 ## Requisites
 
 - Modern GUI browser
 - JavaScript enabled
 
-
 ## Technology Stack
 
-| Layer        | Technology              | Notes                                    |
-| ------------ | ----------------------- | ---------------------------------------- |
-| **Hosting**  | GitHub Pages            | Static site deployment                   |
-| **Frontend** | HTML, CSS, TypeScript   | Modern language stack                    |
-| **Build**    | vite.js                 | Fast and efficient build step            |
+| Layer        | Technology            | Notes                         |
+| ------------ | --------------------- | ----------------------------- |
+| **Hosting**  | GitHub Pages          | Static site deployment        |
+| **Frontend** | HTML, CSS, TypeScript | Modern language stack         |
+| **Build**    | vite.js               | Fast and efficient build step |
 
 ## Future Path
 
@@ -83,10 +79,9 @@ timeuntil/
 
 ## Utilized Tools & Services
 
-- [TypeScript](https://github.com/microsoft/TypeScript) 
+- [TypeScript](https://github.com/microsoft/TypeScript)
 - [Vite](https://github.com/vitejs/vite)
 - [Prettier](https://github.com/prettier/prettier)
-
 
 ## License
 
