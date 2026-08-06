@@ -11,11 +11,14 @@
   --card-border: #cfcfcf;
 
   --radius-classic: 10px;
-  --radius-bar: 4px;
+  --radius-mild: 4px;
 
   --warning-text-color: #78350f;
   --warning-border-color: #a41502;
   --warning-bg-color: #f59e0b;
+
+  --dropdown-bg: #ffffff;
+  --dropdown-item-hover: #e2e2e2;
 }
 
 * {
@@ -186,7 +189,7 @@ hr {
 .bar {
   height: 20px;
   width: 100%;
-  border-radius: var(--radius-bar);
+  border-radius: var(--radius-mild);
   background: transparent;
 }
 
@@ -205,7 +208,7 @@ hr {
 .progress {
   height: 100%;
   width: 50%;
-  border-radius: var(--radius-bar) 0 0 var(--radius-bar);
+  border-radius: var(--radius-mild) 0 0 var(--radius-mild);
   background-color: var(--progress-bg);
 }
 
@@ -246,12 +249,46 @@ hr {
   transition: transform 0.3s linear;
 }
 
+.dropdown {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  color: var(--font-color-black);
+  background-color: var(--dropdown-bg);
+  border-radius: var(--radius-classic);
+  font-size: 14px;
+  max-width: 200px;
+  padding: 0 25px;
+}
+
+.dropdown p {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.dropdown ul {
+  padding: 2px;
+  font-style: italic;
+  font-weight: 400;
+  list-style-type: none;
+}
+
+.dropdown ul li {
+  padding: 5px;
+  border-radius: var(--radius-mild);
+}
+
+.dropdown ul li:hover {
+  background-color: var(--dropdown-item-hover);
+  cursor: pointer;
+}
+
 .github-icon {
   width: 25px;
   height: 25px;
 }
 
-.settings:hover {
+.settings:hover, .settings.open {
   transform: rotate(45deg) scale(1.05);
 }
 
