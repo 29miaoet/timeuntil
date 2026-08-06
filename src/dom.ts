@@ -16,6 +16,9 @@ const absoluteTimeContainer = document.getElementById("abs-time-remaining") as H
 const schoolTimeContainer = document.getElementById("school-time-remaining") as HTMLDivElement | null;
 const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
 
+const timeToggleButton = document.getElementById("time-toggle") as HTMLElement | null;
+const timeMenu = document.getElementById("time-menu") as HTMLElement | null;
+
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
@@ -31,10 +34,31 @@ async function start() {
     console.warn("Outside of calendar time frame, school time unavailable.");
   }
 
+  handleTime();
+
   updateDOM();
   setInterval(() => {
     updateDOM();
   }, 100);
+}
+
+function handleTime() {
+  timeToggleButton.addEventListener("click", (e) => {
+    if (timeMenu.hidden) {
+      timeMenu.hidden = false;
+      timeToggleButton.classList.add("open");
+    } else {
+      timeMenu.hidden = true;
+      timeToggleButton.classList.remove("open");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+      if (!timeMenu.contains(e.target) && !timeToggleButton.contains(e.target)) {
+          timeMenu.hidden = true;
+          timeToggleButton.classList.remove("open");
+      }
+  });
 }
 
 function updateDOM() {
