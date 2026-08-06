@@ -2,6 +2,8 @@ import "./styles.css";
 
 import Calendar from "./calendar";
 
+const welcomeText = "🥕 Welcome to timeuntil! 🥕\nContribute at https://github.com/29miaoet/timeuntil/"
+
 const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
@@ -23,6 +25,7 @@ let endDate = new Date(2027, 5, 21, 15, 40);
 
 async function start() {
 
+  console.log(welcomeText);
   await calendar.loadData();
 
   if (!calendar.contains(calendar.now)) {
