@@ -59,12 +59,12 @@ function handleTime() {
   });
 
   document.addEventListener("click", (e) => {
-      // Stop tsc from complaining
-      const target = e.target as Node;
-      if (!timeMenu.contains(target) && !timeToggleButton.contains(target)) {
-          timeMenu.hidden = true;
-          timeToggleButton.classList.remove("open");
-      }
+    // Stop tsc from complaining
+    const target = e.target as Node;
+    if (!timeMenu.contains(target) && !timeToggleButton.contains(target)) {
+      timeMenu.hidden = true;
+      timeToggleButton.classList.remove("open");
+    }
   });
 }
 

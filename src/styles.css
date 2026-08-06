@@ -288,7 +288,8 @@ hr {
   height: 25px;
 }
 
-.settings:hover, .settings.open {
+.settings:hover,
+.settings.open {
   transform: rotate(45deg) scale(1.05);
 }
 
