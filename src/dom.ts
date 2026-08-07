@@ -25,22 +25,36 @@ let schoolDates: Array<number> | null;
 
 const calendar = new Calendar("calendar.json", 0, 0);
 let endDate = new Date(2027, 5, 21, 15, 40);
+let startingDate = new Date(2026, 8, 9, 8, 30);
+
+let finish = false;
 
 async function start() {
   console.log(welcomeText);
   await calendar.loadData();
 
   if (!calendar.contains(calendar.now)) {
-    console.warn("Outside of calendar time frame, school time unavailable.");
+    console.error("Outside of calendar time frame, school time unavailable.");
   }
 
   handleTime();
 
   updateDOM();
-  setInterval(() => {
-    updateDOM();
+  const mainloopId = setInterval(() => {
+    if (checkFinish()) {
+      // clearInterval(mainloopId);
+      triggerFinish();
+    } else {
+      updateDOM();
+    }
   }, 100);
 }
+
+function checkFinish() {
+  const now = new Date(calendar.now);
+  return now >= endDate;
+}
+
 
 function handleTime() {
   if (!timeToggleButton || !timeMenu) {
@@ -66,7 +80,75 @@ function handleTime() {
       timeToggleButton.classList.remove("open");
     }
   });
+
+  timeMenu.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    const option = target.closest("[data-value]");
+
+    if (!option) return;
+    const value = option.dataset.value;
+    switch (value) {
+      case "summer":
+        endDate = new Date(2027, 5, 21, 15, 40);
+        break;
+      case "spring":
+        endDate = new Date(2026, 11, 18, 14, 30);
+        break;
+      case "winter":
+        endDate = new Date(2027, 2, 25, 15, 40);
+        break;
+      case "noschool":
+        findNextNoSchool();
+        break;
+      case "weekend":
+      case "lweekend":
+      case "term":
+      case "start":
+        endDate = new Date(2026, 8, 9, 8, 30);
+    }
+
+  });
 }
+
+function findNextNoSchool() {
+  for (const day in calendar.calendar) {
+    if (day < calendar.strftime(calendar.now)) {
+      continue;
+    } else {
+      if (!calendar.calendar[day].hasSchool) {
+        const previousDay = new Date(day);
+        const previousDayStamp = calendar.strftime(previousDay.getTime());
+
+        if (!calendar.contains(previousDay.getTime())) {
+          endDate = new Date(this.now())
+          return;
+        }
+
+        console.log(previousDay);
+
+        if (calendar.calendar[previousDayStamp].hasSchool) {
+          if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
+            previousDay.setHours(15, 40);
+          } else if (calendar.calendar[previousDayStamp].timeSlot === "Early Dismissal") {
+            previousDay.setHours(14, 30);
+          }
+        } else {
+          endDate = new Date(calendar.now);
+          return;
+        }
+
+        endDate = new Date(previousDay.getTime());
+        return;
+      }
+    }
+  }
+}
+
+function triggerFinish() {
+  console.log("Everything has finished.");
+  finish = true;
+}
+
 
 function updateDOM() {
   updateTimer();
@@ -169,7 +251,7 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
 }
 
 function updateProgressBar() {
-  const start = new Date(2026, 5, 19, 15, 40);
+  const start = startingDate;
 
   // Uncomment when school actually starts
   // const start = new Date(2026, 8, 9, 8, 30);
