@@ -241,7 +241,23 @@ export default class Calendar {
    * only full dates, it should be updated in the
    * future to support more accurate timing.
    */
-  getSchoolTimeAsDate(endingDate: string) {
+  getSchoolTimeAsDate(endingTimeStamp: number) {
+    let endDate = new Date(endingTimeStamp);
+    const endingDateObj = this.getDateAt(this.strftime(endingTimeStamp));
+
+    // Bump ending Date back a day if it is before school actually starts
+    if (endingDateObj.timeSlot === "Regular") {
+      if (this.modTimestamp("day", endingTimeStamp) <= this.regularSchoolDayTime[0]) {
+        endDate = new Date(endingTimeStamp - 24*60*60*1000);
+      }
+    } else if (endingDateObj.timeSlot === "Early Dismissal") {
+      if (this.modTimestamp("day", endingTimeStamp) <= this.earlyDismissalTime[0]) {
+        endDate = new Date(endingTimeStamp - 24*60*60*1000);
+      }
+    }
+
+    const endingDate = this.strftime(endDate);
+
     type schoolDateTuple = [number, number, number, number, number];
     let schoolDateRemaining: schoolDateTuple = [0, 0, 0, 0, 0];
     let milliseconds: number = 0;
