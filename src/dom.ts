@@ -26,6 +26,7 @@ let schoolDates: Array<number> | null;
 const calendar = new Calendar("calendar.json", 0, 0);
 let endDate = new Date(2027, 5, 21, 15, 40);
 let startingDate = new Date(2026, 8, 9, 8, 30);
+startingDate = new Date(Date.now());
 
 let finish = false;
 
@@ -55,7 +56,6 @@ function checkFinish() {
   return now >= endDate;
 }
 
-
 function handleTime() {
   if (!timeToggleButton || !timeMenu) {
     console.error("Time toggle menu nonfunctional.");
@@ -83,7 +83,7 @@ function handleTime() {
 
   timeMenu.addEventListener("click", (event) => {
     const target = event.target as HTMLElement;
-    const option = target.closest("[data-value]");
+    const option = target.closest<HTMLElement>("[data-value]");
 
     if (!option) return;
     const value = option.dataset.value;
@@ -101,13 +101,29 @@ function handleTime() {
         findNextNoSchool();
         break;
       case "weekend":
+        findNextWeekend();
+        break;
       case "lweekend":
       case "term":
       case "start":
         endDate = new Date(2026, 8, 9, 8, 30);
     }
-
   });
+}
+
+function findNextWeekend() {
+  const currentDate = new Date(calendar.now);
+  const currentWeekday = currentDate.getDay();
+  const tempEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+
+  if (currentWeekday === 16 || currentWeekday === 7) {
+    endDate = new Date(calendar.now);
+  } else {
+    const daysToAdd = 11 - currentDate.getDay();
+    tempEnd.setDate(tempEnd.getDate() + daysToAdd);
+  }
+
+  endDate = tempEnd;
 }
 
 function findNextNoSchool() {
@@ -120,7 +136,7 @@ function findNextNoSchool() {
         const previousDayStamp = calendar.strftime(previousDay.getTime());
 
         if (!calendar.contains(previousDay.getTime())) {
-          endDate = new Date(this.now())
+          endDate = new Date(calendar.now);
           return;
         }
 
@@ -148,7 +164,6 @@ function triggerFinish() {
   console.log("Everything has finished.");
   finish = true;
 }
-
 
 function updateDOM() {
   updateTimer();
@@ -182,7 +197,7 @@ function updateTimer() {
 }
 
 function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
-  if (!schoolTimeRemaining) {
+  if (schoolTimeRemaining === null) {
     if (!absoluteTimeContainer) {
       console.error("Absolute times container not found.");
       return;
