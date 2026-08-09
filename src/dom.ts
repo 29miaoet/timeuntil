@@ -2,7 +2,8 @@ import "./styles.css";
 
 import Calendar from "./calendar";
 
-const welcomeText = "🥕 Welcome to timeuntil! 🥕\nContribute at https://github.com/29miaoet/timeuntil/";
+const welcomeText =
+  "🥕 Welcome to timeuntil! 🥕\nContribute at https://github.com/29miaoet/timeuntil/";
 
 const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
@@ -12,8 +13,12 @@ const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info .day-ca
 const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
 const progressText = document.getElementById("percentage") as HTMLDivElement | null;
 
-const absoluteTimeContainer = document.getElementById("abs-time-remaining") as HTMLDivElement | null;
-const schoolTimeContainer = document.getElementById("school-time-remaining") as HTMLDivElement | null;
+const absoluteTimeContainer = document.getElementById(
+  "abs-time-remaining"
+) as HTMLDivElement | null;
+const schoolTimeContainer = document.getElementById(
+  "school-time-remaining"
+) as HTMLDivElement | null;
 const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
 
 const timeToggleButton = document.getElementById("time-toggle") as HTMLElement | null;
@@ -117,7 +122,12 @@ function handleTime() {
 }
 
 function findEndTerm() {
-  const termEnds = [[2026, 10, 18, 15, 40], [2027, 1, 5, 15, 40], [2027, 3, 13, 15, 40], [2027, 5, 21, 15, 40]];
+  const termEnds = [
+    [2026, 10, 18, 15, 40],
+    [2027, 1, 5, 15, 40],
+    [2027, 3, 13, 15, 40],
+    [2027, 5, 21, 15, 40],
+  ];
   let termEndDates = [];
   for (const arr of termEnds) {
     const date = new Date(...arr);
@@ -132,16 +142,18 @@ function findEndTerm() {
       return;
     }
   }
-  
+
   endDate = new Date(calendar.now);
 }
-  
-
 
 function findNextWeekend() {
   const currentDate = new Date(calendar.now);
   const currentWeekday = currentDate.getDay();
-  const tempEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+  const tempEnd = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
 
   if (currentWeekday === 5 || currentWeekday === 6) {
     endDate = new Date(calendar.now);
@@ -149,7 +161,7 @@ function findNextWeekend() {
     const daysToAdd = 5 - currentDate.getDay();
     tempEnd.setDate(tempEnd.getDate() + daysToAdd);
   }
-  
+
   // Rollback to previous day
   tempEnd.setDate(tempEnd.getDate() - 1);
   const stamp: string = calendar.strftime(tempEnd.getTime());
@@ -176,29 +188,26 @@ function findNextLongWeekend() {
       let date = new Date(day);
       const next3Days = [
         calendar.strftime(date.getTime()),
-        calendar.strftime(date.setTime(date.getTime()+(24*60*60*1000))),
-        calendar.strftime(date.setTime(date.getTime()+(24*60*60*1000)))
+        calendar.strftime(date.setTime(date.getTime() + 24 * 60 * 60 * 1000)),
+        calendar.strftime(date.setTime(date.getTime() + 24 * 60 * 60 * 1000)),
       ];
 
       date = new Date(day);
-      let next3Weekdays = [
-        date.getDay(),
-      ]
+      let next3Weekdays = [date.getDay()];
 
-      date.setTime(date.getTime()+(24*60*60*1000));
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
       next3Weekdays.push(date.getDay());
 
-      date.setTime(date.getTime()+(24*60*60*1000));
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
       next3Weekdays.push(date.getDay());
 
-      if (!calendar.calendar[next3Days[0]].hasSchool && 
-          !calendar.calendar[next3Days[1]].hasSchool &&
-          !calendar.calendar[next3Days[2]].hasSchool &&
-            (
-              ((next3Weekdays[0] === 5) && (next3Weekdays[1] === 6)) ||
-              ((next3Weekdays[1] === 5) && (next3Weekdays[2] === 6))
-            )
-          ) {
+      if (
+        !calendar.calendar[next3Days[0]].hasSchool &&
+        !calendar.calendar[next3Days[1]].hasSchool &&
+        !calendar.calendar[next3Days[2]].hasSchool &&
+        ((next3Weekdays[0] === 5 && next3Weekdays[1] === 6) ||
+          (next3Weekdays[1] === 5 && next3Weekdays[2] === 6))
+      ) {
         const previousDay = new Date(day);
         const previousDayStamp = calendar.strftime(previousDay.getTime());
 
@@ -286,7 +295,7 @@ function updateTimer() {
     schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());
     schoolDates = calendar.getSchoolTimeAsDate(endDate.getTime());
   } catch (e) {
-    console.error(e)
+    console.error(e);
     schoolTimeRemaining = null;
     schoolDates = null;
   }
@@ -321,9 +330,15 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
 
 function populateSchoolTimes(schoolTimeRemaining: number) {
   // See calendar.ts for function usage
-  schoolTimes[0].textContent = String(calendar.floorTimestamp("day", schoolTimeRemaining) / 1000 / 60 / 60 / 24);
-  schoolTimes[1].textContent = String(calendar.floorTimestamp("hour", schoolTimeRemaining) / 1000 / 60 / 60);
-  schoolTimes[2].textContent = String(calendar.modTimestamp("minute", schoolTimeRemaining) / 1000 / 60);
+  schoolTimes[0].textContent = String(
+    calendar.floorTimestamp("day", schoolTimeRemaining) / 1000 / 60 / 60 / 24
+  );
+  schoolTimes[1].textContent = String(
+    calendar.floorTimestamp("hour", schoolTimeRemaining) / 1000 / 60 / 60
+  );
+  schoolTimes[2].textContent = String(
+    calendar.modTimestamp("minute", schoolTimeRemaining) / 1000 / 60
+  );
   schoolTimes[3].textContent = String(calendar.modTimestamp("second", schoolTimeRemaining) / 1000);
 }
 
@@ -332,9 +347,19 @@ function populateTotalTimes(timeRemaining: number) {
 
   // Worst code I have ever written, MUST fix later
   const daysLeft: number = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
-  const hoursLeft: number = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
-  const minutesLeft: number = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60);
-  const secondsLeft: number = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60 - minutesLeft * 1000 * 60) / 1000);
+  const hoursLeft: number = Math.floor(
+    (timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60
+  );
+  const minutesLeft: number = Math.floor(
+    (timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
+  );
+  const secondsLeft: number = Math.floor(
+    (timeRemaining -
+      daysLeft * 1000 * 60 * 60 * 24 -
+      hoursLeft * 1000 * 60 * 60 -
+      minutesLeft * 1000 * 60) /
+      1000
+  );
 
   totalTimes[0].textContent = daysLeft.toString();
   totalTimes[1].textContent = hoursLeft.toString();
