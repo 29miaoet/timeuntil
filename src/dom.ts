@@ -104,26 +104,125 @@ function handleTime() {
         findNextWeekend();
         break;
       case "lweekend":
+        findNextLongWeekend();
+        break;
       case "term":
+        findEndTerm();
+        break;
       case "start":
         endDate = new Date(2026, 8, 9, 8, 30);
+        break;
     }
   });
 }
+
+function findEndTerm() {
+  const termEnds = [[2026, 10, 18, 15, 40], [2027, 1, 5, 15, 40], [2027, 3, 13, 15, 40], [2027, 5, 21, 15, 40]];
+  let termEndDates = [];
+  for (const arr of termEnds) {
+    const date = new Date(...arr);
+    termEndDates.push(date);
+  }
+
+  // Get current term
+  for (const date of termEndDates) {
+    // First term that has not passed
+    if (date.getTime() - calendar.now > 0) {
+      endDate = new Date(date.getTime());
+      return;
+    }
+  }
+  
+  endDate = new Date(calendar.now);
+}
+  
+
 
 function findNextWeekend() {
   const currentDate = new Date(calendar.now);
   const currentWeekday = currentDate.getDay();
   const tempEnd = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 
-  if (currentWeekday === 16 || currentWeekday === 7) {
+  if (currentWeekday === 5 || currentWeekday === 6) {
     endDate = new Date(calendar.now);
   } else {
-    const daysToAdd = 11 - currentDate.getDay();
+    const daysToAdd = 5 - currentDate.getDay();
     tempEnd.setDate(tempEnd.getDate() + daysToAdd);
+  }
+  
+  // Rollback to previous day
+  tempEnd.setDate(tempEnd.getDate() - 1);
+  const stamp: string = calendar.strftime(tempEnd.getTime());
+
+  if (calendar.calendar[stamp].hasSchool) {
+    if (calendar.calendar[stamp].timeSlot === "Regular") {
+      tempEnd.setHours(15, 40);
+    } else if (calendar.calendar[stamp].timeSlot === "Early Dismissal") {
+      tempEnd.setHours(14, 30);
+    }
+  } else {
+    tempEnd.setHours(24);
+    return;
   }
 
   endDate = tempEnd;
+}
+
+function findNextLongWeekend() {
+  for (const day in calendar.calendar) {
+    if (day < calendar.strftime(calendar.now)) {
+      continue;
+    } else {
+      let date = new Date(day);
+      const next3Days = [
+        calendar.strftime(date.getTime()),
+        calendar.strftime(date.setTime(date.getTime()+(24*60*60*1000))),
+        calendar.strftime(date.setTime(date.getTime()+(24*60*60*1000)))
+      ];
+
+      date = new Date(day);
+      let next3Weekdays = [
+        date.getDay(),
+      ]
+
+      date.setTime(date.getTime()+(24*60*60*1000));
+      next3Weekdays.push(date.getDay());
+
+      date.setTime(date.getTime()+(24*60*60*1000));
+      next3Weekdays.push(date.getDay());
+
+      if (!calendar.calendar[next3Days[0]].hasSchool && 
+          !calendar.calendar[next3Days[1]].hasSchool &&
+          !calendar.calendar[next3Days[2]].hasSchool &&
+            (
+              ((next3Weekdays[0] === 5) && (next3Weekdays[1] === 6)) ||
+              ((next3Weekdays[1] === 5) && (next3Weekdays[2] === 6))
+            )
+          ) {
+        const previousDay = new Date(day);
+        const previousDayStamp = calendar.strftime(previousDay.getTime());
+
+        if (!calendar.contains(previousDay.getTime())) {
+          endDate = new Date(calendar.now);
+          return;
+        }
+
+        if (calendar.calendar[previousDayStamp].hasSchool) {
+          if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
+            previousDay.setHours(15, 40);
+          } else if (calendar.calendar[previousDayStamp].timeSlot === "Early Dismissal") {
+            previousDay.setHours(14, 30);
+          }
+        } else {
+          endDate = new Date(calendar.now);
+          return;
+        }
+
+        endDate = new Date(previousDay.getTime());
+        return;
+      }
+    }
+  }
 }
 
 function findNextNoSchool() {
@@ -139,8 +238,6 @@ function findNextNoSchool() {
           endDate = new Date(calendar.now);
           return;
         }
-
-        console.log(previousDay);
 
         if (calendar.calendar[previousDayStamp].hasSchool) {
           if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
@@ -187,8 +284,9 @@ function updateTimer() {
 
   try {
     schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());
-    schoolDates = calendar.getSchoolTimeAsDate(calendar.strftime(endDate.getTime()));
-  } catch (Error) {
+    schoolDates = calendar.getSchoolTimeAsDate(endDate.getTime());
+  } catch (e) {
+    console.error(e)
     schoolTimeRemaining = null;
     schoolDates = null;
   }
