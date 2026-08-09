@@ -128,9 +128,15 @@ export default class Calendar {
     if (startingTimeStamp > this.now) return 0;
     if (endingTimeStamp < this.now) return 1;
 
+    // Borrow the this.now variable to force a full school time calculation.
+    // Bad practice, fix later.
+    const temp = this.now;
+    const schoolTimeToElapse: number = this.getSchoolTimeTo(endingTimeStamp);
+    this.now = temp;
+
     if (this.contains(this.now)) {
       // Use schoolTime
-      const timeElapsed = timeToElapse - this.getSchoolTimeTo(endingTimeStamp);
+      const timeElapsed = schoolTimeToElapse - this.getSchoolTimeTo(endingTimeStamp);
       return timeElapsed / timeToElapse;
     } else {
       // Use absoluteTime
