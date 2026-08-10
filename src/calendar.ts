@@ -268,7 +268,7 @@ export default class Calendar {
       }
     }
 
-    const endingDate = this.strftime(endDate);
+    const endingDate = this.strftime(endDate.getTime());
 
     type schoolDateTuple = [number, number, number, number, number];
     let schoolDateRemaining: schoolDateTuple = [0, 0, 0, 0, 0];
