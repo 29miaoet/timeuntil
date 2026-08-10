@@ -210,7 +210,7 @@ function findNextLongWeekend() {
           (next3Weekdays[1] === 6 && next3Weekdays[2] === 0))
       ) {
         const previousDay = new Date(day);
-        previousDay.setTime(previousDay.getTime() - 24*60*60*1000);
+        previousDay.setTime(previousDay.getTime() - 24 * 60 * 60 * 1000);
         const previousDayStamp = calendar.strftime(previousDay.getTime());
 
         if (!calendar.contains(previousDay.getTime())) {
