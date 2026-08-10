@@ -122,13 +122,15 @@ function handleTime() {
 }
 
 function findEndTerm() {
-  const termEnds = [
+  type DateArgs = [number, number, number, number, number];
+
+  const termEnds: DateArgs[] = [
     [2026, 10, 18, 15, 40],
     [2027, 1, 5, 15, 40],
     [2027, 3, 13, 15, 40],
     [2027, 5, 21, 15, 40],
   ];
-  let termEndDates = [];
+  let termEndDates: Date[] = [];
   for (const arr of termEnds) {
     const date = new Date(...arr);
     termEndDates.push(date);
@@ -155,10 +157,10 @@ function findNextWeekend() {
     currentDate.getDate()
   );
 
-  if (currentWeekday === 5 || currentWeekday === 6) {
+  if (currentWeekday === 6 || currentWeekday === 0) {
     endDate = new Date(calendar.now);
   } else {
-    const daysToAdd = 5 - currentDate.getDay();
+    const daysToAdd = 6 - currentDate.getDay();
     tempEnd.setDate(tempEnd.getDate() + daysToAdd);
   }
 
@@ -174,7 +176,6 @@ function findNextWeekend() {
     }
   } else {
     tempEnd.setHours(24);
-    return;
   }
 
   endDate = tempEnd;
@@ -205,10 +206,11 @@ function findNextLongWeekend() {
         !calendar.calendar[next3Days[0]].hasSchool &&
         !calendar.calendar[next3Days[1]].hasSchool &&
         !calendar.calendar[next3Days[2]].hasSchool &&
-        ((next3Weekdays[0] === 5 && next3Weekdays[1] === 6) ||
-          (next3Weekdays[1] === 5 && next3Weekdays[2] === 6))
+        ((next3Weekdays[0] === 6 && next3Weekdays[1] === 0) ||
+          (next3Weekdays[1] === 6 && next3Weekdays[2] === 0))
       ) {
         const previousDay = new Date(day);
+        previousDay.setTime(previousDay.getTime() - 24*60*60*1000);
         const previousDayStamp = calendar.strftime(previousDay.getTime());
 
         if (!calendar.contains(previousDay.getTime())) {
@@ -223,8 +225,7 @@ function findNextLongWeekend() {
             previousDay.setHours(14, 30);
           }
         } else {
-          endDate = new Date(calendar.now);
-          return;
+          previousDay.setHours(24);
         }
 
         endDate = new Date(previousDay.getTime());
