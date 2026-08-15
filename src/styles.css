@@ -283,6 +283,22 @@ hr {
   cursor: pointer;
 }
 
+#themes {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+#settings li {
+  font-weight: 500;
+  font-style: normal;
+}
+
+#settings li ul li {
+  font-weight: 400;
+  font-style: italic;
+}
+
 .github-icon {
   width: 25px;
   height: 25px;
@@ -291,6 +307,10 @@ hr {
 .settings:hover,
 .settings.open {
   transform: rotate(45deg) scale(1.05);
+}
+
+#theme-button.open:hover {
+  background-color: var(--dropdown-bg);
 }
 
 .github-icon:hover {
