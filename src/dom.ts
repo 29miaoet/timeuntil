@@ -1,4 +1,5 @@
 import "./styles.css";
+import "./themes.css";
 
 import Calendar from "./calendar";
 
@@ -24,6 +25,10 @@ const dayInfoContainer = document.getElementById("day-information") as HTMLDivEl
 const timeToggleButton = document.getElementById("time-toggle") as HTMLElement | null;
 const timeMenu = document.getElementById("time-menu") as HTMLElement | null;
 
+const settingsButton = document.getElementById("settings-button") as HTMLElement | null;
+const settingsMenu = document.getElementById("settings") as HTMLElement | null;
+const themeMenu = document.getElementById("themes") as HTMLElement | null;
+
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
@@ -44,6 +49,9 @@ async function start() {
   }
 
   handleTime();
+  loadPreferences();
+  handleSettings();
+  handleThemes();
 
   updateDOM();
   const mainloopId = setInterval(() => {
@@ -54,6 +62,19 @@ async function start() {
       updateDOM();
     }
   }, 100);
+}
+
+function loadPreferences() {
+  const preferredTheme = localStorage.getItem("theme");
+  if (preferredTheme) {
+    setPreferredThemes(preferredTheme);
+  }
+
+  const preferredEndDate = localStorage.getItem("date");
+  if (preferredEndDate) {
+    getPreferredDates(preferredEndDate);
+  }
+  
 }
 
 function checkFinish() {
@@ -92,34 +113,126 @@ function handleTime() {
 
     if (!option) return;
     const value = option.dataset.value;
+    getPreferredDates(value);
+  });
+}
+
+function getPreferredDates(value: string) {
+  switch (value) {
+    case "summer":
+      endDate = new Date(2027, 5, 21, 15, 40);
+      break;
+    case "spring":
+      endDate = new Date(2026, 11, 18, 14, 30);
+      break;
+    case "winter":
+      endDate = new Date(2027, 2, 25, 15, 40);
+      break;
+    case "noschool":
+      findNextNoSchool();
+      break;
+    case "weekend":
+      findNextWeekend();
+      break;
+    case "lweekend":
+      findNextLongWeekend();
+      break;
+    case "term":
+      findEndTerm();
+      break;
+    case "start":
+      endDate = new Date(2026, 8, 9, 8, 30);
+      break;
+  }
+  localStorage.setItem("date", value);
+}
+
+function handleSettings() {
+  if (!settingsButton || !settingsMenu) {
+    console.error("Time toggle menu nonfunctional.");
+    return;
+  }
+
+  settingsButton.addEventListener("click", (e) => {
+    if (settingsMenu.hidden) {
+      settingsMenu.hidden = false;
+      settingsButton.classList.add("open");
+    } else {
+      settingsMenu.hidden = true;
+      settingsButton.classList.remove("open");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    // Stop tsc from complaining
+    const target = e.target as Node;
+    if (!settingsMenu.contains(target) && !settingsButton.contains(target)) {
+      settingsMenu.hidden = true;
+      settingsButton.classList.remove("open");
+    }
+  });
+
+  /*
+  settingsMenu.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    const option = target.closest<HTMLElement>("[data-value]");
+
+    if (!option) return;
+    const value = option.dataset.value;
     switch (value) {
-      case "summer":
-        endDate = new Date(2027, 5, 21, 15, 40);
-        break;
-      case "spring":
-        endDate = new Date(2026, 11, 18, 14, 30);
-        break;
-      case "winter":
-        endDate = new Date(2027, 2, 25, 15, 40);
-        break;
-      case "noschool":
-        findNextNoSchool();
-        break;
-      case "weekend":
-        findNextWeekend();
-        break;
-      case "lweekend":
-        findNextLongWeekend();
-        break;
-      case "term":
-        findEndTerm();
-        break;
-      case "start":
-        endDate = new Date(2026, 8, 9, 8, 30);
+      case "themes":
+        console.log("hello")
         break;
     }
   });
+  */
 }
+
+function handleThemes() {
+  const themeButton = document.getElementById("theme-button") as HTMLDivElement | null;
+
+  if (!themeMenu || !themeButton) {
+    console.error("Theme selection nonfunctional");
+    return;
+  }
+
+  themeButton.addEventListener("click", (e) => {
+    if (themeMenu.hidden) {
+      themeMenu.hidden = false;
+      themeButton.classList.add("open");
+    } else {
+      themeMenu.hidden = true;
+      themeButton.classList.remove("open");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    // Stop tsc from complaining
+    const target = e.target as Node;
+    if (!themeMenu.contains(target) && !themeButton.contains(target)) {
+      themeMenu.hidden = true;
+      themeButton.classList.remove("open");
+    }
+  });
+
+
+  themeMenu.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const option = target.closest<HTMLElement>("[data-theme]");
+
+    if (!option) return;
+    const value = option.dataset.theme;
+
+    setPreferredThemes(value);
+  });
+}
+
+function setPreferredThemes(value: string) {
+  document.documentElement.dataset.theme = value;
+  localStorage.setItem("theme", value);
+}
+
 
 function findEndTerm() {
   type DateArgs = [number, number, number, number, number];
