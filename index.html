@@ -14,7 +14,22 @@
 </head>
 <body>
   <div class="menu">
-    <button type="button" class="option settings">⚙️</button>
+    <button type="button" class="option settings" id="settings-button">⚙️</button>
+    <div class="dropdown" id="settings" hidden>
+      <ul>
+        <li data-value="themes" id="theme-button">
+          Themes
+          <ul class="dropdown" id="themes" hidden>
+            <li data-theme="default">Default</li>
+            <li data-theme="dark">Dark</li>
+            <li data-theme="light">Light</li>
+            <li data-theme="liquid-glass">Liquid Glass</li>
+            <li data-theme="ancient">Ancient</li>
+            <li data-theme="red">Red</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
     <button type="button" class="option settings" id="time-toggle">⏳</button>
     <div class="dropdown" id="time-menu" hidden>
       <p>Show time until...</p>
