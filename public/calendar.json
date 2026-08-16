@@ -317,7 +317,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["SAS Day / First Day of Classes", "School Photos"]
+    "dayInfo": ["SAS Day / First Day of Classes", "School Photos", "Late Start Remembrance Day"]
   },
   "2026-09-10": {
     "date": "2026-09-10",
@@ -373,7 +373,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-09-17": {
     "date": "2026-09-17",
@@ -429,7 +429,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-09-24": {
     "date": "2026-09-24",
@@ -541,7 +541,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-10-08": {
     "date": "2026-10-08",
@@ -597,7 +597,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-10-15": {
     "date": "2026-10-15",
@@ -653,7 +653,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-10-22": {
     "date": "2026-10-22",
@@ -765,7 +765,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-11-05": {
     "date": "2026-11-05",
@@ -877,7 +877,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Report Cards Posted"]
+    "dayInfo": ["Report Cards Posted", "Late Start Remembrance Day"]
   },
   "2026-11-19": {
     "date": "2026-11-19",
@@ -933,7 +933,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-11-26": {
     "date": "2026-11-26",
@@ -989,7 +989,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-12-03": {
     "date": "2026-12-03",
@@ -1045,7 +1045,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-12-10": {
     "date": "2026-12-10",
@@ -1101,7 +1101,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2026-12-17": {
     "date": "2026-12-17",
@@ -1269,7 +1269,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-01-07": {
     "date": "2027-01-07",
@@ -1325,7 +1325,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-01-14": {
     "date": "2027-01-14",
@@ -1381,7 +1381,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-01-21": {
     "date": "2027-01-21",
@@ -1437,7 +1437,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-01-28": {
     "date": "2027-01-28",
@@ -1493,7 +1493,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Transition Day - Grade 8 Tours"]
+    "dayInfo": ["Transition Day - Grade 8 Tours", "Late Start Remembrance Day"]
   },
   "2027-02-04": {
     "date": "2027-02-04",
@@ -1549,7 +1549,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Musical"]
+    "dayInfo": ["Musical", "Late Start Remembrance Day"]
   },
   "2027-02-11": {
     "date": "2027-02-11",
@@ -1605,7 +1605,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-02-18": {
     "date": "2027-02-18",
@@ -1661,7 +1661,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-02-25": {
     "date": "2027-02-25",
@@ -1717,7 +1717,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-03-04": {
     "date": "2027-03-04",
@@ -1773,7 +1773,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-03-11": {
     "date": "2027-03-11",
@@ -1829,7 +1829,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-03-18": {
     "date": "2027-03-18",
@@ -1885,7 +1885,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-03-25": {
     "date": "2027-03-25",
@@ -1997,7 +1997,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-04-08": {
     "date": "2027-04-08",
@@ -2053,7 +2053,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-04-15": {
     "date": "2027-04-15",
@@ -2109,7 +2109,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-04-22": {
     "date": "2027-04-22",
@@ -2165,7 +2165,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-04-29": {
     "date": "2027-04-29",
@@ -2221,7 +2221,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-05-06": {
     "date": "2027-05-06",
@@ -2277,7 +2277,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-05-13": {
     "date": "2027-05-13",
@@ -2333,7 +2333,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-05-20": {
     "date": "2027-05-20",
@@ -2389,7 +2389,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-05-27": {
     "date": "2027-05-27",
@@ -2445,7 +2445,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-06-03": {
     "date": "2027-06-03",
@@ -2501,7 +2501,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-06-10": {
     "date": "2027-06-10",
@@ -2557,7 +2557,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-06-17": {
     "date": "2027-06-17",
@@ -2613,7 +2613,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Course Schedule Changes"]
+    "dayInfo": ["Course Schedule Changes", "Late Start Remembrance Day"]
   },
   "2027-06-24": {
     "date": "2027-06-24",
@@ -2669,6 +2669,6 @@
     "timeSlot": "Early Dismissal",
     "status": "Early Dismissal",
     "holidays": [],
-    "dayInfo": ["SAS Day"]
+    "dayInfo": ["SAS Day", "Late Start Remembrance Day"]
   }
 }
