@@ -12,10 +12,16 @@
 
 <pre><code>
 timeuntil/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+│
 ├── src/
 │   ├── dom.ts
 │   ├── calendar.ts
-│   └── styles.css
+│   ├── themes.css
+│   ├── styles.css
+│   └── vite-env.d.ts
 │
 ├── public/
 │   ├── calendar.json
@@ -29,6 +35,7 @@ timeuntil/
 ├── package.json
 ├── package-lock.json
 ├── tsconfig.json
+├── vite.config.ts
 │
 ├── LICENSE
 └── README.md
@@ -37,6 +44,7 @@ timeuntil/
 ## Attributes
 
 - ✅ Responsive UI layout
+- ✅ Customization options
 - ✅ Modern HTML, CSS and TypeScript code
 - ✅ Modern npm build stack
 
@@ -58,6 +66,7 @@ timeuntil/
 - [ ] Add functionality to UI buttons.
 - [ ] Harden code logic.
 - [ ] Add more theme and styling options.
+- [ ] Transform static CSS into Sass.
 
 ## Stats
 
