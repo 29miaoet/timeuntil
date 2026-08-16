@@ -113,6 +113,7 @@ function handleTime() {
 
     if (!option) return;
     const value = option.dataset.value;
+    if (!value) return;
     getPreferredDates(value);
   });
 }
@@ -171,21 +172,6 @@ function handleSettings() {
       settingsButton.classList.remove("open");
     }
   });
-
-  /*
-  settingsMenu.addEventListener("click", (event) => {
-    const target = event.target as HTMLElement;
-    const option = target.closest<HTMLElement>("[data-value]");
-
-    if (!option) return;
-    const value = option.dataset.value;
-    switch (value) {
-      case "themes":
-        console.log("hello")
-        break;
-    }
-  });
-  */
 }
 
 function handleThemes() {
@@ -224,6 +210,7 @@ function handleThemes() {
     if (!option) return;
     const value = option.dataset.theme;
 
+    if (!value) return;
     setPreferredThemes(value);
   });
 }
