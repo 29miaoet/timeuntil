@@ -21,7 +21,6 @@
   --dropdown-item-hover: #e2e2e2;
 }
 
-
 :root[data-theme="light"] {
   --font-color-black: #03324d;
   --font-color-white: #eeefff;
@@ -44,7 +43,6 @@
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
 }
-
 
 :root[data-theme="dark"] {
   --font-color-black: #e8edf5;
@@ -72,13 +70,7 @@
 :root[data-theme="liquid-glass"] {
   --font-color-black: #19324a;
   --font-color-white: #ffffff;
-  --bg-grad: linear-gradient(
-    135deg,
-    #dff6ff 0%,
-    #b9ddff 35%,
-    #d9c8ff 70%,
-    #f4d9ff 100%
-  );
+  --bg-grad: linear-gradient(135deg, #dff6ff 0%, #b9ddff 35%, #d9c8ff 70%, #f4d9ff 100%);
   --bg-countdown: rgba(80, 149, 235, 0.65);
   --light-blue: rgba(255, 255, 255, 0.32);
   --progress-bg: #ff5f7a;

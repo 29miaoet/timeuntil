@@ -74,7 +74,6 @@ function loadPreferences() {
   if (preferredEndDate) {
     getPreferredDates(preferredEndDate);
   }
-  
 }
 
 function checkFinish() {
@@ -201,7 +200,6 @@ function handleThemes() {
     }
   });
 
-
   themeMenu.addEventListener("click", (event) => {
     event.stopPropagation();
     const target = event.target as HTMLElement;
@@ -219,7 +217,6 @@ function setPreferredThemes(value: string) {
   document.documentElement.dataset.theme = value;
   localStorage.setItem("theme", value);
 }
-
 
 function findEndTerm() {
   type DateArgs = [number, number, number, number, number];
