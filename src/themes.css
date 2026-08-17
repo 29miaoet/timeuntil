@@ -23,13 +23,13 @@
 
 :root[data-theme="light"] {
   --font-color-black: #03324d;
-  --font-color-white: #eeefff;
-  --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
-  --bg-countdown: #5095eb;
+  --font-color-white: #cccddd;
+  --bg-grad: linear-gradient(to bottom, #e8f6ff, #eeefff);
+  --bg-countdown: #cdf0fe;
   --light-blue: #e0f0ff;
-  --progress-bg: #ff4d6d;
-  --progress-bar-hover: #ee3c5c;
-  --progress-bar-bg: #b1d7ff;
+  --progress-bg: #ffb9b9;
+  --progress-bar-hover: #ee9292;
+  --progress-bar-bg: #d2e9ff;
   --info-bg: #e7f3ff;
   --card-border: #cfcfcf;
 
@@ -48,11 +48,11 @@
   --font-color-black: #e8edf5;
   --font-color-white: #ffffff;
   --bg-grad: linear-gradient(to bottom, #18202b, #0b1118);
-  --bg-countdown: #3478c9;
+  --bg-countdown: #101010;
   --light-blue: #1d2b3a;
   --progress-bg: #ff4d6d;
   --progress-bar-hover: #ff667f;
-  --progress-bar-bg: #334b63;
+  --progress-bar-bg: #334863;
   --info-bg: #1b2836;
   --card-border: #3b4652;
 
@@ -63,22 +63,21 @@
   --warning-border-color: #b42318;
   --warning-bg-color: #b86b00;
 
-  --dropdown-bg: #18212b;
+  --dropdown-bg: #363636;
   --dropdown-item-hover: #293541;
 }
 
 :root[data-theme="liquid-glass"] {
   --font-color-black: #19324a;
   --font-color-white: #ffffff;
-  --bg-grad: linear-gradient(135deg, #dff6ff 0%, #b9ddff 35%, #d9c8ff 70%, #f4d9ff 100%);
-  --bg-countdown: rgba(80, 149, 235, 0.65);
-  --light-blue: rgba(255, 255, 255, 0.32);
+  --bg-grad: linear-gradient(135deg, #dff6ff 0%, #b9ddff 35%, #dee3ff 100%);
+  --bg-countdown: rgba(80, 149, 235, 0.1);
+  --light-blue: rgba(255, 255, 255, 0.5);
   --progress-bg: #ff5f7a;
   --progress-bar-hover: #ff7690;
-  --progress-bar-bg: rgba(255, 255, 255, 0.4);
-  --info-bg: rgba(255, 255, 255, 0.28);
+  --progress-bar-bg: rgba(255, 255, 255, 0.1);
+  --info-bg: rgba(230, 230, 255, 0.1);
   --card-border: rgba(255, 255, 255, 0.5);
-
   --radius-classic: 18px;
   --radius-mild: 10px;
 
