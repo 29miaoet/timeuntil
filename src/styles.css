@@ -283,20 +283,19 @@ hr {
   cursor: pointer;
 }
 
-#themes {
-  position: relative;
+.sub-dropdown {
+  position: absolute;
   top: 10px;
-  left: 10px;
+  left: calc(100% + 5px);
 }
 
-#settings li {
-  font-weight: 500;
-  font-style: normal;
+.sub-dropdown.sub-dropdown {
+  /* How else would I override `.dropdown ul li`? */
+  padding: 10px 25px;
 }
 
-#settings li ul li {
-  font-weight: 400;
-  font-style: italic;
+.sub-dropdown li {
+  white-space: nowrap;
 }
 
 .github-icon {
@@ -307,10 +306,6 @@ hr {
 .settings:hover,
 .settings.open {
   transform: rotate(45deg) scale(1.05);
-}
-
-#theme-button.open:hover {
-  background-color: var(--dropdown-bg);
 }
 
 .github-icon:hover {
