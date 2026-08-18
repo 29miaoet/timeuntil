@@ -89,7 +89,7 @@
   --dropdown-item-hover: rgba(255, 255, 255, 0.5);
 }
 
-:root[data-theme="ancient"] {
+:root[data-theme="antique"] {
   --font-color-black: #222222;
   --font-color-white: #ffffff;
   --bg-grad: linear-gradient(to bottom, #f4f4f4, #d8d8d8);
