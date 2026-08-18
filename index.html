@@ -17,17 +17,23 @@
     <button type="button" class="option settings" id="settings-button">⚙️</button>
     <div class="dropdown" id="settings" hidden>
       <ul>
-        <li data-value="themes" id="theme-button">
-          Themes
-          <ul class="dropdown" id="themes" hidden>
+        <li data-value="themes" id="theme-button">Themes</li>
+          <ul class="dropdown sub-dropdown" id="themes" hidden>
             <li data-theme="default">Default</li>
             <li data-theme="dark">Dark</li>
             <li data-theme="light">Light</li>
             <li data-theme="liquid-glass">Liquid Glass</li>
-            <li data-theme="ancient">Ancient</li>
+            <li data-theme="antique">Antique</li>
             <li data-theme="red">Red</li>
           </ul>
-        </li>
+
+        <li data-value="calendars" id="calendar-button">Calendars</li>
+          <ul class="dropdown sub-dropdown" id="calendars" hidden>
+            <li data-calendar="gci">Glenlawn</li>
+            <li data-calendar="cjs">CJS</li>
+            <li data-calendar="dci">Dakota</li>
+            <li data-calendar="burland">Burland</li>
+          </ul>
       </ul>
     </div>
     <button type="button" class="option settings" id="time-toggle">⏳</button>
