@@ -27,13 +27,12 @@ const timeMenu = document.getElementById("time-menu") as HTMLElement | null;
 
 const settingsButton = document.getElementById("settings-button") as HTMLElement | null;
 const settingsMenu = document.getElementById("settings") as HTMLElement | null;
-const themeMenu = document.getElementById("themes") as HTMLElement | null;
 
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
 
-const calendar = new Calendar("calendar.json", 0, 0);
+let calendar = new Calendar("./calendars/gci.json");
 let endDate = new Date(2027, 5, 21, 15, 40);
 let startingDate = new Date(2026, 8, 9, 8, 30);
 startingDate = new Date(Date.now());
@@ -49,9 +48,10 @@ async function start() {
   }
 
   handleTime();
-  loadPreferences();
+  await loadPreferences();
   handleSettings();
   handleThemes();
+  handleCalendars();
 
   updateDOM();
   const mainloopId = setInterval(() => {
@@ -64,7 +64,7 @@ async function start() {
   }, 100);
 }
 
-function loadPreferences() {
+async function loadPreferences() {
   const preferredTheme = localStorage.getItem("theme");
   if (preferredTheme) {
     setPreferredThemes(preferredTheme);
@@ -73,6 +73,11 @@ function loadPreferences() {
   const preferredEndDate = localStorage.getItem("date");
   if (preferredEndDate) {
     getPreferredDates(preferredEndDate);
+  }
+
+  const preferredCalendar = localStorage.getItem("calendar");
+  if (preferredCalendar) {
+    await setPreferredCalendars(preferredCalendar);
   }
 }
 
@@ -174,6 +179,7 @@ function handleSettings() {
 }
 
 function handleThemes() {
+  const themeMenu = document.getElementById("themes") as HTMLElement | null;
   const themeButton = document.getElementById("theme-button") as HTMLDivElement | null;
 
   if (!themeMenu || !themeButton) {
@@ -213,9 +219,57 @@ function handleThemes() {
   });
 }
 
+function handleCalendars() {
+  const calendarMenu = document.getElementById("calendars") as HTMLElement | null;
+  const calendarButton = document.getElementById("calendar-button") as HTMLDivElement | null;
+
+  if (!calendarMenu || !calendarButton) {
+    console.error("Calendar selection nonfunctional");
+    return;
+  }
+
+  calendarButton.addEventListener("click", (e) => {
+    if (calendarMenu.hidden) {
+      calendarMenu.hidden = false;
+      calendarButton.classList.add("open");
+    } else {
+      calendarMenu.hidden = true;
+      calendarButton.classList.remove("open");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    // Stop tsc from complaining
+    const target = e.target as Node;
+    if (!calendarMenu.contains(target) && !calendarButton.contains(target)) {
+      calendarMenu.hidden = true;
+      calendarButton.classList.remove("open");
+    }
+  });
+
+  calendarMenu.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const option = target.closest<HTMLElement>("[data-calendar]");
+
+    if (!option) return;
+    const value = option.dataset.calendar;
+
+    if (!value) return;
+    setPreferredCalendars(value);
+  });
+}
+
 function setPreferredThemes(value: string) {
   document.documentElement.dataset.theme = value;
   localStorage.setItem("theme", value);
+}
+
+async function setPreferredCalendars(value: string) {
+  const school_name = `./calendars/${value}.json`;
+  calendar = new Calendar(school_name);
+  await calendar.loadData();
+  localStorage.setItem("calendar", value);
 }
 
 function findEndTerm() {
@@ -370,10 +424,10 @@ function triggerFinish() {
 }
 
 function updateDOM() {
+  populateAbsoluteTimes(schoolTimeRemaining);
   updateTimer();
 
   populateSchoolDates(schoolDates);
-  populateAbsoluteTimes(schoolTimeRemaining);
 
   populateTotalTimes(totalTimeRemaining);
   updateProgressBar();
@@ -493,7 +547,13 @@ function updateProgressBar() {
   // const start = new Date(2026, 8, 9, 8, 30);
 
   const end = endDate;
-  const fractionPercentage: number = calendar.getPercentCompletion(start.getTime(), end.getTime());
+  let fractionPercentage: number;
+  try {
+    fractionPercentage = calendar.getPercentCompletion(start.getTime(), end.getTime());
+  } catch(e) {
+    return;
+  }
+
   const percentFinished: string = `${fractionPercentage * 100}%`;
 
   if (progressBar) {
