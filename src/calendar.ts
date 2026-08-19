@@ -29,10 +29,8 @@ export default class Calendar {
   private regularSchoolDayTime: Array<number>;
   public now: number;
 
-  constructor(dbPath: string, startTime: number, endTime: number) {
+  constructor(dbPath: string) {
     this.dbPath = dbPath;
-    this.startTime = startTime;
-    this.endTime = endTime;
     // 8:30 to 14:30
     this.earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
     // 8:30 to 15:40
