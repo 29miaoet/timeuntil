@@ -24,9 +24,17 @@ timeuntil/
 │   └── vite-env.d.ts
 │
 ├── public/
+│   ├── calendars/
+│   │   ├── gci.json
+│   │   └── github.svg
+│   │
 │   ├── calendar.json
 │   ├── favicon.svg
 │   └── github.svg
+│
+├── scripts/
+│   ├── fetch_calendar.py
+│   └── scrape_id.py
 │
 ├── .gitignore
 ├── .prettierignore
