@@ -267,8 +267,13 @@ function setPreferredThemes(value: string) {
 
 async function setPreferredCalendars(value: string) {
   const school_name = `./calendars/${value}.json`;
-  calendar = new Calendar(school_name);
-  await calendar.loadData();
+
+  const tempCalendar = new Calendar(school_name);
+  await tempCalendar.loadData();
+  // Wait until the data is initialized and loaded before assigning 
+  // to prevent crashes caused by an incomplete object.
+  calendar = tempCalendar;
+
   localStorage.setItem("calendar", value);
 }
 
