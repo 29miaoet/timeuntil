@@ -270,7 +270,7 @@ async function setPreferredCalendars(value: string) {
 
   const tempCalendar = new Calendar(school_name);
   await tempCalendar.loadData();
-  // Wait until the data is initialized and loaded before assigning 
+  // Wait until the data is initialized and loaded before assigning
   // to prevent crashes caused by an incomplete object.
   calendar = tempCalendar;
 
@@ -555,7 +555,7 @@ function updateProgressBar() {
   let fractionPercentage: number;
   try {
     fractionPercentage = calendar.getPercentCompletion(start.getTime(), end.getTime());
-  } catch(e) {
+  } catch (e) {
     return;
   }
 
