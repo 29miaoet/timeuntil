@@ -3,8 +3,7 @@ import "./themes.css";
 
 import Calendar from "./calendar";
 
-const welcomeText =
-  "🥕 Welcome to timeuntil! 🥕\nContribute at https://github.com/29miaoet/timeuntil/";
+const welcomeText = "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
 
 const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
@@ -40,7 +39,14 @@ startingDate = new Date(Date.now());
 let finish = false;
 
 async function start() {
-  console.log(welcomeText);
+  // Welcome
+  console.log(
+    welcomeText,
+    "color: #64b2ff; font-size: 16px; font-weight: bold;",
+    "color: #2c2c2c; font-size: 12px;",
+    "font-style: italic;"
+  );
+
   await calendar.loadData();
 
   if (!calendar.contains(calendar.now)) {
@@ -65,6 +71,12 @@ async function start() {
 }
 
 async function loadPreferences() {
+  // Must be loaded before preferredEndDate
+  const preferredCalendar = localStorage.getItem("calendar");
+  if (preferredCalendar) {
+    await setPreferredCalendars(preferredCalendar);
+  }
+
   const preferredTheme = localStorage.getItem("theme");
   if (preferredTheme) {
     setPreferredThemes(preferredTheme);
@@ -73,11 +85,6 @@ async function loadPreferences() {
   const preferredEndDate = localStorage.getItem("date");
   if (preferredEndDate) {
     getPreferredDates(preferredEndDate);
-  }
-
-  const preferredCalendar = localStorage.getItem("calendar");
-  if (preferredCalendar) {
-    await setPreferredCalendars(preferredCalendar);
   }
 }
 
@@ -273,6 +280,8 @@ async function setPreferredCalendars(value: string) {
   // Wait until the data is initialized and loaded before assigning
   // to prevent crashes caused by an incomplete object.
   calendar = tempCalendar;
+  // Recalculate dates
+  getPreferredDates("summer");
 
   localStorage.setItem("calendar", value);
 }
