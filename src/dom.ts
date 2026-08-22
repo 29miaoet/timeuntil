@@ -136,7 +136,6 @@ function handleTime() {
 }
 
 function getPreferredDates(value: string) {
-  undoFinish();
   switch (value) {
     case "summer":
       endDate = new Date(2027, 5, 21, 15, 40);
@@ -171,6 +170,7 @@ function getPreferredDates(value: string) {
       causeOfDeath = "(Sadly) School Has Started";
       break;
   }
+  if (!checkFinish()) undoFinish();
   localStorage.setItem("date", value);
 }
 
