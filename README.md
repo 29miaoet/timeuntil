@@ -71,7 +71,7 @@ timeuntil/
 
 ## Future Path
 
-- [X] Add functionality to UI buttons.
+- [x] Add functionality to UI buttons.
 - [ ] Finish basic website UI.
 - [ ] Organize and shorten code by using more functions.
 - [ ] Harden code logic.
