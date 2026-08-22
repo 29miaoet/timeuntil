@@ -6,6 +6,8 @@ import Calendar from "./calendar";
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
 
+const container = document.getElementById("card-container-main") as HTMLDivElement | null;
+
 const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
@@ -34,10 +36,13 @@ let schoolDates: Array<number> | null;
 
 let calendar = new Calendar("./calendars/gci.json");
 let endDate = new Date(2027, 5, 21, 15, 40);
-let startingDate = new Date(2026, 8, 9, 8, 30);
-startingDate = new Date(Date.now());
+// let startingDate = new Date(2026, 8, 9, 8, 30);
+let startingDate = new Date(Date.now());
 
 let finish = false;
+let causeOfDeath;
+
+const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
 async function start() {
   // Welcome
@@ -131,30 +136,39 @@ function handleTime() {
 }
 
 function getPreferredDates(value: string) {
+  undoFinish();
   switch (value) {
     case "summer":
       endDate = new Date(2027, 5, 21, 15, 40);
+      causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
       endDate = new Date(2026, 11, 18, 14, 30);
+      causeOfDeath = "Spring Break";
       break;
     case "winter":
       endDate = new Date(2027, 2, 25, 15, 40);
+      causeOfDeath = "Winter Break";
       break;
     case "noschool":
       findNextNoSchool();
+      causeOfDeath = "No School Right Now";
       break;
     case "weekend":
       findNextWeekend();
+      causeOfDeath = "Weekend";
       break;
     case "lweekend":
       findNextLongWeekend();
+      causeOfDeath = "Long Weekend";
       break;
     case "term":
       findEndTerm();
+      causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
       endDate = new Date(2026, 8, 9, 8, 30);
+      causeOfDeath = "(Sadly) School Has Started";
       break;
   }
   localStorage.setItem("date", value);
@@ -281,8 +295,6 @@ async function setPreferredCalendars(value: string) {
   // Wait until the data is initialized and loaded before assigning
   // to prevent crashes caused by an incomplete object.
   calendar = tempCalendar;
-  // Recalculate dates
-  getPreferredDates("summer");
 
   localStorage.setItem("calendar", value);
 }
@@ -434,8 +446,18 @@ function findNextNoSchool() {
 }
 
 function triggerFinish() {
-  console.log("Everything has finished.");
   finish = true;
+  if (!container) return;
+  container.hidden = true;
+  lastMessage.textContent = causeOfDeath;
+  lastMessage.hidden = false;
+}
+
+function undoFinish() {
+  finish = false;
+  if (!container) return;
+  container.hidden = false;
+  lastMessage.hidden = true;
 }
 
 function updateDOM() {
