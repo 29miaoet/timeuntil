@@ -23,8 +23,6 @@ interface CalendarObject {
 export default class Calendar {
   public calendar!: CalendarObject;
   private dbPath: string;
-  private startTime: number;
-  private endTime: number;
   private earlyDismissalTime: Array<number>;
   private regularSchoolDayTime: Array<number>;
   public now: number;
