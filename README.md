@@ -71,10 +71,12 @@ timeuntil/
 
 ## Future Path
 
-- [ ] Add functionality to UI buttons.
+- [X] Add functionality to UI buttons.
+- [ ] Finish basic website UI.
+- [ ] Organize and shorten code by using more functions.
 - [ ] Harden code logic.
-- [ ] Add more theme and styling options.
 - [ ] Transform static CSS into Sass.
+- [ ] Add more theme and styling options.
 
 ## Stats
 
@@ -96,9 +98,12 @@ timeuntil/
 
 ## Utilized Tools & Services
 
+- [Node.js](https://github.com/nodejs/node)
 - [TypeScript](https://github.com/microsoft/TypeScript)
 - [Vite](https://github.com/vitejs/vite)
 - [Prettier](https://github.com/prettier/prettier)
+- [Dependabot](https://github.com/dependabot)
+- [GitHub Actions](https://github.com/actions)
 
 ## License
 
