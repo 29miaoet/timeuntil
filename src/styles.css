@@ -58,16 +58,26 @@ h2 {
 }
 
 #last-message {
-  width: 85%;
+  align-self: center;
   color: var(--font-color-black);
+  font-size: 24px;
+  font-weight: 700;
+  font-style: italic;
   border: none;
   border-radius: var(--radius-classic);
   background: var(--bg-countdown);
   text-align: center;
   max-width: 900px;
-  padding: 15px;
+  padding: 5% 15%;
+  margin: auto;
   box-shadow: 5px 5px 20px rgba(100, 100, 120, 0.5);
 }
+
+#last-message:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 7px 7px 24px rgba(100, 100, 120, 0.5);
+}
+
 
 .card {
   padding: 20px;
