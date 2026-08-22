@@ -39,8 +39,8 @@ let endDate = new Date(2027, 5, 21, 15, 40);
 // let startingDate = new Date(2026, 8, 9, 8, 30);
 let startingDate = new Date(Date.now());
 
-let finish = false;
-let causeOfDeath;
+let finish: boolean = false;
+let causeOfDeath: string;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
@@ -447,7 +447,7 @@ function findNextNoSchool() {
 
 function triggerFinish() {
   finish = true;
-  if (!container) return;
+  if (!container || !lastMessage) return;
   container.hidden = true;
   lastMessage.textContent = causeOfDeath;
   lastMessage.hidden = false;
@@ -455,7 +455,7 @@ function triggerFinish() {
 
 function undoFinish() {
   finish = false;
-  if (!container) return;
+  if (!container || !lastMessage) return;
   container.hidden = false;
   lastMessage.hidden = true;
 }
