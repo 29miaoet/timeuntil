@@ -8,7 +8,7 @@ import requests
 import scrape_id
 
 # Get school name
-SCHOOL_NAME = input("Enter school name: ")
+SCHOOL_NAME = sys.argv[1]
 output_file = f"../public/calendars/{SCHOOL_NAME}.json"
 
 try:
@@ -18,9 +18,7 @@ except (RuntimeError, KeyError):
     sys.exit(1)
 
 # Configuration
-SCHOOL_YEAR = "2026-2027"
-
-START_DATE = "2026-09-01"
+START_DATE = "2026-09-05"
 END_DATE = "2027-06-30"
 
 # Hijack lrsd school calendar URLs
