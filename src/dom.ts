@@ -3,7 +3,8 @@ import "./themes.css";
 
 import Calendar from "./calendar";
 
-const welcomeText = "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
+const welcomeText =
+  "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
 
 const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
