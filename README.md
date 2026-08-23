@@ -14,7 +14,8 @@
 timeuntil/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml
+│       ├── deploy.yml
+│       └── format.yml
 │
 ├── src/
 │   ├── dom.ts
@@ -26,9 +27,10 @@ timeuntil/
 ├── public/
 │   ├── calendars/
 │   │   ├── gci.json
-│   │   └── github.svg
+│   │   ├── dci.json
+│   │   ├── cjs.json
+│   │   └── burland.json
 │   │
-│   ├── calendar.json
 │   ├── favicon.svg
 │   └── github.svg
 │
@@ -46,6 +48,7 @@ timeuntil/
 ├── vite.config.ts
 │
 ├── LICENSE
+├── CONTRIBUTING.md
 └── README.md
 </code></pre>
 
@@ -61,6 +64,9 @@ timeuntil/
 - Modern GUI browser
 - JavaScript enabled
 
+## Contributing
+Please Reference [CONTRIBUTING.md](https://github.com/29miaoet/timeuntil/blob/main/LICENSE).
+
 ## Technology Stack
 
 | Layer        | Technology            | Notes                         |
@@ -71,8 +77,9 @@ timeuntil/
 
 ## Future Path
 
-- [x] Add functionality to UI buttons.
-- [ ] Finish basic website UI.
+- [X] Add functionality to UI buttons.
+- [X] Finish basic website UI.
+- [ ] Migrate UI handlers to React.
 - [ ] Organize and shorten code by using more functions.
 - [ ] Harden code logic.
 - [ ] Transform static CSS into Sass.
