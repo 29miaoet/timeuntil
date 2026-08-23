@@ -65,6 +65,7 @@ timeuntil/
 - JavaScript enabled
 
 ## Contributing
+
 Please Reference [CONTRIBUTING.md](https://github.com/29miaoet/timeuntil/blob/main/LICENSE).
 
 ## Technology Stack
@@ -77,8 +78,8 @@ Please Reference [CONTRIBUTING.md](https://github.com/29miaoet/timeuntil/blob/ma
 
 ## Future Path
 
-- [X] Add functionality to UI buttons.
-- [X] Finish basic website UI.
+- [x] Add functionality to UI buttons.
+- [x] Finish basic website UI.
 - [ ] Migrate UI handlers to React.
 - [ ] Organize and shorten code by using more functions.
 - [ ] Harden code logic.
