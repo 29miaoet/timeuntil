@@ -13,9 +13,12 @@
 <pre><code>
 timeuntil/
 ├── .github/
-│   └── workflows/
-│       ├── deploy.yml
-│       └── format.yml
+│   ├── workflows/
+│   │   ├── deploy.yml
+│   │   └── format.yml
+│   │ 
+│   ├── dependabot.yml
+│   └── CONTRIBUTING.md
 │
 ├── src/
 │   ├── dom.ts
@@ -48,7 +51,6 @@ timeuntil/
 ├── vite.config.ts
 │
 ├── LICENSE
-├── CONTRIBUTING.md
 └── README.md
 </code></pre>
 
