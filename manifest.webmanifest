@@ -1,0 +1,15 @@
+{
+  "name": "timeuntil",
+  "short_name": "timeuntil",
+  "description": "A frontend website to count down the days until school ends.",
+  "start_url": "/timeuntil/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
