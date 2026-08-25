@@ -34,6 +34,7 @@ timeuntil/
 │   │   ├── cjs.json
 │   │   └── burland.json
 │   │
+│   ├── manifest.webmanifest
 │   ├── favicon.svg
 │   └── github.svg
 │
