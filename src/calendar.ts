@@ -20,11 +20,30 @@ interface CalendarObject {
   [date: string]: DayInfo;
 }
 
+interface DayInfoStruct {
+  daystatus: string;
+  feature: Array<string>;
+  event: Array<string>;
+}
+
+type FixedTime = readonly [number, number];
+type SchoolTimeAsDateStruct = [number, number, number, number, number];
+
+class CalendarError extends Error {
+  public readonly statusCode: number;
+
+  constructor(message: string, statusCode: number = 400) {
+    super(message);
+    this.name = "CalendarError";
+    this.statusCode = statusCode;
+  }
+}
+
 export default class Calendar {
   public calendar!: CalendarObject;
   private dbPath: string;
-  private earlyDismissalTime: Array<number>;
-  private regularSchoolDayTime: Array<number>;
+  private earlyDismissalTime: FixedTime;
+  private regularSchoolDayTime: FixedTime;
   public now: number;
 
   constructor(dbPath: string) {
@@ -40,14 +59,25 @@ export default class Calendar {
     try {
       const response = await fetch(this.dbPath);
       if (!response.ok) {
-        throw new Error("Network response error " + response.statusText);
+        throw new CalendarError("Network response error" + response.statusText, response.status);
       }
       this.calendar = await response.json();
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      throw new CalendarError("Calendar fetch error.", 404);
     }
   }
 
+  // Check whether calendar has been loaded.
+  private get requireData(): CalendarObject {
+    if (!this.calendar) {
+      throw new CalendarError("No calendar loaded, did you forget to call loadData()?", 404);
+    }
+    return this.calendar;
+  }
+
+  /**
+   * This method should only be used in debugging and not in production code.
+   */
   getRaw() {
     console.log(this.calendar);
   }
@@ -79,7 +109,7 @@ export default class Calendar {
     return absTime;
   }
 
-  getDayInfo(dateStamp: string) {
+  getDayInfo(dateStamp: string): DayInfoStruct {
     return {
       daystatus: this.calendar[dateStamp]["status"],
       feature: this.calendar[dateStamp]["holidays"],
@@ -87,7 +117,7 @@ export default class Calendar {
     };
   }
 
-  floorTimestamp(timeUnit: string, timeStamp: number) {
+  floorTimestamp(timeUnit: string, timeStamp: number): number {
     const timeObj = new Date(timeStamp);
     if (timeUnit === "second") {
       timeObj.setMilliseconds(0);
@@ -109,11 +139,11 @@ export default class Calendar {
     return timeObj.getTime();
   }
 
-  modTimestamp(timeUnit: string, timeStamp: number) {
+  modTimestamp(timeUnit: string, timeStamp: number): number {
     return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
   }
 
-  getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number) {
+  getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number): number {
     const timeToElapse: number = endingTimeStamp - startingTimeStamp;
 
     // Basic safety test
@@ -141,7 +171,7 @@ export default class Calendar {
     }
   }
 
-  getSchoolTimeTo(timeStamp: number) {
+  getSchoolTimeTo(timeStamp: number): number {
     const currentDate: string = this.strftime(this.now);
     const endingDate: string = this.strftime(timeStamp);
     const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
@@ -249,7 +279,7 @@ export default class Calendar {
    * only full dates, it should be updated in the
    * future to support more accurate timing.
    */
-  getSchoolTimeAsDate(endingTimeStamp: number) {
+  getSchoolTimeAsDate(endingTimeStamp: number): SchoolTimeAsDateStruct {
     let endDate = new Date(endingTimeStamp);
     const endingDateObj = this.getDateAt(this.strftime(endingTimeStamp));
 
@@ -332,7 +362,7 @@ export default class Calendar {
     return schoolDateRemaining;
   }
 
-  getDateAt(dateStamp: string) {
+  getDateAt(dateStamp: string): DayInfo {
     if (!this.calendar[dateStamp]) {
       throw new RangeError(`Calendar does not contain ${dateStamp}.`);
     }
