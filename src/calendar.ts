@@ -10,8 +10,8 @@
 interface DayInfo {
   date: string;
   hasSchool: boolean;
-  timeSlot: string;
-  status: string;
+  timeSlot: "Regular" | "Early Dismissal";
+  status: "Normal School Day" | "No School" | "Early Dismissal";
   holidays: Array<string>;
   dayInfo: Array<string>;
 }
@@ -28,19 +28,18 @@ interface DayInfoStruct {
 
 type FixedTime = readonly [number, number];
 type SchoolTimeAsDateStruct = [number, number, number, number, number];
+type TimeUnitType = "day" | "hour" | "minute" | "second";
+type SchoolDateTuple = [number, number, number, number, number];
 
 class CalendarError extends Error {
-  public readonly statusCode: number;
-
-  constructor(message: string, statusCode: number = 400) {
+  constructor(message: string) {
     super(message);
     this.name = "CalendarError";
-    this.statusCode = statusCode;
   }
 }
 
 export default class Calendar {
-  public calendar!: CalendarObject;
+  public _calendar!: CalendarObject;
   private dbPath: string;
   private earlyDismissalTime: FixedTime;
   private regularSchoolDayTime: FixedTime;
@@ -59,20 +58,24 @@ export default class Calendar {
     try {
       const response = await fetch(this.dbPath);
       if (!response.ok) {
-        throw new CalendarError("Network response error" + response.statusText, response.status);
+        throw new CalendarError("Network response error" + response.statusText);
       }
       this.calendar = await response.json();
     } catch (error) {
-      throw new CalendarError("Calendar fetch error.", 404);
+      throw new CalendarError("Calendar fetch error.");
     }
   }
 
   // Check whether calendar has been loaded.
-  private get requireData(): CalendarObject {
-    if (!this.calendar) {
-      throw new CalendarError("No calendar loaded, did you forget to call loadData()?", 404);
+  public get calendar(): CalendarObject {
+    if (!this._calendar) {
+      throw new CalendarError("No calendar loaded, did you forget to call loadData()?");
     }
-    return this.calendar;
+    return this._calendar;
+  }
+
+  private set calendar(data: CalendarObject) {
+    this._calendar = data;
   }
 
   /**
@@ -82,9 +85,9 @@ export default class Calendar {
     console.log(this.calendar);
   }
 
-  strftime(timeStamp: number) {
+  strftime(timeStamp: number): string {
     const date = new Date(timeStamp);
-    const year = date.getFullYear();
+    const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
@@ -95,17 +98,17 @@ export default class Calendar {
     this.now = Date.now();
   }
 
-  contains(schoolDate: number) {
+  contains(schoolDate: number): boolean {
     try {
       this.getDateAt(this.strftime(schoolDate));
       return true;
-    } catch (RangeError) {
+    } catch (e) {
       return false;
     }
   }
 
-  getAbsoluteTimeTo(timeStamp: number) {
-    const absTime: number = timeStamp - this.now;
+  getAbsoluteTimeTo(timeStamp: number): number {
+    const absTime = timeStamp - this.now;
     return absTime;
   }
 
@@ -117,7 +120,7 @@ export default class Calendar {
     };
   }
 
-  floorTimestamp(timeUnit: string, timeStamp: number): number {
+  floorTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
     const timeObj = new Date(timeStamp);
     if (timeUnit === "second") {
       timeObj.setMilliseconds(0);
@@ -134,21 +137,21 @@ export default class Calendar {
       timeObj.setMinutes(0);
       timeObj.setHours(0);
     } else {
-      throw new TypeError(`Unknown time measurement unit ${timeUnit}`);
+      throw new CalendarError(`Unknown time measurement unit ${timeUnit}`);
     }
     return timeObj.getTime();
   }
 
-  modTimestamp(timeUnit: string, timeStamp: number): number {
+  modTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
     return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
   }
 
   getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number): number {
-    const timeToElapse: number = endingTimeStamp - startingTimeStamp;
+    const timeToElapse = endingTimeStamp - startingTimeStamp;
 
     // Basic safety test
     if (timeToElapse < 0) {
-      throw new RangeError(`Invalid range ${startingTimeStamp}-${endingTimeStamp}`);
+      throw new CalendarError(`Invalid range ${startingTimeStamp} - ${endingTimeStamp}`);
     }
 
     if (startingTimeStamp > this.now) return 0;
@@ -157,7 +160,7 @@ export default class Calendar {
     // Borrow the this.now variable to force a full school time calculation.
     // Bad practice, fix later.
     const temp = this.now;
-    const schoolTimeToElapse: number = this.getSchoolTimeTo(endingTimeStamp);
+    const schoolTimeToElapse = this.getSchoolTimeTo(endingTimeStamp);
     this.now = temp;
 
     if (this.contains(this.now)) {
@@ -172,10 +175,10 @@ export default class Calendar {
   }
 
   getSchoolTimeTo(timeStamp: number): number {
-    const currentDate: string = this.strftime(this.now);
-    const endingDate: string = this.strftime(timeStamp);
-    const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
-    const hoursLastDay: number = this.modTimestamp("day", timeStamp);
+    const currentDate = this.strftime(this.now);
+    const endingDate = this.strftime(timeStamp);
+    const hoursAfterMidnight = this.modTimestamp("day", this.now);
+    const hoursLastDay = this.modTimestamp("day", timeStamp);
 
     let milliSeconds: number = 0;
 
@@ -296,12 +299,11 @@ export default class Calendar {
 
     const endingDate = this.strftime(endDate.getTime());
 
-    type schoolDateTuple = [number, number, number, number, number];
-    let schoolDateRemaining: schoolDateTuple = [0, 0, 0, 0, 0];
+    let schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
     let milliseconds: number = 0;
 
-    const currentDate: string = this.strftime(this.now);
-    const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
+    const currentDate = this.strftime(this.now);
+    const hoursAfterMidnight = this.modTimestamp("day", this.now);
 
     for (const date in this.calendar) {
       // The current date should not be counted but the ending Date should be
@@ -370,16 +372,3 @@ export default class Calendar {
   }
 }
 
-/*
-async function start() {
-  const cal = new Calendar("calendar.json", 0, 0);
-  await cal.loadData();
-  const tempdate = new Date(2026, 8, 22, 18, 0);
-  const tempnow = new Date(2026, 8, 22, 9, 0);
-  cal.now = tempnow.getTime();
-  console.log(cal.getSchoolTimeTo(tempdate.getTime()));
-  console.log(cal.getAbsoluteTimeTo(tempdate.getTime()));
-}
-
-start();
-*/
