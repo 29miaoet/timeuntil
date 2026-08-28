@@ -367,7 +367,7 @@ export default class Calendar {
   findNextWeekend(): number {
     const currentDate = new Date(this.now);
     const currentWeekday = currentDate.getDay();
-    const tempEnd = new Date(this.floorTimestamp("day", this.now))
+    const tempEnd = new Date(this.floorTimestamp("day", this.now));
     let endDate: Date;
 
     if (currentWeekday === 6 || currentWeekday === 0) {
@@ -392,15 +392,15 @@ export default class Calendar {
   getLastDay(indexToCheckFirst: number): number {
     const day = Object.values(this.calendar).at(indexToCheckFirst);
     if (!day) {
-      throw new CalendarError("Could not find last school day.")
+      throw new CalendarError("Could not find last school day.");
     }
 
     if (day.hasSchool) {
       const foundDate = new Date(day.date);
       if (day.timeSlot === "Regular") {
-        foundDate.setMilliseconds(this.regularSchoolDayTime[1])
+        foundDate.setMilliseconds(this.regularSchoolDayTime[1]);
       } else if (day.timeSlot === "Early Dismissal") {
-        foundDate.setMilliseconds(this.earlyDismissalTime[1])
+        foundDate.setMilliseconds(this.earlyDismissalTime[1]);
       }
       return foundDate.getTime();
     } else {
@@ -410,17 +410,17 @@ export default class Calendar {
 
   findNextLongWeekend(): number {
     const day = Object.values(this.calendar).find((day, index, array) => {
-      const first = array[index]
-      const second = array[index + 1]
-      const third = array[index + 2]
+      const first = array[index];
+      const second = array[index + 1];
+      const third = array[index + 2];
       if (!second || !third) return false;
       const schoolNotExists = !first.hasSchool && !second?.hasSchool && !third?.hasSchool;
-      const onWeekend = 
-        ((this.getDayOfTheWeek(first) === 6) && (this.getDayOfTheWeek(second) === 0)) || 
-        ((this.getDayOfTheWeek(second) === 6) && (this.getDayOfTheWeek(third) === 0)); 
+      const onWeekend =
+        (this.getDayOfTheWeek(first) === 6 && this.getDayOfTheWeek(second) === 0) ||
+        (this.getDayOfTheWeek(second) === 6 && this.getDayOfTheWeek(third) === 0);
 
-      const dateNow = new Date(this.now)
-      const dateCandidate = new Date(first.date)
+      const dateNow = new Date(this.now);
+      const dateCandidate = new Date(first.date);
 
       const inTheFuture = dateCandidate > dateNow;
 
@@ -459,7 +459,7 @@ export default class Calendar {
   }
 
   findNextNoSchool(): number {
-    const day = Object.values(this.calendar).find(day => {
+    const day = Object.values(this.calendar).find((day) => {
       const dateNow = new Date(this.now);
       const dateCandidate = new Date(day.date);
       const inTheFuture = dateCandidate > dateNow;
