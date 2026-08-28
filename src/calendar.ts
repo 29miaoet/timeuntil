@@ -377,20 +377,7 @@ export default class Calendar {
       tempEnd.setDate(tempEnd.getDate() + daysToAdd);
     }
 
-    // Rollback to previous day
-    tempEnd.setDate(tempEnd.getDate() - 1);
-    const stamp = this.strftime(tempEnd.getTime());
-
-    if (this.calendar[stamp].hasSchool) {
-      if (this.calendar[stamp].timeSlot === "Regular") {
-        tempEnd.setMilliseconds(this.regularSchoolDayTime[1]);
-      } else if (this.calendar[stamp].timeSlot === "Early Dismissal") {
-        tempEnd.setMilliseconds(this.earlyDismissalTime[1]);
-      }
-    } else {
-      tempEnd.setHours(24);
-    }
-    return tempEnd.getTime();
+    return this.schoolTimeify(tempEnd).getTime();
   }
 
   getDayOfTheWeek(date: DayInfo): number {
@@ -398,7 +385,30 @@ export default class Calendar {
     return d.getDay();
   }
 
-  findNextLongWeekend() {
+  /**
+   * This function must be called with an index to check first
+   * as a parameter, preferably -1.
+   */
+  getLastDay(indexToCheckFirst: number): number {
+    const day = Object.values(this.calendar).at(indexToCheckFirst);
+    if (!day) {
+      throw new CalendarError("Could not find last school day.")
+    }
+
+    if (day.hasSchool) {
+      const foundDate = new Date(day.date);
+      if (day.timeSlot === "Regular") {
+        foundDate.setMilliseconds(this.regularSchoolDayTime[1])
+      } else if (day.timeSlot === "Early Dismissal") {
+        foundDate.setMilliseconds(this.earlyDismissalTime[1])
+      }
+      return foundDate.getTime();
+    } else {
+      return this.getLastDay(--indexToCheckFirst);
+    }
+  }
+
+  findNextLongWeekend(): number {
     const day = Object.values(this.calendar).find((day, index, array) => {
       const first = array[index]
       const second = array[index + 1]
@@ -416,9 +426,52 @@ export default class Calendar {
 
       return schoolNotExists && onWeekend && inTheFuture;
     });
-    console.log(`Long weekend is ${day}`)
-    console.log(day)
-    throw new CalendarError("Add functionality and merge for findNextLongWeekend, `day` object contains found day, decrease by 1")
+
+    if (!day) {
+      const previousFoundDay = new Date(this.getLastDay(-1));
+      return previousFoundDay.getTime();
+    }
+    const previousFoundDay = new Date(day.date);
+    return this.schoolTimeify(previousFoundDay).getTime();
+  }
+
+  /**
+   * Takes a date object as an input and returns a modified date object
+   * that has hours and minutes set to the end school time of either
+   * late start or early dismissal.
+   */
+  schoolTimeify(dateObj: Date): Date {
+    // Rollback to previous day
+    dateObj.setDate(dateObj.getDate() - 1);
+    const stamp = this.strftime(dateObj.getTime());
+
+    if (this.calendar[stamp].hasSchool) {
+      if (this.calendar[stamp].timeSlot === "Regular") {
+        dateObj.setMilliseconds(this.regularSchoolDayTime[1]);
+      } else if (this.calendar[stamp].timeSlot === "Early Dismissal") {
+        dateObj.setMilliseconds(this.earlyDismissalTime[1]);
+      }
+    } else {
+      dateObj.setHours(24);
+    }
+
+    return dateObj;
+  }
+
+  findNextNoSchool(): number {
+    const day = Object.values(this.calendar).find(day => {
+      const dateNow = new Date(this.now);
+      const dateCandidate = new Date(day.date);
+      const inTheFuture = dateCandidate > dateNow;
+      return !day.hasSchool && inTheFuture;
+    });
+
+    if (!day) {
+      const previousFoundDay = new Date(this.getLastDay(-1));
+      return previousFoundDay.getTime();
+    }
+    const foundDate = new Date(day.date);
+    return this.schoolTimeify(foundDate).getTime();
   }
 
   getDateAt(dateStamp: string): DayInfo {

@@ -150,7 +150,7 @@ function getPreferredDates(value: string) {
       causeOfDeath = "Winter Break";
       break;
     case "noschool":
-      findNextNoSchool();
+      endDate = new Date(calendar.findNextNoSchool());
       causeOfDeath = "No School Right Now";
       break;
     case "weekend":
@@ -158,8 +158,7 @@ function getPreferredDates(value: string) {
       causeOfDeath = "Weekend";
       break;
     case "lweekend":
-      findNextLongWeekend();
-      calendar.findNextLongWeekend();
+      endDate = new Date(calendar.findNextLongWeekend());
       causeOfDeath = "Long Weekend";
       break;
     case "term":
@@ -325,94 +324,6 @@ function findEndTerm() {
   }
 
   endDate = new Date(calendar.now);
-}
-
-
-function findNextLongWeekend() {
-  for (const day in calendar.calendar) {
-    if (day < calendar.strftime(calendar.now)) {
-      continue;
-    } else {
-      let date = new Date(day);
-      const next3Days = [
-        calendar.strftime(date.getTime()),
-        calendar.strftime(date.setTime(date.getTime() + 24 * 60 * 60 * 1000)),
-        calendar.strftime(date.setTime(date.getTime() + 24 * 60 * 60 * 1000)),
-      ];
-
-      date = new Date(day);
-      let next3Weekdays = [date.getDay()];
-
-      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
-      next3Weekdays.push(date.getDay());
-
-      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
-      next3Weekdays.push(date.getDay());
-
-      if (
-        !calendar.calendar[next3Days[0]].hasSchool &&
-        !calendar.calendar[next3Days[1]].hasSchool &&
-        !calendar.calendar[next3Days[2]].hasSchool &&
-        ((next3Weekdays[0] === 6 && next3Weekdays[1] === 0) ||
-          (next3Weekdays[1] === 6 && next3Weekdays[2] === 0))
-      ) {
-        const previousDay = new Date(day);
-        console.log(previousDay)
-        previousDay.setTime(previousDay.getTime() - 24 * 60 * 60 * 1000);
-        const previousDayStamp = calendar.strftime(previousDay.getTime());
-
-        if (!calendar.contains(previousDay.getTime())) {
-          endDate = new Date(calendar.now);
-          return;
-        }
-
-        if (calendar.calendar[previousDayStamp].hasSchool) {
-          if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
-            previousDay.setHours(15, 40);
-          } else if (calendar.calendar[previousDayStamp].timeSlot === "Early Dismissal") {
-            previousDay.setHours(14, 30);
-          }
-        } else {
-          previousDay.setHours(24);
-        }
-
-        endDate = new Date(previousDay.getTime());
-        return;
-      }
-    }
-  }
-}
-
-function findNextNoSchool() {
-  for (const day in calendar.calendar) {
-    if (day < calendar.strftime(calendar.now)) {
-      continue;
-    } else {
-      if (!calendar.calendar[day].hasSchool) {
-        const previousDay = new Date(day);
-        const previousDayStamp = calendar.strftime(previousDay.getTime());
-
-        if (!calendar.contains(previousDay.getTime())) {
-          endDate = new Date(calendar.now);
-          return;
-        }
-
-        if (calendar.calendar[previousDayStamp].hasSchool) {
-          if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
-            previousDay.setHours(15, 40);
-          } else if (calendar.calendar[previousDayStamp].timeSlot === "Early Dismissal") {
-            previousDay.setHours(14, 30);
-          }
-        } else {
-          endDate = new Date(calendar.now);
-          return;
-        }
-
-        endDate = new Date(previousDay.getTime());
-        return;
-      }
-    }
-  }
 }
 
 function triggerFinish() {
