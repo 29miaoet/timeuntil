@@ -154,11 +154,12 @@ function getPreferredDates(value: string) {
       causeOfDeath = "No School Right Now";
       break;
     case "weekend":
-      findNextWeekend();
+      endDate = new Date(calendar.findNextWeekend());
       causeOfDeath = "Weekend";
       break;
     case "lweekend":
       findNextLongWeekend();
+      calendar.findNextLongWeekend();
       causeOfDeath = "Long Weekend";
       break;
     case "term":
@@ -326,38 +327,6 @@ function findEndTerm() {
   endDate = new Date(calendar.now);
 }
 
-function findNextWeekend() {
-  const currentDate = new Date(calendar.now);
-  const currentWeekday = currentDate.getDay();
-  const tempEnd = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate()
-  );
-
-  if (currentWeekday === 6 || currentWeekday === 0) {
-    endDate = new Date(calendar.now);
-  } else {
-    const daysToAdd = 6 - currentDate.getDay();
-    tempEnd.setDate(tempEnd.getDate() + daysToAdd);
-  }
-
-  // Rollback to previous day
-  tempEnd.setDate(tempEnd.getDate() - 1);
-  const stamp: string = calendar.strftime(tempEnd.getTime());
-
-  if (calendar.calendar[stamp].hasSchool) {
-    if (calendar.calendar[stamp].timeSlot === "Regular") {
-      tempEnd.setHours(15, 40);
-    } else if (calendar.calendar[stamp].timeSlot === "Early Dismissal") {
-      tempEnd.setHours(14, 30);
-    }
-  } else {
-    tempEnd.setHours(24);
-  }
-
-  endDate = tempEnd;
-}
 
 function findNextLongWeekend() {
   for (const day in calendar.calendar) {
@@ -388,6 +357,7 @@ function findNextLongWeekend() {
           (next3Weekdays[1] === 6 && next3Weekdays[2] === 0))
       ) {
         const previousDay = new Date(day);
+        console.log(previousDay)
         previousDay.setTime(previousDay.getTime() - 24 * 60 * 60 * 1000);
         const previousDayStamp = calendar.strftime(previousDay.getTime());
 

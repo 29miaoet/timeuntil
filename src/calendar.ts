@@ -364,6 +364,63 @@ export default class Calendar {
     return schoolDateRemaining;
   }
 
+  findNextWeekend(): number {
+    const currentDate = new Date(this.now);
+    const currentWeekday = currentDate.getDay();
+    const tempEnd = new Date(this.floorTimestamp("day", this.now))
+    let endDate: Date;
+
+    if (currentWeekday === 6 || currentWeekday === 0) {
+      return this.now;
+    } else {
+      const daysToAdd = 6 - currentDate.getDay();
+      tempEnd.setDate(tempEnd.getDate() + daysToAdd);
+    }
+
+    // Rollback to previous day
+    tempEnd.setDate(tempEnd.getDate() - 1);
+    const stamp = this.strftime(tempEnd.getTime());
+
+    if (this.calendar[stamp].hasSchool) {
+      if (this.calendar[stamp].timeSlot === "Regular") {
+        tempEnd.setMilliseconds(this.regularSchoolDayTime[1]);
+      } else if (this.calendar[stamp].timeSlot === "Early Dismissal") {
+        tempEnd.setMilliseconds(this.earlyDismissalTime[1]);
+      }
+    } else {
+      tempEnd.setHours(24);
+    }
+    return tempEnd.getTime();
+  }
+
+  getDayOfTheWeek(date: DayInfo): number {
+    const d = new Date(date.date);
+    return d.getDay();
+  }
+
+  findNextLongWeekend() {
+    const day = Object.values(this.calendar).find((day, index, array) => {
+      const first = array[index]
+      const second = array[index + 1]
+      const third = array[index + 2]
+      if (!second || !third) return false;
+      const schoolNotExists = !first.hasSchool && !second?.hasSchool && !third?.hasSchool;
+      const onWeekend = 
+        ((this.getDayOfTheWeek(first) === 6) && (this.getDayOfTheWeek(second) === 0)) || 
+        ((this.getDayOfTheWeek(second) === 6) && (this.getDayOfTheWeek(third) === 0)); 
+
+      const dateNow = new Date(this.now)
+      const dateCandidate = new Date(first.date)
+
+      const inTheFuture = dateCandidate > dateNow;
+
+      return schoolNotExists && onWeekend && inTheFuture;
+    });
+    console.log(`Long weekend is ${day}`)
+    console.log(day)
+    throw new CalendarError("Add functionality and merge for findNextLongWeekend, `day` object contains found day, decrease by 1")
+  }
+
   getDateAt(dateStamp: string): DayInfo {
     if (!this.calendar[dateStamp]) {
       throw new RangeError(`Calendar does not contain ${dateStamp}.`);
@@ -371,4 +428,3 @@ export default class Calendar {
     return this.calendar[dateStamp];
   }
 }
-
