@@ -46,14 +46,16 @@ git push -u origin your-branch-name
 
 ## Guidelines
 
-- Use HTML syntax instead of XHTML syntax.
-- Use LF line returns instead of CRLF or CR whenever possible.
+- Use `Array<T>` for typing arrays instead of `T[]`.
+- Use `error` for error catching and `event` for event handling, do not use `e`.
 - Use CSS variables instead of direct values.
+- Use LF line returns instead of CRLF or CR whenever possible, or ensure you have the correct git configurations.
+- Use HTML syntax instead of XHTML syntax.
 - Background color schemes should follow those of the existing `:root` elements.
 - Prefer aria-labels for accessibility over direct `<label>` tags.
 - New files or folders should be organized in the same fashion as the existing structure.
 
 ## Resources
 
-- [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
-- [Docs](https://developer.mozilla.org/en-US/)
+- [TypeScript Docs](https://www.typescriptlang.org/docs/)
+- [More Docs](https://developer.mozilla.org/en-US/)

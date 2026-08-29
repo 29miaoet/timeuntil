@@ -1,6 +1,5 @@
 import "./styles.css";
 import "./themes.css";
-
 import Calendar from "./calendar";
 
 const welcomeText =
@@ -24,25 +23,34 @@ const schoolTimeContainer = document.getElementById(
 ) as HTMLDivElement | null;
 const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
 
-const timeToggleButton = document.getElementById("time-toggle") as HTMLElement | null;
-const timeMenu = document.getElementById("time-menu") as HTMLElement | null;
+const timeToggleButton = document.getElementById("time-toggle");
+const timeMenu = document.getElementById("time-menu");
 
-const settingsButton = document.getElementById("settings-button") as HTMLElement | null;
-const settingsMenu = document.getElementById("settings") as HTMLElement | null;
+const settingsButton = document.getElementById("settings-button");
+const settingsMenu = document.getElementById("settings");
 
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
 
 let calendar = new Calendar("./calendars/gci.json");
-let endDate = new Date(2027, 5, 21, 15, 40);
-// let startingDate = new Date(2026, 8, 9, 8, 30);
-let startingDate = new Date(Date.now());
+let endDate: Date = new Date(2027, 5, 21, 15, 40);
 
-let finish: boolean = false;
+// When school starts, uncomment
+// let startingDate: Date = new Date(2026, 8, 9, 8, 30);
+let startingDate: Date = new Date(Date.now());
 let causeOfDeath: string;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
+
+type DateArgs = [number, number, number, number, number];
+
+const termEnds: Array<DateArgs> = [
+  [2026, 10, 18, 15, 40],
+  [2027, 1, 5, 15, 40],
+  [2027, 3, 13, 15, 40],
+  [2027, 5, 21, 15, 40],
+];
 
 async function start() {
   // Welcome
@@ -66,9 +74,8 @@ async function start() {
   handleCalendars();
 
   updateDOM();
-  const mainloopId = setInterval(() => {
+  setInterval(() => {
     if (checkFinish()) {
-      // clearInterval(mainloopId);
       triggerFinish();
     } else {
       updateDOM();
@@ -105,7 +112,7 @@ function handleTime() {
     return;
   }
 
-  timeToggleButton.addEventListener("click", (e) => {
+  timeToggleButton.addEventListener("click", () => {
     if (timeMenu.hidden) {
       timeMenu.hidden = false;
       timeToggleButton.classList.add("open");
@@ -115,9 +122,9 @@ function handleTime() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!timeMenu.contains(target) && !timeToggleButton.contains(target)) {
       timeMenu.hidden = true;
       timeToggleButton.classList.remove("open");
@@ -150,19 +157,19 @@ function getPreferredDates(value: string) {
       causeOfDeath = "Winter Break";
       break;
     case "noschool":
-      findNextNoSchool();
+      endDate = new Date(calendar.findNextNoSchool());
       causeOfDeath = "No School Right Now";
       break;
     case "weekend":
-      findNextWeekend();
+      endDate = new Date(calendar.findNextWeekend());
       causeOfDeath = "Weekend";
       break;
     case "lweekend":
-      findNextLongWeekend();
+      endDate = new Date(calendar.findNextLongWeekend());
       causeOfDeath = "Long Weekend";
       break;
     case "term":
-      findEndTerm();
+      endDate = new Date(calendar.findEndTerm(...termEnds));
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
@@ -180,7 +187,7 @@ function handleSettings() {
     return;
   }
 
-  settingsButton.addEventListener("click", (e) => {
+  settingsButton.addEventListener("click", () => {
     if (settingsMenu.hidden) {
       settingsMenu.hidden = false;
       settingsButton.classList.add("open");
@@ -190,9 +197,9 @@ function handleSettings() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!settingsMenu.contains(target) && !settingsButton.contains(target)) {
       settingsMenu.hidden = true;
       settingsButton.classList.remove("open");
@@ -209,7 +216,7 @@ function handleThemes() {
     return;
   }
 
-  themeButton.addEventListener("click", (e) => {
+  themeButton.addEventListener("click", () => {
     if (themeMenu.hidden) {
       themeMenu.hidden = false;
       themeButton.classList.add("open");
@@ -219,9 +226,9 @@ function handleThemes() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!themeMenu.contains(target) && !themeButton.contains(target)) {
       themeMenu.hidden = true;
       themeButton.classList.remove("open");
@@ -250,7 +257,7 @@ function handleCalendars() {
     return;
   }
 
-  calendarButton.addEventListener("click", (e) => {
+  calendarButton.addEventListener("click", () => {
     if (calendarMenu.hidden) {
       calendarMenu.hidden = false;
       calendarButton.classList.add("open");
@@ -260,9 +267,9 @@ function handleCalendars() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!calendarMenu.contains(target) && !calendarButton.contains(target)) {
       calendarMenu.hidden = true;
       calendarButton.classList.remove("open");
@@ -299,154 +306,8 @@ async function setPreferredCalendars(value: string) {
   localStorage.setItem("calendar", value);
 }
 
-function findEndTerm() {
-  type DateArgs = [number, number, number, number, number];
-
-  const termEnds: DateArgs[] = [
-    [2026, 10, 18, 15, 40],
-    [2027, 1, 5, 15, 40],
-    [2027, 3, 13, 15, 40],
-    [2027, 5, 21, 15, 40],
-  ];
-  let termEndDates: Date[] = [];
-  for (const arr of termEnds) {
-    const date = new Date(...arr);
-    termEndDates.push(date);
-  }
-
-  // Get current term
-  for (const date of termEndDates) {
-    // First term that has not passed
-    if (date.getTime() - calendar.now > 0) {
-      endDate = new Date(date.getTime());
-      return;
-    }
-  }
-
-  endDate = new Date(calendar.now);
-}
-
-function findNextWeekend() {
-  const currentDate = new Date(calendar.now);
-  const currentWeekday = currentDate.getDay();
-  const tempEnd = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate()
-  );
-
-  if (currentWeekday === 6 || currentWeekday === 0) {
-    endDate = new Date(calendar.now);
-  } else {
-    const daysToAdd = 6 - currentDate.getDay();
-    tempEnd.setDate(tempEnd.getDate() + daysToAdd);
-  }
-
-  // Rollback to previous day
-  tempEnd.setDate(tempEnd.getDate() - 1);
-  const stamp: string = calendar.strftime(tempEnd.getTime());
-
-  if (calendar.calendar[stamp].hasSchool) {
-    if (calendar.calendar[stamp].timeSlot === "Regular") {
-      tempEnd.setHours(15, 40);
-    } else if (calendar.calendar[stamp].timeSlot === "Early Dismissal") {
-      tempEnd.setHours(14, 30);
-    }
-  } else {
-    tempEnd.setHours(24);
-  }
-
-  endDate = tempEnd;
-}
-
-function findNextLongWeekend() {
-  for (const day in calendar.calendar) {
-    if (day < calendar.strftime(calendar.now)) {
-      continue;
-    } else {
-      let date = new Date(day);
-      const next3Days = [
-        calendar.strftime(date.getTime()),
-        calendar.strftime(date.setTime(date.getTime() + 24 * 60 * 60 * 1000)),
-        calendar.strftime(date.setTime(date.getTime() + 24 * 60 * 60 * 1000)),
-      ];
-
-      date = new Date(day);
-      let next3Weekdays = [date.getDay()];
-
-      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
-      next3Weekdays.push(date.getDay());
-
-      date.setTime(date.getTime() + 24 * 60 * 60 * 1000);
-      next3Weekdays.push(date.getDay());
-
-      if (
-        !calendar.calendar[next3Days[0]].hasSchool &&
-        !calendar.calendar[next3Days[1]].hasSchool &&
-        !calendar.calendar[next3Days[2]].hasSchool &&
-        ((next3Weekdays[0] === 6 && next3Weekdays[1] === 0) ||
-          (next3Weekdays[1] === 6 && next3Weekdays[2] === 0))
-      ) {
-        const previousDay = new Date(day);
-        previousDay.setTime(previousDay.getTime() - 24 * 60 * 60 * 1000);
-        const previousDayStamp = calendar.strftime(previousDay.getTime());
-
-        if (!calendar.contains(previousDay.getTime())) {
-          endDate = new Date(calendar.now);
-          return;
-        }
-
-        if (calendar.calendar[previousDayStamp].hasSchool) {
-          if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
-            previousDay.setHours(15, 40);
-          } else if (calendar.calendar[previousDayStamp].timeSlot === "Early Dismissal") {
-            previousDay.setHours(14, 30);
-          }
-        } else {
-          previousDay.setHours(24);
-        }
-
-        endDate = new Date(previousDay.getTime());
-        return;
-      }
-    }
-  }
-}
-
-function findNextNoSchool() {
-  for (const day in calendar.calendar) {
-    if (day < calendar.strftime(calendar.now)) {
-      continue;
-    } else {
-      if (!calendar.calendar[day].hasSchool) {
-        const previousDay = new Date(day);
-        const previousDayStamp = calendar.strftime(previousDay.getTime());
-
-        if (!calendar.contains(previousDay.getTime())) {
-          endDate = new Date(calendar.now);
-          return;
-        }
-
-        if (calendar.calendar[previousDayStamp].hasSchool) {
-          if (calendar.calendar[previousDayStamp].timeSlot === "Regular") {
-            previousDay.setHours(15, 40);
-          } else if (calendar.calendar[previousDayStamp].timeSlot === "Early Dismissal") {
-            previousDay.setHours(14, 30);
-          }
-        } else {
-          endDate = new Date(calendar.now);
-          return;
-        }
-
-        endDate = new Date(previousDay.getTime());
-        return;
-      }
-    }
-  }
-}
-
 function triggerFinish() {
-  finish = true;
+  // Finished
   if (!container || !lastMessage) return;
   container.hidden = true;
   lastMessage.textContent = causeOfDeath;
@@ -454,7 +315,7 @@ function triggerFinish() {
 }
 
 function undoFinish() {
-  finish = false;
+  // Not finished
   if (!container || !lastMessage) return;
   container.hidden = false;
   lastMessage.hidden = true;
@@ -483,8 +344,8 @@ function updateTimer() {
   try {
     schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());
     schoolDates = calendar.getSchoolTimeAsDate(endDate.getTime());
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     schoolTimeRemaining = null;
     schoolDates = null;
   }
@@ -517,32 +378,14 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
 }
 
-function populateSchoolTimes(schoolTimeRemaining: number) {
-  // See calendar.ts for function usage
-  schoolTimes[0].textContent = String(
-    calendar.floorTimestamp("day", schoolTimeRemaining) / 1000 / 60 / 60 / 24
-  );
-  schoolTimes[1].textContent = String(
-    calendar.floorTimestamp("hour", schoolTimeRemaining) / 1000 / 60 / 60
-  );
-  schoolTimes[2].textContent = String(
-    calendar.modTimestamp("minute", schoolTimeRemaining) / 1000 / 60
-  );
-  schoolTimes[3].textContent = String(calendar.modTimestamp("second", schoolTimeRemaining) / 1000);
-}
-
 function populateTotalTimes(timeRemaining: number) {
-  // See calendar.ts for function usage
-
   // Worst code I have ever written, MUST fix later
-  const daysLeft: number = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
-  const hoursLeft: number = Math.floor(
-    (timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60
-  );
-  const minutesLeft: number = Math.floor(
+  const daysLeft = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
+  const hoursLeft = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
+  const minutesLeft = Math.floor(
     (timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
   );
-  const secondsLeft: number = Math.floor(
+  const secondsLeft = Math.floor(
     (timeRemaining -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
@@ -580,18 +423,15 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
 function updateProgressBar() {
   const start = startingDate;
 
-  // Uncomment when school actually starts
-  // const start = new Date(2026, 8, 9, 8, 30);
-
   const end = endDate;
   let fractionPercentage: number;
   try {
     fractionPercentage = calendar.getPercentCompletion(start.getTime(), end.getTime());
-  } catch (e) {
+  } catch (error) {
     return;
   }
 
-  const percentFinished: string = `${fractionPercentage * 100}%`;
+  const percentFinished = `${fractionPercentage * 100}%`;
 
   if (progressBar) {
     progressBar.style.width = percentFinished;

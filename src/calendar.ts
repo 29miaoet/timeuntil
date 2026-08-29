@@ -10,8 +10,8 @@
 interface DayInfo {
   date: string;
   hasSchool: boolean;
-  timeSlot: string;
-  status: string;
+  timeSlot: "Regular" | "Early Dismissal";
+  status: "Normal School Day" | "No School" | "Early Dismissal";
   holidays: Array<string>;
   dayInfo: Array<string>;
 }
@@ -20,15 +20,36 @@ interface CalendarObject {
   [date: string]: DayInfo;
 }
 
+interface DayInfoStruct {
+  daystatus: string;
+  feature: Array<string>;
+  event: Array<string>;
+}
+
+type FixedTime = readonly [number, number];
+type SchoolTimeAsDateStruct = [number, number, number, number, number];
+type TimeUnitType = "day" | "hour" | "minute" | "second";
+type SchoolDateTuple = [number, number, number, number, number];
+type TermEndSpecification = [number, number, number, number, number];
+
+class CalendarError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "CalendarError";
+  }
+}
+
 export default class Calendar {
-  public calendar!: CalendarObject;
+  public _calendar!: CalendarObject;
+  public _lastDay!: number | null;
   private dbPath: string;
-  private earlyDismissalTime: Array<number>;
-  private regularSchoolDayTime: Array<number>;
+  private earlyDismissalTime: FixedTime;
+  private regularSchoolDayTime: FixedTime;
   public now: number;
 
   constructor(dbPath: string) {
     this.dbPath = dbPath;
+    // Hardcoded for now, fix later
     // 8:30 to 14:30
     this.earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
     // 8:30 to 15:40
@@ -36,25 +57,84 @@ export default class Calendar {
     this.now = Date.now();
   }
 
+  /**
+   * Loads data using fetch from an external JSON file, data
+   * format must match type `dayInfo`.
+   */
   async loadData(): Promise<void> {
     try {
       const response = await fetch(this.dbPath);
       if (!response.ok) {
-        throw new Error("Network response error " + response.statusText);
+        throw new CalendarError("Network response error" + response.statusText);
       }
       this.calendar = await response.json();
+      this.lastDay = this.getLastDay(-1);
     } catch (error) {
-      console.error("There was a problem with the fetch operation:", error);
+      throw new CalendarError("Calendar fetch error.");
     }
   }
 
+  /**
+   * This function must be called with an index to check first
+   * as a parameter, preferably -1. It should only be used once
+   * inside loadDate(), to prevent unnecessary calculation; to
+   * get the last day of school, reference the `this.lastDay`
+   * variable.
+   */
+  getLastDay(indexToCheckFirst: number): number {
+    const day = Object.values(this.calendar).at(indexToCheckFirst);
+    if (!day) {
+      throw new CalendarError("Could not find last school day.");
+    }
+
+    if (day.hasSchool) {
+      const foundDate = new Date(day.date);
+      if (day.timeSlot === "Regular") {
+        foundDate.setMilliseconds(this.regularSchoolDayTime[1]);
+      } else if (day.timeSlot === "Early Dismissal") {
+        foundDate.setMilliseconds(this.earlyDismissalTime[1]);
+      }
+      return foundDate.getTime();
+    } else {
+      return this.getLastDay(--indexToCheckFirst);
+    }
+  }
+
+  // Check whether calendar has been loaded.
+  get calendar(): CalendarObject {
+    if (!this._calendar) {
+      throw new CalendarError("No calendar loaded, did you forget to call loadData()?");
+    }
+    return this._calendar;
+  }
+
+  private set calendar(data: CalendarObject) {
+    this._calendar = data;
+  }
+
+  get lastDay(): number {
+    if (!this._lastDay) {
+      throw new CalendarError(
+        "Last day of school not found, this may be due to failing to load a valid calendar."
+      );
+    }
+    return this._lastDay;
+  }
+
+  private set lastDay(data: number) {
+    this._lastDay = data;
+  }
+
+  /**
+   * This method should only be used in debugging and not in production code.
+   */
   getRaw() {
     console.log(this.calendar);
   }
 
-  strftime(timeStamp: number) {
+  strftime(timeStamp: number): string {
     const date = new Date(timeStamp);
-    const year = date.getFullYear();
+    const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
@@ -65,21 +145,21 @@ export default class Calendar {
     this.now = Date.now();
   }
 
-  contains(schoolDate: number) {
+  contains(schoolDate: number): boolean {
     try {
       this.getDateAt(this.strftime(schoolDate));
       return true;
-    } catch (RangeError) {
+    } catch (e) {
       return false;
     }
   }
 
-  getAbsoluteTimeTo(timeStamp: number) {
-    const absTime: number = timeStamp - this.now;
+  getAbsoluteTimeTo(timeStamp: number): number {
+    const absTime = timeStamp - this.now;
     return absTime;
   }
 
-  getDayInfo(dateStamp: string) {
+  getDayInfo(dateStamp: string): DayInfoStruct {
     return {
       daystatus: this.calendar[dateStamp]["status"],
       feature: this.calendar[dateStamp]["holidays"],
@@ -87,7 +167,7 @@ export default class Calendar {
     };
   }
 
-  floorTimestamp(timeUnit: string, timeStamp: number) {
+  floorTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
     const timeObj = new Date(timeStamp);
     if (timeUnit === "second") {
       timeObj.setMilliseconds(0);
@@ -104,31 +184,27 @@ export default class Calendar {
       timeObj.setMinutes(0);
       timeObj.setHours(0);
     } else {
-      throw new TypeError(`Unknown time measurement unit ${timeUnit}`);
+      throw new CalendarError(`Unknown time measurement unit ${timeUnit}`);
     }
     return timeObj.getTime();
   }
 
-  modTimestamp(timeUnit: string, timeStamp: number) {
+  modTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
     return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
   }
 
-  getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number) {
-    const timeToElapse: number = endingTimeStamp - startingTimeStamp;
+  getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number): number {
+    const timeToElapse = endingTimeStamp - startingTimeStamp;
 
     // Basic safety test
     if (timeToElapse < 0) {
-      throw new RangeError(`Invalid range ${startingTimeStamp}-${endingTimeStamp}`);
+      throw new CalendarError(`Invalid range ${startingTimeStamp} - ${endingTimeStamp}`);
     }
 
     if (startingTimeStamp > this.now) return 0;
     if (endingTimeStamp < this.now) return 1;
 
-    // Borrow the this.now variable to force a full school time calculation.
-    // Bad practice, fix later.
-    const temp = this.now;
-    const schoolTimeToElapse: number = this.getSchoolTimeTo(endingTimeStamp);
-    this.now = temp;
+    const schoolTimeToElapse = this.getSchoolTimeTo(endingTimeStamp, startingTimeStamp);
 
     if (this.contains(this.now)) {
       // Use schoolTime
@@ -141,11 +217,18 @@ export default class Calendar {
     }
   }
 
-  getSchoolTimeTo(timeStamp: number) {
-    const currentDate: string = this.strftime(this.now);
-    const endingDate: string = this.strftime(timeStamp);
-    const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
-    const hoursLastDay: number = this.modTimestamp("day", timeStamp);
+  /**
+   * This method takes two arguments, the timeStamp parameter represents the target
+   * to which the school time to will be calculated, the second parameter, which is
+   * optional, represents the time where the function should take as it's starting
+   * time. Please take note that the FIRST parameter is the ending time, and the
+   * SECOND is the starting time.
+   */
+  getSchoolTimeTo(timeStamp: number, startingTime: number = this.now): number {
+    const currentDate = this.strftime(startingTime);
+    const endingDate = this.strftime(timeStamp);
+    const millisecondsAfterMidnight = this.modTimestamp("day", startingTime);
+    const millisecondsLastDay = this.modTimestamp("day", timeStamp);
 
     let milliSeconds: number = 0;
 
@@ -169,17 +252,17 @@ export default class Calendar {
       if (this.calendar[currentDate].timeSlot === "Regular") {
         // If there is school right now
         if (
-          this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
-          hoursAfterMidnight < this.regularSchoolDayTime[1]
+          this.regularSchoolDayTime[0] <= millisecondsAfterMidnight &&
+          millisecondsAfterMidnight < this.regularSchoolDayTime[1]
         ) {
           // Subtract one day since it was already calculated above
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
           // Add on the time that is still remaining today
-          milliSeconds += this.regularSchoolDayTime[1] - hoursAfterMidnight;
-        } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+          milliSeconds += this.regularSchoolDayTime[1] - millisecondsAfterMidnight;
+        } else if (millisecondsAfterMidnight < this.regularSchoolDayTime[0]) {
           // Extra day already calculated
           // Do nothing
-        } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
+        } else if (millisecondsAfterMidnight >= this.regularSchoolDayTime[1]) {
           // Subtract extra counted day
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
         }
@@ -188,15 +271,15 @@ export default class Calendar {
       // Same thing as above except for early dismissal
       if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
         if (
-          this.earlyDismissalTime[0] <= hoursAfterMidnight &&
-          hoursAfterMidnight < this.earlyDismissalTime[1]
+          this.earlyDismissalTime[0] <= millisecondsAfterMidnight &&
+          millisecondsAfterMidnight < this.earlyDismissalTime[1]
         ) {
           // Subtract one day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
-          milliSeconds += this.earlyDismissalTime[1] - hoursAfterMidnight;
-        } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+          milliSeconds += this.earlyDismissalTime[1] - millisecondsAfterMidnight;
+        } else if (millisecondsAfterMidnight < this.earlyDismissalTime[0]) {
           // Do nothing
-        } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+        } else if (millisecondsAfterMidnight >= this.earlyDismissalTime[1]) {
           // Subtract extra counted day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
         }
@@ -208,17 +291,17 @@ export default class Calendar {
       if (this.calendar[endingDate].timeSlot === "Regular") {
         // If there is school right now
         if (
-          this.regularSchoolDayTime[0] <= hoursLastDay &&
-          hoursLastDay < this.regularSchoolDayTime[1]
+          this.regularSchoolDayTime[0] <= millisecondsLastDay &&
+          millisecondsLastDay < this.regularSchoolDayTime[1]
         ) {
           // Subtract one day since it was already calculated above
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
           // Add on the time that has passed today
-          milliSeconds += hoursLastDay - this.regularSchoolDayTime[0];
-        } else if (hoursLastDay < this.regularSchoolDayTime[0]) {
+          milliSeconds += millisecondsLastDay - this.regularSchoolDayTime[0];
+        } else if (millisecondsLastDay < this.regularSchoolDayTime[0]) {
           // Subtract extra counted day
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
-        } else if (hoursLastDay >= this.regularSchoolDayTime[1]) {
+        } else if (millisecondsLastDay >= this.regularSchoolDayTime[1]) {
           // Extra day already calculated
           // Do nothing
         }
@@ -227,16 +310,16 @@ export default class Calendar {
       // Same thing as above except for early dismissal
       if (this.calendar[endingDate].timeSlot === "Early Dismissal") {
         if (
-          this.earlyDismissalTime[0] <= hoursLastDay &&
-          hoursLastDay < this.earlyDismissalTime[1]
+          this.earlyDismissalTime[0] <= millisecondsLastDay &&
+          millisecondsLastDay < this.earlyDismissalTime[1]
         ) {
           // Subtract one day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
-          milliSeconds += hoursLastDay - this.earlyDismissalTime[0];
-        } else if (hoursLastDay < this.earlyDismissalTime[0]) {
+          milliSeconds += millisecondsLastDay - this.earlyDismissalTime[0];
+        } else if (millisecondsLastDay < this.earlyDismissalTime[0]) {
           // Subtract extra counted day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
-        } else if (hoursLastDay >= this.earlyDismissalTime[1]) {
+        } else if (millisecondsLastDay >= this.earlyDismissalTime[1]) {
           // Do nothing
         }
       }
@@ -249,7 +332,7 @@ export default class Calendar {
    * only full dates, it should be updated in the
    * future to support more accurate timing.
    */
-  getSchoolTimeAsDate(endingTimeStamp: number) {
+  getSchoolTimeAsDate(endingTimeStamp: number): SchoolTimeAsDateStruct {
     let endDate = new Date(endingTimeStamp);
     const endingDateObj = this.getDateAt(this.strftime(endingTimeStamp));
 
@@ -266,12 +349,11 @@ export default class Calendar {
 
     const endingDate = this.strftime(endDate.getTime());
 
-    type schoolDateTuple = [number, number, number, number, number];
-    let schoolDateRemaining: schoolDateTuple = [0, 0, 0, 0, 0];
+    let schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
     let milliseconds: number = 0;
 
-    const currentDate: string = this.strftime(this.now);
-    const hoursAfterMidnight: number = this.modTimestamp("day", this.now);
+    const currentDate = this.strftime(this.now);
+    const hoursAfterMidnight = this.modTimestamp("day", this.now);
 
     for (const date in this.calendar) {
       // The current date should not be counted but the ending Date should be
@@ -332,24 +414,120 @@ export default class Calendar {
     return schoolDateRemaining;
   }
 
-  getDateAt(dateStamp: string) {
+  findNextWeekend(): number {
+    const currentDate = new Date(this.now);
+    const currentWeekday = currentDate.getDay();
+    const tempEnd = new Date(this.floorTimestamp("day", this.now));
+
+    if (currentWeekday === 6 || currentWeekday === 0) {
+      return this.now;
+    } else {
+      const daysToAdd = 6 - currentDate.getDay();
+      tempEnd.setDate(tempEnd.getDate() + daysToAdd);
+    }
+
+    return this.schoolTimeify(tempEnd).getTime();
+  }
+
+  getDayOfTheWeek(date: DayInfo): number {
+    const d = new Date(date.date);
+    return d.getDay();
+  }
+
+  findNextLongWeekend(): number {
+    const day = Object.values(this.calendar).find((_day, index, array) => {
+      // Use indexes for consistency
+      const first = array[index];
+      const second = array[index + 1];
+      const third = array[index + 2];
+      if (!second || !third) return false;
+      const schoolNotExists = !first.hasSchool && !second?.hasSchool && !third?.hasSchool;
+      const onWeekend =
+        (this.getDayOfTheWeek(first) === 6 && this.getDayOfTheWeek(second) === 0) ||
+        (this.getDayOfTheWeek(second) === 6 && this.getDayOfTheWeek(third) === 0);
+
+      const dateNow = new Date(this.now);
+      const dateCandidate = new Date(first.date);
+
+      const inTheFuture = dateCandidate > dateNow;
+
+      return schoolNotExists && onWeekend && inTheFuture;
+    });
+
+    if (!day) {
+      const previousFoundDay = new Date(this.lastDay);
+      return previousFoundDay.getTime();
+    }
+    const previousFoundDay = new Date(day.date);
+    return this.schoolTimeify(previousFoundDay).getTime();
+  }
+
+  /**
+   * Takes a date object as an input and returns a modified date object
+   * that has hours and minutes set to the end school time of either
+   * late start or early dismissal.
+   */
+  schoolTimeify(dateObj: Date): Date {
+    // Rollback to previous day
+    dateObj.setDate(dateObj.getDate() - 1);
+    const stamp = this.strftime(dateObj.getTime());
+
+    if (this.calendar[stamp].hasSchool) {
+      if (this.calendar[stamp].timeSlot === "Regular") {
+        dateObj.setMilliseconds(this.regularSchoolDayTime[1]);
+      } else if (this.calendar[stamp].timeSlot === "Early Dismissal") {
+        dateObj.setMilliseconds(this.earlyDismissalTime[1]);
+      }
+    } else {
+      dateObj.setHours(24);
+    }
+
+    return dateObj;
+  }
+
+  findNextNoSchool(): number {
+    const day = Object.values(this.calendar).find((day) => {
+      const dateNow = new Date(this.now);
+      const dateCandidate = new Date(day.date);
+      const inTheFuture = dateCandidate > dateNow;
+      return !day.hasSchool && inTheFuture;
+    });
+
+    if (!day) {
+      const previousFoundDay = new Date(this.lastDay);
+      return previousFoundDay.getTime();
+    }
+    const foundDate = new Date(day.date);
+    return this.schoolTimeify(foundDate).getTime();
+  }
+
+  /**
+   * Takes any number of arrays of numbers as an argument,
+   * each array must have exactly 5 numbers, to be passed on
+   * to a Date object constructor, they must be valid dates.
+   * and arranged in chronological order.
+   */
+  findEndTerm(...termEnds: Array<TermEndSpecification>): number {
+    let termEndDates: Array<Date> = [];
+    for (const arr of termEnds) {
+      const date = new Date(...arr);
+      termEndDates.push(date);
+    }
+
+    for (const date of termEndDates) {
+      // First term that has not passed
+      if (date.getTime() - this.now > 0) {
+        return date.getTime();
+      }
+    }
+
+    return this.now;
+  }
+
+  getDateAt(dateStamp: string): DayInfo {
     if (!this.calendar[dateStamp]) {
       throw new RangeError(`Calendar does not contain ${dateStamp}.`);
     }
     return this.calendar[dateStamp];
   }
 }
-
-/*
-async function start() {
-  const cal = new Calendar("calendar.json", 0, 0);
-  await cal.loadData();
-  const tempdate = new Date(2026, 8, 22, 18, 0);
-  const tempnow = new Date(2026, 8, 22, 9, 0);
-  cal.now = tempnow.getTime();
-  console.log(cal.getSchoolTimeTo(tempdate.getTime()));
-  console.log(cal.getAbsoluteTimeTo(tempdate.getTime()));
-}
-
-start();
-*/
