@@ -418,7 +418,6 @@ export default class Calendar {
     const currentDate = new Date(this.now);
     const currentWeekday = currentDate.getDay();
     const tempEnd = new Date(this.floorTimestamp("day", this.now));
-    let endDate: Date;
 
     if (currentWeekday === 6 || currentWeekday === 0) {
       return this.now;
@@ -436,7 +435,8 @@ export default class Calendar {
   }
 
   findNextLongWeekend(): number {
-    const day = Object.values(this.calendar).find((day, index, array) => {
+    const day = Object.values(this.calendar).find((_day, index, array) => {
+      // Use indexes for consistency
       const first = array[index];
       const second = array[index + 1];
       const third = array[index + 2];
