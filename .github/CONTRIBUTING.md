@@ -47,6 +47,7 @@ git push -u origin your-branch-name
 ## Guidelines
 
 - Use `Array<T>` for typing arrays instead of `T[]`.
+- Use `error` for error catching and `event` for event handling, do not use `e`.
 - Use CSS variables instead of direct values.
 - Use LF line returns instead of CRLF or CR whenever possible, or ensure you have the correct git configurations.
 - Use HTML syntax instead of XHTML syntax.
@@ -56,5 +57,5 @@ git push -u origin your-branch-name
 
 ## Resources
 
-- [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
-- [Docs](https://developer.mozilla.org/en-US/)
+- [TypeScript Docs](https://www.typescriptlang.org/docs/)
+- [More Docs](https://developer.mozilla.org/en-US/)
