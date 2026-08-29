@@ -30,6 +30,7 @@ type FixedTime = readonly [number, number];
 type SchoolTimeAsDateStruct = [number, number, number, number, number];
 type TimeUnitType = "day" | "hour" | "minute" | "second";
 type SchoolDateTuple = [number, number, number, number, number];
+type TermEndSpecification = [number, number, number, number, number];
 
 class CalendarError extends Error {
   constructor(message: string) {
@@ -40,6 +41,7 @@ class CalendarError extends Error {
 
 export default class Calendar {
   public _calendar!: CalendarObject;
+  public _lastDay!: number | null;
   private dbPath: string;
   private earlyDismissalTime: FixedTime;
   private regularSchoolDayTime: FixedTime;
@@ -47,6 +49,7 @@ export default class Calendar {
 
   constructor(dbPath: string) {
     this.dbPath = dbPath;
+    // Hardcoded for now, fix later
     // 8:30 to 14:30
     this.earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
     // 8:30 to 15:40
@@ -54,6 +57,10 @@ export default class Calendar {
     this.now = Date.now();
   }
 
+  /**
+   * Loads data using fetch from an external JSON file, data 
+   * format must match type `dayInfo`.
+   */
   async loadData(): Promise<void> {
     try {
       const response = await fetch(this.dbPath);
@@ -61,13 +68,41 @@ export default class Calendar {
         throw new CalendarError("Network response error" + response.statusText);
       }
       this.calendar = await response.json();
+      this.lastDay = this.getLastDay(-1);
     } catch (error) {
       throw new CalendarError("Calendar fetch error.");
     }
   }
 
+  /**
+   * This function must be called with an index to check first
+   * as a parameter, preferably -1. It should only be used once 
+   * inside loadDate(), to prevent unnecessary calculation; to 
+   * get the last day of school, reference the `this.lastDay` 
+   * variable.
+   */
+  getLastDay(indexToCheckFirst: number): number {
+    const day = Object.values(this.calendar).at(indexToCheckFirst);
+    if (!day) {
+      throw new CalendarError("Could not find last school day.");
+    }
+
+    if (day.hasSchool) {
+      const foundDate = new Date(day.date);
+      if (day.timeSlot === "Regular") {
+        foundDate.setMilliseconds(this.regularSchoolDayTime[1]);
+      } else if (day.timeSlot === "Early Dismissal") {
+        foundDate.setMilliseconds(this.earlyDismissalTime[1]);
+      }
+      return foundDate.getTime();
+    } else {
+      return this.getLastDay(--indexToCheckFirst);
+    }
+  }
+
+
   // Check whether calendar has been loaded.
-  public get calendar(): CalendarObject {
+  get calendar(): CalendarObject {
     if (!this._calendar) {
       throw new CalendarError("No calendar loaded, did you forget to call loadData()?");
     }
@@ -76,6 +111,17 @@ export default class Calendar {
 
   private set calendar(data: CalendarObject) {
     this._calendar = data;
+  }
+
+  get lastDay(): number {
+    if (!this._lastDay) {
+      throw new CalendarError("Last day of school not found, this may be due to failing to load a valid calendar.");
+    }
+    return this._lastDay;
+  }
+
+  private set lastDay(data: number) {
+    this._lastDay = data;
   }
 
   /**
@@ -157,11 +203,7 @@ export default class Calendar {
     if (startingTimeStamp > this.now) return 0;
     if (endingTimeStamp < this.now) return 1;
 
-    // Borrow the this.now variable to force a full school time calculation.
-    // Bad practice, fix later.
-    const temp = this.now;
-    const schoolTimeToElapse = this.getSchoolTimeTo(endingTimeStamp);
-    this.now = temp;
+    const schoolTimeToElapse = this.getSchoolTimeTo(endingTimeStamp, startingTimeStamp);
 
     if (this.contains(this.now)) {
       // Use schoolTime
@@ -174,11 +216,18 @@ export default class Calendar {
     }
   }
 
-  getSchoolTimeTo(timeStamp: number): number {
-    const currentDate = this.strftime(this.now);
+  /**
+   * This method takes two arguments, the timeStamp parameter represents the target
+   * to which the school time to will be calculated, the second parameter, which is 
+   * optional, represents the time where the function should take as it's starting 
+   * time. Please take note that the FIRST parameter is the ending time, and the 
+   * SECOND is the starting time.
+   */
+  getSchoolTimeTo(timeStamp: number, startingTime: number = this.now): number {
+    const currentDate = this.strftime(startingTime);
     const endingDate = this.strftime(timeStamp);
-    const hoursAfterMidnight = this.modTimestamp("day", this.now);
-    const hoursLastDay = this.modTimestamp("day", timeStamp);
+    const millisecondsAfterMidnight = this.modTimestamp("day", startingTime);
+    const millisecondsLastDay = this.modTimestamp("day", timeStamp);
 
     let milliSeconds: number = 0;
 
@@ -202,17 +251,17 @@ export default class Calendar {
       if (this.calendar[currentDate].timeSlot === "Regular") {
         // If there is school right now
         if (
-          this.regularSchoolDayTime[0] <= hoursAfterMidnight &&
-          hoursAfterMidnight < this.regularSchoolDayTime[1]
+          this.regularSchoolDayTime[0] <= millisecondsAfterMidnight &&
+          millisecondsAfterMidnight < this.regularSchoolDayTime[1]
         ) {
           // Subtract one day since it was already calculated above
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
           // Add on the time that is still remaining today
-          milliSeconds += this.regularSchoolDayTime[1] - hoursAfterMidnight;
-        } else if (hoursAfterMidnight < this.regularSchoolDayTime[0]) {
+          milliSeconds += this.regularSchoolDayTime[1] - millisecondsAfterMidnight;
+        } else if (millisecondsAfterMidnight < this.regularSchoolDayTime[0]) {
           // Extra day already calculated
           // Do nothing
-        } else if (hoursAfterMidnight >= this.regularSchoolDayTime[1]) {
+        } else if (millisecondsAfterMidnight >= this.regularSchoolDayTime[1]) {
           // Subtract extra counted day
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
         }
@@ -221,15 +270,15 @@ export default class Calendar {
       // Same thing as above except for early dismissal
       if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
         if (
-          this.earlyDismissalTime[0] <= hoursAfterMidnight &&
-          hoursAfterMidnight < this.earlyDismissalTime[1]
+          this.earlyDismissalTime[0] <= millisecondsAfterMidnight &&
+          millisecondsAfterMidnight < this.earlyDismissalTime[1]
         ) {
           // Subtract one day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
-          milliSeconds += this.earlyDismissalTime[1] - hoursAfterMidnight;
-        } else if (hoursAfterMidnight < this.earlyDismissalTime[0]) {
+          milliSeconds += this.earlyDismissalTime[1] - millisecondsAfterMidnight;
+        } else if (millisecondsAfterMidnight < this.earlyDismissalTime[0]) {
           // Do nothing
-        } else if (hoursAfterMidnight >= this.earlyDismissalTime[1]) {
+        } else if (millisecondsAfterMidnight >= this.earlyDismissalTime[1]) {
           // Subtract extra counted day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
         }
@@ -241,17 +290,17 @@ export default class Calendar {
       if (this.calendar[endingDate].timeSlot === "Regular") {
         // If there is school right now
         if (
-          this.regularSchoolDayTime[0] <= hoursLastDay &&
-          hoursLastDay < this.regularSchoolDayTime[1]
+          this.regularSchoolDayTime[0] <= millisecondsLastDay &&
+          millisecondsLastDay < this.regularSchoolDayTime[1]
         ) {
           // Subtract one day since it was already calculated above
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
           // Add on the time that has passed today
-          milliSeconds += hoursLastDay - this.regularSchoolDayTime[0];
-        } else if (hoursLastDay < this.regularSchoolDayTime[0]) {
+          milliSeconds += millisecondsLastDay - this.regularSchoolDayTime[0];
+        } else if (millisecondsLastDay < this.regularSchoolDayTime[0]) {
           // Subtract extra counted day
           milliSeconds -= this.regularSchoolDayTime[1] - this.regularSchoolDayTime[0];
-        } else if (hoursLastDay >= this.regularSchoolDayTime[1]) {
+        } else if (millisecondsLastDay >= this.regularSchoolDayTime[1]) {
           // Extra day already calculated
           // Do nothing
         }
@@ -260,16 +309,16 @@ export default class Calendar {
       // Same thing as above except for early dismissal
       if (this.calendar[endingDate].timeSlot === "Early Dismissal") {
         if (
-          this.earlyDismissalTime[0] <= hoursLastDay &&
-          hoursLastDay < this.earlyDismissalTime[1]
+          this.earlyDismissalTime[0] <= millisecondsLastDay &&
+          millisecondsLastDay < this.earlyDismissalTime[1]
         ) {
           // Subtract one day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
-          milliSeconds += hoursLastDay - this.earlyDismissalTime[0];
-        } else if (hoursLastDay < this.earlyDismissalTime[0]) {
+          milliSeconds += millisecondsLastDay - this.earlyDismissalTime[0];
+        } else if (millisecondsLastDay < this.earlyDismissalTime[0]) {
           // Subtract extra counted day
           milliSeconds -= this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
-        } else if (hoursLastDay >= this.earlyDismissalTime[1]) {
+        } else if (millisecondsLastDay >= this.earlyDismissalTime[1]) {
           // Do nothing
         }
       }
@@ -385,29 +434,6 @@ export default class Calendar {
     return d.getDay();
   }
 
-  /**
-   * This function must be called with an index to check first
-   * as a parameter, preferably -1.
-   */
-  getLastDay(indexToCheckFirst: number): number {
-    const day = Object.values(this.calendar).at(indexToCheckFirst);
-    if (!day) {
-      throw new CalendarError("Could not find last school day.");
-    }
-
-    if (day.hasSchool) {
-      const foundDate = new Date(day.date);
-      if (day.timeSlot === "Regular") {
-        foundDate.setMilliseconds(this.regularSchoolDayTime[1]);
-      } else if (day.timeSlot === "Early Dismissal") {
-        foundDate.setMilliseconds(this.earlyDismissalTime[1]);
-      }
-      return foundDate.getTime();
-    } else {
-      return this.getLastDay(--indexToCheckFirst);
-    }
-  }
-
   findNextLongWeekend(): number {
     const day = Object.values(this.calendar).find((day, index, array) => {
       const first = array[index];
@@ -428,7 +454,7 @@ export default class Calendar {
     });
 
     if (!day) {
-      const previousFoundDay = new Date(this.getLastDay(-1));
+      const previousFoundDay = new Date(this.lastDay);
       return previousFoundDay.getTime();
     }
     const previousFoundDay = new Date(day.date);
@@ -467,12 +493,36 @@ export default class Calendar {
     });
 
     if (!day) {
-      const previousFoundDay = new Date(this.getLastDay(-1));
+      const previousFoundDay = new Date(this.lastDay);
       return previousFoundDay.getTime();
     }
     const foundDate = new Date(day.date);
     return this.schoolTimeify(foundDate).getTime();
   }
+
+  /**
+   * Takes any number of arrays of numbers as an argument, 
+   * each array must have exactly 5 numbers, to be passed on 
+   * to a Date object constructor, they must be valid dates.
+   * and arranged in chronological order.
+   */
+  findEndTerm(...termEnds: Array<TermEndSpecification>): number {
+    let termEndDates: Array<Date> = [];
+    for (const arr of termEnds) {
+      const date = new Date(...arr);
+      termEndDates.push(date);
+    }
+
+    for (const date of termEndDates) {
+      // First term that has not passed
+      if (date.getTime() - this.now > 0) {
+        return date.getTime();
+      }
+    }
+
+    return this.now;
+  }
+
 
   getDateAt(dateStamp: string): DayInfo {
     if (!this.calendar[dateStamp]) {

@@ -44,6 +44,15 @@ let causeOfDeath: string;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
+type DateArgs = [number, number, number, number, number];
+
+const termEnds: Array<DateArgs> = [
+  [2026, 10, 18, 15, 40],
+  [2027, 1, 5, 15, 40],
+  [2027, 3, 13, 15, 40],
+  [2027, 5, 21, 15, 40],
+];
+
 async function start() {
   // Welcome
   console.log(
@@ -162,7 +171,7 @@ function getPreferredDates(value: string) {
       causeOfDeath = "Long Weekend";
       break;
     case "term":
-      findEndTerm();
+      endDate = new Date(calendar.findEndTerm(...termEnds));
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
@@ -297,33 +306,6 @@ async function setPreferredCalendars(value: string) {
   calendar = tempCalendar;
 
   localStorage.setItem("calendar", value);
-}
-
-function findEndTerm() {
-  type DateArgs = [number, number, number, number, number];
-
-  const termEnds: DateArgs[] = [
-    [2026, 10, 18, 15, 40],
-    [2027, 1, 5, 15, 40],
-    [2027, 3, 13, 15, 40],
-    [2027, 5, 21, 15, 40],
-  ];
-  let termEndDates: Date[] = [];
-  for (const arr of termEnds) {
-    const date = new Date(...arr);
-    termEndDates.push(date);
-  }
-
-  // Get current term
-  for (const date of termEndDates) {
-    // First term that has not passed
-    if (date.getTime() - calendar.now > 0) {
-      endDate = new Date(date.getTime());
-      return;
-    }
-  }
-
-  endDate = new Date(calendar.now);
 }
 
 function triggerFinish() {
