@@ -58,7 +58,7 @@ export default class Calendar {
   }
 
   /**
-   * Loads data using fetch from an external JSON file, data 
+   * Loads data using fetch from an external JSON file, data
    * format must match type `dayInfo`.
    */
   async loadData(): Promise<void> {
@@ -76,9 +76,9 @@ export default class Calendar {
 
   /**
    * This function must be called with an index to check first
-   * as a parameter, preferably -1. It should only be used once 
-   * inside loadDate(), to prevent unnecessary calculation; to 
-   * get the last day of school, reference the `this.lastDay` 
+   * as a parameter, preferably -1. It should only be used once
+   * inside loadDate(), to prevent unnecessary calculation; to
+   * get the last day of school, reference the `this.lastDay`
    * variable.
    */
   getLastDay(indexToCheckFirst: number): number {
@@ -100,7 +100,6 @@ export default class Calendar {
     }
   }
 
-
   // Check whether calendar has been loaded.
   get calendar(): CalendarObject {
     if (!this._calendar) {
@@ -115,7 +114,9 @@ export default class Calendar {
 
   get lastDay(): number {
     if (!this._lastDay) {
-      throw new CalendarError("Last day of school not found, this may be due to failing to load a valid calendar.");
+      throw new CalendarError(
+        "Last day of school not found, this may be due to failing to load a valid calendar."
+      );
     }
     return this._lastDay;
   }
@@ -218,9 +219,9 @@ export default class Calendar {
 
   /**
    * This method takes two arguments, the timeStamp parameter represents the target
-   * to which the school time to will be calculated, the second parameter, which is 
-   * optional, represents the time where the function should take as it's starting 
-   * time. Please take note that the FIRST parameter is the ending time, and the 
+   * to which the school time to will be calculated, the second parameter, which is
+   * optional, represents the time where the function should take as it's starting
+   * time. Please take note that the FIRST parameter is the ending time, and the
    * SECOND is the starting time.
    */
   getSchoolTimeTo(timeStamp: number, startingTime: number = this.now): number {
@@ -501,8 +502,8 @@ export default class Calendar {
   }
 
   /**
-   * Takes any number of arrays of numbers as an argument, 
-   * each array must have exactly 5 numbers, to be passed on 
+   * Takes any number of arrays of numbers as an argument,
+   * each array must have exactly 5 numbers, to be passed on
    * to a Date object constructor, they must be valid dates.
    * and arranged in chronological order.
    */
@@ -522,7 +523,6 @@ export default class Calendar {
 
     return this.now;
   }
-
 
   getDateAt(dateStamp: string): DayInfo {
     if (!this.calendar[dateStamp]) {
