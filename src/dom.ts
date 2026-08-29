@@ -1,6 +1,5 @@
 import "./styles.css";
 import "./themes.css";
-
 import Calendar from "./calendar";
 
 const welcomeText =
@@ -24,22 +23,22 @@ const schoolTimeContainer = document.getElementById(
 ) as HTMLDivElement | null;
 const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
 
-const timeToggleButton = document.getElementById("time-toggle") as HTMLElement | null;
-const timeMenu = document.getElementById("time-menu") as HTMLElement | null;
+const timeToggleButton = document.getElementById("time-toggle");
+const timeMenu = document.getElementById("time-menu");
 
-const settingsButton = document.getElementById("settings-button") as HTMLElement | null;
-const settingsMenu = document.getElementById("settings") as HTMLElement | null;
+const settingsButton = document.getElementById("settings-button");
+const settingsMenu = document.getElementById("settings");
 
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
 
 let calendar = new Calendar("./calendars/gci.json");
-let endDate = new Date(2027, 5, 21, 15, 40);
-// let startingDate = new Date(2026, 8, 9, 8, 30);
-let startingDate = new Date(Date.now());
+let endDate: Date = new Date(2027, 5, 21, 15, 40);
 
-let finish: boolean = false;
+// When school starts, uncomment
+// let startingDate: Date = new Date(2026, 8, 9, 8, 30);
+let startingDate: Date = new Date(Date.now());
 let causeOfDeath: string;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
@@ -75,9 +74,8 @@ async function start() {
   handleCalendars();
 
   updateDOM();
-  const mainloopId = setInterval(() => {
+  setInterval(() => {
     if (checkFinish()) {
-      // clearInterval(mainloopId);
       triggerFinish();
     } else {
       updateDOM();
@@ -114,7 +112,7 @@ function handleTime() {
     return;
   }
 
-  timeToggleButton.addEventListener("click", (e) => {
+  timeToggleButton.addEventListener("click", () => {
     if (timeMenu.hidden) {
       timeMenu.hidden = false;
       timeToggleButton.classList.add("open");
@@ -124,9 +122,9 @@ function handleTime() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!timeMenu.contains(target) && !timeToggleButton.contains(target)) {
       timeMenu.hidden = true;
       timeToggleButton.classList.remove("open");
@@ -189,7 +187,7 @@ function handleSettings() {
     return;
   }
 
-  settingsButton.addEventListener("click", (e) => {
+  settingsButton.addEventListener("click", () => {
     if (settingsMenu.hidden) {
       settingsMenu.hidden = false;
       settingsButton.classList.add("open");
@@ -199,9 +197,9 @@ function handleSettings() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!settingsMenu.contains(target) && !settingsButton.contains(target)) {
       settingsMenu.hidden = true;
       settingsButton.classList.remove("open");
@@ -218,7 +216,7 @@ function handleThemes() {
     return;
   }
 
-  themeButton.addEventListener("click", (e) => {
+  themeButton.addEventListener("click", () => {
     if (themeMenu.hidden) {
       themeMenu.hidden = false;
       themeButton.classList.add("open");
@@ -228,9 +226,9 @@ function handleThemes() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!themeMenu.contains(target) && !themeButton.contains(target)) {
       themeMenu.hidden = true;
       themeButton.classList.remove("open");
@@ -259,7 +257,7 @@ function handleCalendars() {
     return;
   }
 
-  calendarButton.addEventListener("click", (e) => {
+  calendarButton.addEventListener("click", () => {
     if (calendarMenu.hidden) {
       calendarMenu.hidden = false;
       calendarButton.classList.add("open");
@@ -269,9 +267,9 @@ function handleCalendars() {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", (event) => {
     // Stop tsc from complaining
-    const target = e.target as Node;
+    const target = event.target as Node;
     if (!calendarMenu.contains(target) && !calendarButton.contains(target)) {
       calendarMenu.hidden = true;
       calendarButton.classList.remove("open");
@@ -309,7 +307,7 @@ async function setPreferredCalendars(value: string) {
 }
 
 function triggerFinish() {
-  finish = true;
+  // Finished
   if (!container || !lastMessage) return;
   container.hidden = true;
   lastMessage.textContent = causeOfDeath;
@@ -317,7 +315,7 @@ function triggerFinish() {
 }
 
 function undoFinish() {
-  finish = false;
+  // Not finished
   if (!container || !lastMessage) return;
   container.hidden = false;
   lastMessage.hidden = true;
@@ -380,32 +378,16 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
 }
 
-function populateSchoolTimes(schoolTimeRemaining: number) {
-  // See calendar.ts for function usage
-  schoolTimes[0].textContent = String(
-    calendar.floorTimestamp("day", schoolTimeRemaining) / 1000 / 60 / 60 / 24
-  );
-  schoolTimes[1].textContent = String(
-    calendar.floorTimestamp("hour", schoolTimeRemaining) / 1000 / 60 / 60
-  );
-  schoolTimes[2].textContent = String(
-    calendar.modTimestamp("minute", schoolTimeRemaining) / 1000 / 60
-  );
-  schoolTimes[3].textContent = String(calendar.modTimestamp("second", schoolTimeRemaining) / 1000);
-}
-
 function populateTotalTimes(timeRemaining: number) {
-  // See calendar.ts for function usage
-
   // Worst code I have ever written, MUST fix later
-  const daysLeft: number = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
-  const hoursLeft: number = Math.floor(
+  const daysLeft = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
+  const hoursLeft = Math.floor(
     (timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60
   );
-  const minutesLeft: number = Math.floor(
+  const minutesLeft = Math.floor(
     (timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
   );
-  const secondsLeft: number = Math.floor(
+  const secondsLeft = Math.floor(
     (timeRemaining -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
@@ -443,9 +425,6 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
 function updateProgressBar() {
   const start = startingDate;
 
-  // Uncomment when school actually starts
-  // const start = new Date(2026, 8, 9, 8, 30);
-
   const end = endDate;
   let fractionPercentage: number;
   try {
@@ -454,7 +433,7 @@ function updateProgressBar() {
     return;
   }
 
-  const percentFinished: string = `${fractionPercentage * 100}%`;
+  const percentFinished = `${fractionPercentage * 100}%`;
 
   if (progressBar) {
     progressBar.style.width = percentFinished;
