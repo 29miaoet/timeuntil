@@ -344,8 +344,8 @@ function updateTimer() {
   try {
     schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());
     schoolDates = calendar.getSchoolTimeAsDate(endDate.getTime());
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     schoolTimeRemaining = null;
     schoolDates = null;
   }
@@ -427,7 +427,7 @@ function updateProgressBar() {
   let fractionPercentage: number;
   try {
     fractionPercentage = calendar.getPercentCompletion(start.getTime(), end.getTime());
-  } catch (e) {
+  } catch (error) {
     return;
   }
 
