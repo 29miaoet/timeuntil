@@ -381,9 +381,7 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
 function populateTotalTimes(timeRemaining: number) {
   // Worst code I have ever written, MUST fix later
   const daysLeft = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
-  const hoursLeft = Math.floor(
-    (timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60
-  );
+  const hoursLeft = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
   const minutesLeft = Math.floor(
     (timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
   );
