@@ -43,7 +43,6 @@ export default class Menu {
     return this._menu;
   }
 
-
   addExpandCollapse(): void {
     this.button.addEventListener("click", () => {
       if (this.menu.hidden) {

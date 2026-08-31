@@ -68,7 +68,6 @@ themeMenu.addFunction((event) => {
   setPreferredThemes(value);
 });
 
-
 throw new Error("Do the same thing as above for the settings menu and show time until menu");
 
 async function start() {
@@ -89,7 +88,6 @@ async function start() {
   handleTime();
   await loadPreferences();
   handleSettings();
-
 
   handleCalendars();
 
@@ -226,7 +224,6 @@ function handleSettings() {
     }
   });
 }
-
 
 function handleThemes() {
   const themeMenu = document.getElementById("themes") as HTMLElement | null;
