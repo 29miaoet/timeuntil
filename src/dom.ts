@@ -1,6 +1,7 @@
 import "./styles.css";
 import "./themes.css";
 import Calendar from "./calendar";
+import Menu from "./menu";
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
@@ -52,6 +53,24 @@ const termEnds: Array<DateArgs> = [
   [2027, 5, 21, 15, 40],
 ];
 
+// themeMenu
+const themeMenu = new Menu("#theme-button", "#themes");
+themeMenu.addExpandCollapse();
+themeMenu.addFunction((event) => {
+  event.stopPropagation();
+  const target = event.target as HTMLElement;
+  const option = target.closest<HTMLElement>("[data-theme]");
+
+  if (!option) return;
+  const value = option.dataset.theme;
+
+  if (!value) return;
+  setPreferredThemes(value);
+});
+
+
+throw new Error("Do the same thing as above for the settings menu and show time until menu");
+
 async function start() {
   // Welcome
   console.log(
@@ -70,7 +89,8 @@ async function start() {
   handleTime();
   await loadPreferences();
   handleSettings();
-  handleThemes();
+
+
   handleCalendars();
 
   updateDOM();
@@ -206,6 +226,7 @@ function handleSettings() {
     }
   });
 }
+
 
 function handleThemes() {
   const themeMenu = document.getElementById("themes") as HTMLElement | null;
