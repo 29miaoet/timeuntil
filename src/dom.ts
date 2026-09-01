@@ -24,12 +24,6 @@ const schoolTimeContainer = document.getElementById(
 ) as HTMLDivElement | null;
 const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
 
-const timeToggleButton = document.getElementById("time-toggle");
-const timeMenu = document.getElementById("time-menu");
-
-const settingsButton = document.getElementById("settings-button");
-const settingsMenu = document.getElementById("settings");
-
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
@@ -53,22 +47,7 @@ const termEnds: Array<DateArgs> = [
   [2027, 5, 21, 15, 40],
 ];
 
-// themeMenu
-const themeMenu = new Menu("#theme-button", "#themes");
-themeMenu.addExpandCollapse();
-themeMenu.addFunction((event) => {
-  event.stopPropagation();
-  const target = event.target as HTMLElement;
-  const option = target.closest<HTMLElement>("[data-theme]");
 
-  if (!option) return;
-  const value = option.dataset.theme;
-
-  if (!value) return;
-  setPreferredThemes(value);
-});
-
-throw new Error("Do the same thing as above for the settings menu and show time until menu");
 
 async function start() {
   // Welcome
@@ -85,12 +64,9 @@ async function start() {
     console.error("Outside of calendar time frame, school time unavailable.");
   }
 
-  handleTime();
   await loadPreferences();
-  handleSettings();
 
-  handleCalendars();
-
+  initializeMenus();
   updateDOM();
   setInterval(() => {
     if (checkFinish()) {
@@ -119,37 +95,42 @@ async function loadPreferences() {
   }
 }
 
-function checkFinish() {
-  const now = new Date(calendar.now);
-  return now >= endDate;
-}
+function initializeMenus() {
+  // themeMenu
+  const themeMenu = new Menu("#theme-button", "#themes");
+  themeMenu.addExpandCollapse();
+  themeMenu.addFunction((event) => {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const option = target.closest<HTMLElement>("[data-theme]");
 
-function handleTime() {
-  if (!timeToggleButton || !timeMenu) {
-    console.error("Time toggle menu nonfunctional.");
-    return;
-  }
+    if (!option) return;
+    const value = option.dataset.theme;
 
-  timeToggleButton.addEventListener("click", () => {
-    if (timeMenu.hidden) {
-      timeMenu.hidden = false;
-      timeToggleButton.classList.add("open");
-    } else {
-      timeMenu.hidden = true;
-      timeToggleButton.classList.remove("open");
-    }
+    if (!value) return;
+    setPreferredThemes(value);
   });
 
-  document.addEventListener("click", (event) => {
-    // Stop tsc from complaining
-    const target = event.target as Node;
-    if (!timeMenu.contains(target) && !timeToggleButton.contains(target)) {
-      timeMenu.hidden = true;
-      timeToggleButton.classList.remove("open");
-    }
+  // CalendarMenu
+  const calendarSettingsMenu =  new Menu("#calendar-button", "#calendars");
+  calendarSettingsMenu.addExpandCollapse();
+  calendarSettingsMenu.addFunction((event) => {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const option = target.closest<HTMLElement>("[data-calendar]");
+
+    if (!option) return;
+    const value = option.dataset.calendar;
+
+    if (!value) return;
+    setPreferredCalendars(value);
   });
 
-  timeMenu.addEventListener("click", (event) => {
+
+  // TimeMenu
+  const timeMenu = new Menu("#time-toggle", "#time-menu");
+  timeMenu.addExpandCollapse();
+  timeMenu.addFunction((event) => {
     const target = event.target as HTMLElement;
     const option = target.closest<HTMLElement>("[data-value]");
 
@@ -158,6 +139,10 @@ function handleTime() {
     if (!value) return;
     getPreferredDates(value);
   });
+
+  // SettingsMenu
+  const settingsMenu = new Menu("#settings-button", "#settings")
+  settingsMenu.addExpandCollapse();
 }
 
 function getPreferredDates(value: string) {
@@ -199,113 +184,6 @@ function getPreferredDates(value: string) {
   localStorage.setItem("date", value);
 }
 
-function handleSettings() {
-  if (!settingsButton || !settingsMenu) {
-    console.error("Time toggle menu nonfunctional.");
-    return;
-  }
-
-  settingsButton.addEventListener("click", () => {
-    if (settingsMenu.hidden) {
-      settingsMenu.hidden = false;
-      settingsButton.classList.add("open");
-    } else {
-      settingsMenu.hidden = true;
-      settingsButton.classList.remove("open");
-    }
-  });
-
-  document.addEventListener("click", (event) => {
-    // Stop tsc from complaining
-    const target = event.target as Node;
-    if (!settingsMenu.contains(target) && !settingsButton.contains(target)) {
-      settingsMenu.hidden = true;
-      settingsButton.classList.remove("open");
-    }
-  });
-}
-
-function handleThemes() {
-  const themeMenu = document.getElementById("themes") as HTMLElement | null;
-  const themeButton = document.getElementById("theme-button") as HTMLDivElement | null;
-
-  if (!themeMenu || !themeButton) {
-    console.error("Theme selection nonfunctional");
-    return;
-  }
-
-  themeButton.addEventListener("click", () => {
-    if (themeMenu.hidden) {
-      themeMenu.hidden = false;
-      themeButton.classList.add("open");
-    } else {
-      themeMenu.hidden = true;
-      themeButton.classList.remove("open");
-    }
-  });
-
-  document.addEventListener("click", (event) => {
-    // Stop tsc from complaining
-    const target = event.target as Node;
-    if (!themeMenu.contains(target) && !themeButton.contains(target)) {
-      themeMenu.hidden = true;
-      themeButton.classList.remove("open");
-    }
-  });
-
-  themeMenu.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const target = event.target as HTMLElement;
-    const option = target.closest<HTMLElement>("[data-theme]");
-
-    if (!option) return;
-    const value = option.dataset.theme;
-
-    if (!value) return;
-    setPreferredThemes(value);
-  });
-}
-
-function handleCalendars() {
-  const calendarMenu = document.getElementById("calendars") as HTMLElement | null;
-  const calendarButton = document.getElementById("calendar-button") as HTMLDivElement | null;
-
-  if (!calendarMenu || !calendarButton) {
-    console.error("Calendar selection nonfunctional");
-    return;
-  }
-
-  calendarButton.addEventListener("click", () => {
-    if (calendarMenu.hidden) {
-      calendarMenu.hidden = false;
-      calendarButton.classList.add("open");
-    } else {
-      calendarMenu.hidden = true;
-      calendarButton.classList.remove("open");
-    }
-  });
-
-  document.addEventListener("click", (event) => {
-    // Stop tsc from complaining
-    const target = event.target as Node;
-    if (!calendarMenu.contains(target) && !calendarButton.contains(target)) {
-      calendarMenu.hidden = true;
-      calendarButton.classList.remove("open");
-    }
-  });
-
-  calendarMenu.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const target = event.target as HTMLElement;
-    const option = target.closest<HTMLElement>("[data-calendar]");
-
-    if (!option) return;
-    const value = option.dataset.calendar;
-
-    if (!value) return;
-    setPreferredCalendars(value);
-  });
-}
 
 function setPreferredThemes(value: string) {
   document.documentElement.dataset.theme = value;
@@ -322,6 +200,11 @@ async function setPreferredCalendars(value: string) {
   calendar = tempCalendar;
 
   localStorage.setItem("calendar", value);
+}
+
+function checkFinish() {
+  const now = new Date(calendar.now);
+  return now >= endDate;
 }
 
 function triggerFinish() {
