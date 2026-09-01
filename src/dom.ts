@@ -47,8 +47,6 @@ const termEnds: Array<DateArgs> = [
   [2027, 5, 21, 15, 40],
 ];
 
-
-
 async function start() {
   // Welcome
   console.log(
@@ -112,7 +110,7 @@ function initializeMenus() {
   });
 
   // CalendarMenu
-  const calendarSettingsMenu =  new Menu("#calendar-button", "#calendars");
+  const calendarSettingsMenu = new Menu("#calendar-button", "#calendars");
   calendarSettingsMenu.addExpandCollapse();
   calendarSettingsMenu.addFunction((event) => {
     event.stopPropagation();
@@ -125,7 +123,6 @@ function initializeMenus() {
     if (!value) return;
     setPreferredCalendars(value);
   });
-
 
   // TimeMenu
   const timeMenu = new Menu("#time-toggle", "#time-menu");
@@ -141,7 +138,7 @@ function initializeMenus() {
   });
 
   // SettingsMenu
-  const settingsMenu = new Menu("#settings-button", "#settings")
+  const settingsMenu = new Menu("#settings-button", "#settings");
   settingsMenu.addExpandCollapse();
 }
 
@@ -183,7 +180,6 @@ function getPreferredDates(value: string) {
   if (!checkFinish()) undoFinish();
   localStorage.setItem("date", value);
 }
-
 
 function setPreferredThemes(value: string) {
   document.documentElement.dataset.theme = value;

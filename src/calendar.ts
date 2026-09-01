@@ -465,16 +465,15 @@ export default class Calendar {
   /**
    * Takes a date object as an input and returns a modified date object
    * that has hours and minutes set to the end school time of either
-   * late start or early dismissal. It is the only method in this 
+   * late start or early dismissal. It is the only method in this
    * class that converses in Date objects rather than timestamps.
    */
   schoolTimeify(dateObj: Date): Date {
     // Rollback to previous day
     dateObj.setDate(dateObj.getDate() - 1);
     // Add check for whether it falls on the same day as right now
-    if (this.floorTimestamp("day", dateObj.getTime()) === 
-        this.floorTimestamp("day", this.now)) {
-      return new Date(this.now)
+    if (this.floorTimestamp("day", dateObj.getTime()) === this.floorTimestamp("day", this.now)) {
+      return new Date(this.now);
     }
     const stamp = this.strftime(dateObj.getTime());
 
