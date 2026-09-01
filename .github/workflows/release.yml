@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. v1.2.3)"
+        required: true
+        type: string
+
+      prerelease:
+        description: "Mark as a pre-release"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 #v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - run: sha256sum dist/* > SHA256SUMS
+
+      - uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 #3.0.3
+        with:
+          tag_name: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          prerelease: ${{ inputs.prerelease }}
+          generate_release_notes: true
+
+          body: |
+            ## Deployed
+            [**timeuntil**](https://29miaoet.github.io/timeuntil/)
+
+            ## Features
+            - ✅ Dropdown menu to select different end times
+            - ✅ Options to toggle between different schools
+            - ✅ Responsive UI layout
+            - ✅ Modern HTML, CSS and TypeScript code
+            - ✅ Modern npm build stack
+
+          files: |
+            dist/*
+            SHA256SUMS
