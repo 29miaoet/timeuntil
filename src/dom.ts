@@ -33,9 +33,9 @@ const earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
 const regularSchoolDayTime = [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000];
 
 let calendar = new Calendar(
-"./calendars/gci.json", 
-[8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-[8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
+  "./calendars/gci.json",
+  [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
+  [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
 );
 
 let endDate: Date = new Date(2027, 5, 21, 15, 40);
@@ -203,13 +203,13 @@ async function setPreferredCalendars(value: string) {
     tempCalendar = new Calendar(
       school_name,
       [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, (15 * 60 + 30) * 60 * 1000],
+      [8.5 * 60 * 60 * 1000, (15 * 60 + 30) * 60 * 1000]
     );
   } else {
     tempCalendar = new Calendar(
       school_name,
       [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000],
+      [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
     );
   }
 
