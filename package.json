@@ -1,4 +1,6 @@
 {
+  "name": "timeuntil",
+  "type": "module",
   "devDependencies": {
     "typescript": "^7.0.2",
     "vite": "^8.2.2"
