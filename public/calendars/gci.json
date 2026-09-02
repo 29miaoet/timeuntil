@@ -2595,39 +2595,39 @@
     "date": "2027-06-21",
     "hasSchool": true,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "Last Day of School",
     "holidays": [],
     "dayInfo": ["Last Day of Classes"]
   },
   "2027-06-22": {
     "date": "2027-06-22",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Course Schedule Changes"]
   },
   "2027-06-23": {
     "date": "2027-06-23",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Course Schedule Changes", "Late Start Remembrance Day"]
   },
   "2027-06-24": {
     "date": "2027-06-24",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Grade 9 Run Through"]
   },
   "2027-06-25": {
     "date": "2027-06-25",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Convocation"]
   },
@@ -2649,25 +2649,25 @@
   },
   "2027-06-28": {
     "date": "2027-06-28",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Grad Banquet"]
   },
   "2027-06-29": {
     "date": "2027-06-29",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Convocation", "Report Cards Posted"]
   },
   "2027-06-30": {
     "date": "2027-06-30",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Early Dismissal",
-    "status": "Early Dismissal",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["SAS Day", "Late Start Remembrance Day"]
   }
