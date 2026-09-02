@@ -47,13 +47,10 @@ export default class Calendar {
   private regularSchoolDayTime: FixedTime;
   public now: number;
 
-  constructor(dbPath: string) {
+  constructor(dbPath: string, earlyDismissalTime: FixedTime, regularSchoolDayTime: FixedTime) {
     this.dbPath = dbPath;
-    // Hardcoded for now, something to fix later
-    // 8:30 to 14:30
-    this.earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-    // 8:30 to 15:40
-    this.regularSchoolDayTime = [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000];
+    this.earlyDismissalTime = earlyDismissalTime;
+    this.regularSchoolDayTime = regularSchoolDayTime;
     this.now = Date.now();
   }
 

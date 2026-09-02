@@ -28,7 +28,16 @@ let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
 
-let calendar = new Calendar("./calendars/gci.json");
+const earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
+// 8:30 to 15:40
+const regularSchoolDayTime = [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000];
+
+let calendar = new Calendar(
+"./calendars/gci.json", 
+[8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
+[8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
+);
+
 let endDate: Date = new Date(2027, 5, 21, 15, 40);
 
 // When school starts, uncomment
@@ -188,8 +197,22 @@ function setPreferredThemes(value: string) {
 
 async function setPreferredCalendars(value: string) {
   const school_name = `./calendars/${value}.json`;
+  let tempCalendar: Calendar;
 
-  const tempCalendar = new Calendar(school_name);
+  if (school_name === "burland") {
+    tempCalendar = new Calendar(
+      school_name,
+      [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
+      [8.5 * 60 * 60 * 1000, (15 * 60 + 30) * 60 * 1000],
+    );
+  } else {
+    tempCalendar = new Calendar(
+      school_name,
+      [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
+      [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000],
+    );
+  }
+
   await tempCalendar.loadData();
   // Wait until the data is initialized and loaded before assigning
   // to prevent crashes caused by an incomplete object.
