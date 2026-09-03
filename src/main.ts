@@ -83,7 +83,6 @@ async function start() {
       updateDOM();
     }
   }, 100);
-
 }
 
 async function loadPreferences() {
@@ -259,7 +258,7 @@ function slowUpdateDOM() {
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  
+
   tomorrow.setHours(0, 0, 0, 0);
 
   const delay = tomorrow.getTime() - Date.now();
