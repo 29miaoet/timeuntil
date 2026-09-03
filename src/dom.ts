@@ -75,6 +75,7 @@ async function start() {
 
   initializeMenus();
   updateDOM();
+  slowUpdateDOM();
   setInterval(() => {
     if (checkFinish()) {
       triggerFinish();
@@ -82,6 +83,7 @@ async function start() {
       updateDOM();
     }
   }, 100);
+
 }
 
 async function loadPreferences() {
@@ -248,8 +250,23 @@ function updateDOM() {
   populateSchoolDates(schoolDates);
 
   populateTotalTimes(totalTimeRemaining);
+}
+
+// Only runs once a day to conserve resources
+function slowUpdateDOM() {
   updateProgressBar();
   updateDayInfos();
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  tomorrow.setHours(0, 0, 0, 0);
+
+  const delay = tomorrow.getTime() - Date.now();
+
+  setTimeout(() => {
+    slowUpdateDOM();
+  }, delay);
 }
 
 function updateTimer() {
@@ -385,21 +402,21 @@ function updateDayInfos() {
 
   let feature;
   if (dayInfos.feature.length !== 0) {
-    feature = '<p class="card-content">' + dayInfos.feature.join("<br>") + "</p>";
+    feature = dayInfos.feature.join("\n");
   } else {
-    feature = '<p class="card-content">Nothing Interesting</p>';
+    feature = "Nothing Interesting";
   }
 
   let event;
   if (dayInfos.event.length !== 0) {
-    event = '<p class="card-content">' + dayInfos.event.join("<br>") + "</p>";
+    event = dayInfos.event.join("\n");
   } else {
-    event = '<p class="card-content">No Events</p>';
+    event = "No Events";
   }
 
   dayStatuses[0].textContent = daystatus;
-  dayStatuses[1].outerHTML = feature;
-  dayStatuses[2].outerHTML = event;
+  dayStatuses[1].textContent = feature;
+  dayStatuses[2].textContent = event;
 }
 
 start();
