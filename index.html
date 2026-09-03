@@ -11,12 +11,14 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="canonical" href="https://29miaoet.github.io/timeuntil/">
+  <link rel="preload" href="calendars/gci.json" as="fetch" crossorigin>
 
   <title>Time Until</title>
 </head>
 <body>
-  <div class="menu">
-    <button type="button" class="option settings" id="settings-button">⚙️</button>
+  <section class="menu">
+  <button type="button" class="option settings" id="settings-button"
+          aria-label="Settings" aria-expanded="false" aria-controls="settings">⚙️</button>
     <div class="dropdown" id="settings" hidden>
       <ul>
         <li data-value="themes" id="theme-button">Themes</li>
@@ -38,7 +40,8 @@
           </ul>
       </ul>
     </div>
-    <button type="button" class="option settings" id="time-toggle">⏳</button>
+    <button type="button" class="option settings" id="time-toggle"
+      aria-label="Time Until Settings" aria-expanded="false">⏳</button>
     <div class="dropdown" id="time-menu" hidden>
       <p>Show time until...</p>
       <ul>
@@ -53,33 +56,36 @@
       </ul>
     </div>
     <a class="option github-icon" href="https://github.com/29miaoet/timeuntil" target="_blank">
-      <img src="github.svg" alt="GitHub logo">
+      <img src="github.svg" alt="GitHub logo" width="25" height="25">
     </a>
-  </div>
+  </section>
 
-  <h1>Time Until</h1>
-  <div class="card-container" id="card-container-main">
-  <div class="card countdown-container">
+  <header>
+    <h1>Time Until</h1>
+  </header>
+
+  <main class="card-container" id="card-container-main">
+  <section class="card countdown-container">
     <h2>School Time Remaining</h2>
     <hr>
     <div class="school-time remaining-time" id="school-time-remaining">
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">days</span>
       </div>
 
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">hours</span>
       </div>
 
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">minutes</span>
       </div>
 
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">seconds</span>
       </div>
     </div>
@@ -88,22 +94,22 @@
     <hr>
     <div class="total-time remaining-time">
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">days</span>
       </div>
 
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">hours</span>
       </div>
 
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">minutes</span>
       </div>
 
       <div class="timeunit">
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
         <span class="timelabel">seconds</span>
       </div>
     </div>
@@ -113,10 +119,10 @@
     <hr>
     <div class="abs-time" id="abs-time-remaining">
       <div class="times">
-        <div class="timebox">00</div>
-        <div class="timebox">00</div>
-        <div class="timebox">00</div>
-        <div class="timebox">00</div>
+        <output class="timebox">00</output>
+        <output class="timebox">00</output>
+        <output class="timebox">00</output>
+        <output class="timebox">00</output>
       </div>
       <div class="timelabels">
         <div class="timelabel">days</div>
@@ -126,39 +132,40 @@
       </div>
     </div>
 
-  </div>
+  </section>
 
-  <div class="card progress-bar">
+  <section class="card progress-bar">
     <div class="bar">
       <div class="progress" id="progress-bar-element"></div>
     </div>
     <p><span id="percentage">50%</span> percent finished</p>
-  </div>
+  </section>
 
-  <div class="card day-info" id="day-information">
+  <section class="card day-info" id="day-information">
     <div class="day-card">
       <p class="card-title">Status</p>
       <hr>
-      <p class="card-content">null</p>
+      <output class="card-content">null</output>
     </div>
     <div class="day-card">
       <p class="card-title">Feature</p>
       <hr>
-      <p class="card-content">null</p>
+      <output class="card-content">null</output>
     </div>
     <div class="day-card">
       <p class="card-title">Event</p>
       <hr>
-      <p class="card-content">null</p>
+      <output class="card-content">null</output>
     </div>
-  </div>
-  </div>
-  <div id="last-message" hidden></div>
+  </section>
+  </main>
+
+  <aside id="last-message" hidden></aside>
 
   <footer>
     &copy; 2026 — Ethan Miao — MIT License
   </footer>
-  <script type="module" src="./src/dom.ts"></script>
+  <script type="module" src="./src/main.ts"></script>
 
 
 </body>
