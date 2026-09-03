@@ -21,23 +21,27 @@
           aria-label="Settings" aria-expanded="false" aria-controls="settings">⚙️</button>
     <div class="dropdown" id="settings" hidden>
       <ul>
-        <li data-value="themes" id="theme-button">Themes</li>
+        <li data-value="themes" id="theme-button">
+          <button>Themes</button>
           <ul class="dropdown sub-dropdown" id="themes" hidden>
-            <li data-theme="default">Default</li>
-            <li data-theme="dark">Dark</li>
-            <li data-theme="light">Light</li>
-            <li data-theme="liquid-glass">Liquid Glass</li>
-            <li data-theme="antique">Antique</li>
-            <li data-theme="red">Red</li>
+            <li data-theme="default"><button>Default</button></li>
+            <li data-theme="dark"><button>Dark</button></li>
+            <li data-theme="light"><button>Light</button></li>
+            <li data-theme="liquid-glass"><button>Liquid Glass</button></li>
+            <li data-theme="antique"><button>Antique</button></li>
+            <li data-theme="red"><button>Red</button></li>
           </ul>
+        </li>
 
-        <li data-value="calendars" id="calendar-button">Calendars</li>
+        <li data-value="calendars" id="calendar-button">
+          <button>Calendars</button>
           <ul class="dropdown sub-dropdown" id="calendars" hidden>
-            <li data-calendar="gci">Glenlawn</li>
-            <li data-calendar="cjs">CJS</li>
-            <li data-calendar="dci">Dakota</li>
-            <li data-calendar="burland">Burland</li>
+            <li data-calendar="gci"><button>Glenlawn</button></li>
+            <li data-calendar="cjs"><button>CJS</button></li>
+            <li data-calendar="dci"><button>Dakota</button></li>
+            <li data-calendar="burland"><button>Burland</button></li>
           </ul>
+        </li>
       </ul>
     </div>
     <button type="button" class="option settings" id="time-toggle"
@@ -45,14 +49,14 @@
     <div class="dropdown" id="time-menu" hidden>
       <p>Show time until...</p>
       <ul>
-        <li data-value="summer">Summer</li>
-        <li data-value="spring">Spring Break</li>
-        <li data-value="winter">Winter Break</li>
-        <li data-value="noschool">No School Day</li>
-        <li data-value="weekend">Weekend</li>
-        <li data-value="lweekend">Long Weekend</li>
-        <li data-value="term">End of term</li>
-        <li data-value="start">School Starts</li>
+        <li data-value="summer"><button>Summer</button></li>
+        <li data-value="spring"><button>Spring Break</button></li>
+        <li data-value="winter"><button>Winter Break</button></li>
+        <li data-value="noschool"><button>No School Day</button></li>
+        <li data-value="weekend"><button>Weekend</button></li>
+        <li data-value="lweekend"><button>Long Weekend</button></li>
+        <li data-value="term"><button>End of term</button></li>
+        <li data-value="start"><button>School Starts</button></li>
       </ul>
     </div>
     <a class="option github-icon" href="https://github.com/29miaoet/timeuntil" target="_blank">
@@ -138,24 +142,24 @@
     <div class="bar">
       <div class="progress" id="progress-bar-element"></div>
     </div>
-    <p><span id="percentage">50%</span> percent finished</p>
+    <p><span id="percentage">0%</span> percent finished</p>
   </section>
 
   <section class="card day-info" id="day-information">
     <div class="day-card">
       <p class="card-title">Status</p>
       <hr>
-      <output class="card-content">null</output>
+      <output class="card-content">loading...</output>
     </div>
     <div class="day-card">
       <p class="card-title">Feature</p>
       <hr>
-      <output class="card-content">null</output>
+      <output class="card-content">loading...</output>
     </div>
     <div class="day-card">
       <p class="card-title">Event</p>
       <hr>
-      <output class="card-content">null</output>
+      <output class="card-content">loading...</output>
     </div>
   </section>
   </main>
