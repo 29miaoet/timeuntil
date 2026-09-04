@@ -117,7 +117,7 @@ button {
 }
 
 .abs-time {
-  width: 75%;
+  width: 100%;
   max-width: 500px;
   display: flex;
   flex-direction: row;
@@ -136,8 +136,6 @@ button {
   display: flex;
   flex-direction: column;
   margin-left: 5px;
-  align-items: left;
-  justify-content: left;
   text-align: left;
   flex: 1;
 }
@@ -382,12 +380,6 @@ footer {
 }
 
 @media (max-width: 820px) {
-  .school-time {
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-  }
-
   .timelabel,
   .timebox {
     margin-left: 10px;
@@ -397,10 +389,6 @@ footer {
 
   .timebox {
     flex: 1;
-  }
-
-  .abs-time > .times > .timebox {
-    margin-left: 25%;
   }
 }
 
@@ -409,17 +397,32 @@ footer {
     position: relative;
   }
 
-  .school-time {
+  .school-time, .total-time {
     flex-direction: column;
     justify-content: center;
     align-items: left;
   }
 
-  .timelabel,
-  .timebox {
+  .timelabel, .timebox {
     margin-left: 10px;
     margin-right: 10px;
     flex: 1;
+  }
+
+  .abs-time {
+    min-width: 0;
+  }
+
+  .abs-time > .times {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .abs-time > .times > .timebox {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .timebox {
