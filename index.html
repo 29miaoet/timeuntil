@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A client-side webpage to count down the days until school ends.">
   <meta name="google-site-verification" content="d6W-f_P_-ShbtMOYyo0yqaKPRt3SQ5--5r77UmngTuo">
+  <meta name="theme-color" content="#5095eb">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="manifest" href="manifest.webmanifest">
@@ -16,13 +17,13 @@
   <title>Time Until</title>
 </head>
 <body>
-  <section class="menu">
+  <section class="menu" aria-label="Settings Panel">
   <button type="button" class="option settings" id="settings-button"
-          aria-label="Settings" aria-expanded="false" aria-controls="settings">⚙️</button>
+          aria-label="Settings Button" aria-expanded="false" aria-controls="settings">⚙️</button>
     <div class="dropdown" id="settings" hidden>
       <ul>
         <li data-value="themes" id="theme-button">
-          <button>Themes</button>
+          <button aria-label="Themes"  aria-expanded="false" aria-controls="themes">Themes</button>
           <ul class="dropdown sub-dropdown" id="themes" hidden>
             <li data-theme="default"><button>Default</button></li>
             <li data-theme="dark"><button>Dark</button></li>
@@ -30,11 +31,12 @@
             <li data-theme="liquid-glass"><button>Liquid Glass</button></li>
             <li data-theme="antique"><button>Antique</button></li>
             <li data-theme="red"><button>Red</button></li>
+            <li data-theme="accessible"><button>Accessible</button></li>
           </ul>
         </li>
 
         <li data-value="calendars" id="calendar-button">
-          <button>Calendars</button>
+          <button aria-label="Themes"  aria-expanded="false" aria-controls="calendars">Calendars</button>
           <ul class="dropdown sub-dropdown" id="calendars" hidden>
             <li data-calendar="gci"><button>Glenlawn</button></li>
             <li data-calendar="cjs"><button>CJS</button></li>
@@ -45,7 +47,7 @@
       </ul>
     </div>
     <button type="button" class="option settings" id="time-toggle"
-      aria-label="Time Until Settings" aria-expanded="false">⏳</button>
+      aria-label="Time Until Settings" aria-expanded="false" aria-controls="time-menu">⏳</button>
     <div class="dropdown" id="time-menu" hidden>
       <p>Show time until...</p>
       <ul>
@@ -140,7 +142,8 @@
 
   <section class="card progress-bar">
     <div class="bar">
-      <div class="progress" id="progress-bar-element"></div>
+      <div class="progress" id="progress-bar-element" role="progressbar" aria-label="School year progress"
+     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
     </div>
     <p><span id="percentage">0%</span> percent finished</p>
   </section>
