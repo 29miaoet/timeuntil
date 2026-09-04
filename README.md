@@ -21,7 +21,8 @@ timeuntil/
 │   └── CONTRIBUTING.md
 │
 ├── src/
-│   ├── dom.ts
+│   ├── main.ts
+│   ├── menu.ts
 │   ├── calendar.ts
 │   ├── themes.css
 │   ├── styles.css
@@ -61,6 +62,7 @@ timeuntil/
 - ✅ Customization options
 - ✅ Modern HTML, CSS and TypeScript code
 - ✅ Modern npm build stack
+- ✅ Only ~10ms drift between displays
 
 ## Requisites
 
@@ -83,10 +85,10 @@ Please Reference [CONTRIBUTING.md](https://github.com/29miaoet/timeuntil/blob/ma
 
 - [x] Add functionality to UI buttons.
 - [x] Finish basic website UI.
-- [ ] Migrate UI handlers to React.
-- [ ] Organize and shorten code by using more functions.
+- ~~Migrate UI handlers to React.~~
+- [x] Organize and shorten code by using more functions.
 - [ ] Harden code logic.
-- [ ] Transform static CSS into Sass.
+- ~~Transform static CSS into Sass.~~
 - [ ] Add more theme and styling options.
 
 ## Stats
@@ -107,7 +109,7 @@ Please Reference [CONTRIBUTING.md](https://github.com/29miaoet/timeuntil/blob/ma
 - ![Pull requests](https://img.shields.io/github/issues-pr/29miaoet/timeuntil)
 - ![Closed Pull requests](https://img.shields.io/github/issues-pr-closed/29miaoet/timeuntil)
 
-## Utilized Tools & Services
+## Utilized Tools
 
 - [Node.js](https://github.com/nodejs/node)
 - [TypeScript](https://github.com/microsoft/TypeScript)
