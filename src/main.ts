@@ -195,11 +195,10 @@ function setPreferredThemes(value: string) {
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
 
   if (!metaThemeColor) {
-    console.error("Meta theme color tag is missing.")
+    console.error("Meta theme color tag is missing.");
     return;
   }
-  metaThemeColor.setAttribute('content', color);
-
+  metaThemeColor.setAttribute("content", color);
 }
 
 async function setPreferredCalendars(value: string) {
