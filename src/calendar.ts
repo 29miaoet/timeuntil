@@ -151,6 +151,18 @@ export default class Calendar {
     }
   }
 
+  schoolNow(): boolean {
+    const currentDate = this.strftime(this.now);
+    if (!this.calendar[currentDate].hasSchool) {
+      return false;
+    } else if (this.calendar[currentDate].timeSlot === "Regular") {
+      return (this.regularSchoolDayTime[0] < this.now) && (this.regularSchoolDayTime[1] > this.now);
+    } else if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
+      return (this.earlyDismissalTime[0] < this.now) && (this.earlyDismissalTime[1] > this.now);
+    }
+    return false;
+  }
+
   getAbsoluteTimeTo(timeStamp: number): number {
     const absTime = timeStamp - this.now;
     return absTime;

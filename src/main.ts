@@ -40,6 +40,7 @@ let endDate: Date = new Date(2027, 5, 21, 15, 40);
 // let startingDate: Date = new Date(2026, 8, 9, 8, 30);
 let startingDate: Date = new Date(Date.now());
 let causeOfDeath: string;
+let domIsEmpty: boolean = true;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
@@ -72,6 +73,7 @@ async function start() {
   initializeMenus();
   updateDOM();
   slowUpdateDOM();
+  domIsEmpty = false;
   setInterval(() => {
     if (checkFinish()) {
       triggerFinish();
@@ -248,11 +250,10 @@ function undoFinish() {
 }
 
 function updateDOM() {
-  populateAbsoluteTimes(schoolTimeRemaining);
   updateTimer();
 
+  populateAbsoluteTimes(schoolTimeRemaining);
   populateSchoolDates(schoolDates);
-
   populateTotalTimes(totalTimeRemaining);
 }
 
@@ -295,6 +296,7 @@ function updateTimer() {
 }
 
 function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
+  if (!calendar.schoolNow() && !domIsEmpty) return;
   if (schoolTimeRemaining === null) {
     if (!absoluteTimeContainer) {
       console.error("Absolute times container not found.");
@@ -341,6 +343,7 @@ function populateTotalTimes(timeRemaining: number) {
 }
 
 function populateSchoolDates(schoolDates: Array<number> | null) {
+  if (!calendar.schoolNow() && !domIsEmpty) return;
   if (!schoolDates) {
     if (!schoolTimeContainer) {
       console.error("School times container not found.");
