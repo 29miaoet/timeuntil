@@ -40,7 +40,8 @@ let endDate: Date = new Date(2027, 5, 21, 15, 40);
 // let startingDate: Date = new Date(2026, 8, 9, 8, 30);
 let startingDate: Date = new Date(Date.now());
 let causeOfDeath: string;
-let domIsEmpty: boolean = true;
+let lastUpdatedSchoolTime: number;
+let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
@@ -73,15 +74,22 @@ async function start() {
   initializeMenus();
   updateDOM();
   slowUpdateDOM();
-  domIsEmpty = false;
-  setInterval(() => {
-    if (checkFinish()) {
-      triggerFinish();
-    } else {
-      updateDOM();
-    }
-  }, 100);
+  // Recursive function, runs at start of every 10th second
+  watchUI();
 }
+
+function watchUI() {
+  if (checkFinish()) {
+    triggerFinish();
+  } else {
+    updateDOM();
+  }
+  const timeUntilNextTenthSecond = 100 - (Date.now() % 100);
+  setTimeout(() => {
+    watchUI();
+  }, timeUntilNextTenthSecond);
+}
+
 
 async function loadPreferences() {
   // Must be loaded before preferredEndDate
@@ -296,7 +304,6 @@ function updateTimer() {
 }
 
 function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
-  if (!calendar.schoolNow() && !domIsEmpty) return;
   if (schoolTimeRemaining === null) {
     if (!absoluteTimeContainer) {
       console.error("Absolute times container not found.");
@@ -313,12 +320,15 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
       </div> `;
 
     return;
+  } else if (schoolTimeRemaining === lastUpdatedSchoolTime) {
+    return;
   }
-
   absoluteTimes[0].textContent = String(schoolTimeRemaining / 1000 / 60 / 60 / 24);
   absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
   absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
   absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
+
+  lastUpdatedSchoolTime = schoolTimeRemaining;
 }
 
 function populateTotalTimes(timeRemaining: number) {
@@ -343,7 +353,6 @@ function populateTotalTimes(timeRemaining: number) {
 }
 
 function populateSchoolDates(schoolDates: Array<number> | null) {
-  if (!calendar.schoolNow() && !domIsEmpty) return;
   if (!schoolDates) {
     if (!schoolTimeContainer) {
       console.error("School times container not found.");
@@ -360,7 +369,9 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
   }
 
   for (let i = 0; i < 4; i++) {
+    if (schoolDates[i] === lastUpdatedSchoolDates[i]) continue;
     schoolTimes[i].textContent = schoolDates[i].toString();
+    lastUpdatedSchoolDates[i] = schoolDates[i];
   }
 }
 
