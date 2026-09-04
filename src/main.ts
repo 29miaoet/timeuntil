@@ -28,10 +28,6 @@ let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
 
-const earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-// 8:30 to 15:40
-const regularSchoolDayTime = [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000];
-
 let calendar = new Calendar(
   "./calendars/gci.json",
   [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
@@ -75,6 +71,7 @@ async function start() {
 
   initializeMenus();
   updateDOM();
+  slowUpdateDOM();
   setInterval(() => {
     if (checkFinish()) {
       triggerFinish();
@@ -193,6 +190,15 @@ function getPreferredDates(value: string) {
 function setPreferredThemes(value: string) {
   document.documentElement.dataset.theme = value;
   localStorage.setItem("theme", value);
+  const color = getComputedStyle(document.documentElement).getPropertyValue("--bg-countdown");
+
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+  if (!metaThemeColor) {
+    console.error("Meta theme color tag is missing.");
+    return;
+  }
+  metaThemeColor.setAttribute("content", color);
 }
 
 async function setPreferredCalendars(value: string) {
@@ -248,8 +254,23 @@ function updateDOM() {
   populateSchoolDates(schoolDates);
 
   populateTotalTimes(totalTimeRemaining);
+}
+
+// Only runs once a day to conserve resources
+function slowUpdateDOM() {
   updateProgressBar();
   updateDayInfos();
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  tomorrow.setHours(0, 0, 0, 0);
+
+  const delay = tomorrow.getTime() - Date.now();
+
+  setTimeout(() => {
+    slowUpdateDOM();
+  }, delay);
 }
 
 function updateTimer() {
@@ -352,9 +373,11 @@ function updateProgressBar() {
   }
 
   const percentFinished = `${fractionPercentage * 100}%`;
+  const ariaAmountFinished = String(fractionPercentage * 100);
 
   if (progressBar) {
     progressBar.style.width = percentFinished;
+    progressBar.setAttribute("aria-valuenow", ariaAmountFinished);
   } else {
     console.error("Progress bar not found");
   }
@@ -385,21 +408,21 @@ function updateDayInfos() {
 
   let feature;
   if (dayInfos.feature.length !== 0) {
-    feature = '<p class="card-content">' + dayInfos.feature.join("<br>") + "</p>";
+    feature = dayInfos.feature.join("\n");
   } else {
-    feature = '<p class="card-content">Nothing Interesting</p>';
+    feature = "Nothing Interesting";
   }
 
   let event;
   if (dayInfos.event.length !== 0) {
-    event = '<p class="card-content">' + dayInfos.event.join("<br>") + "</p>";
+    event = dayInfos.event.join("\n");
   } else {
-    event = '<p class="card-content">No Events</p>';
+    event = "No Events";
   }
 
   dayStatuses[0].textContent = daystatus;
-  dayStatuses[1].outerHTML = feature;
-  dayStatuses[2].outerHTML = event;
+  dayStatuses[1].textContent = feature;
+  dayStatuses[2].textContent = event;
 }
 
 start();
