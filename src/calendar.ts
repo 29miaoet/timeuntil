@@ -156,9 +156,9 @@ export default class Calendar {
     if (!this.calendar[currentDate].hasSchool) {
       return false;
     } else if (this.calendar[currentDate].timeSlot === "Regular") {
-      return (this.regularSchoolDayTime[0] < this.now) && (this.regularSchoolDayTime[1] > this.now);
+      return this.regularSchoolDayTime[0] < this.now && this.regularSchoolDayTime[1] > this.now;
     } else if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-      return (this.earlyDismissalTime[0] < this.now) && (this.earlyDismissalTime[1] > this.now);
+      return this.earlyDismissalTime[0] < this.now && this.earlyDismissalTime[1] > this.now;
     }
     return false;
   }

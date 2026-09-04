@@ -397,13 +397,15 @@ footer {
     position: relative;
   }
 
-  .school-time, .total-time {
+  .school-time,
+  .total-time {
     flex-direction: column;
     justify-content: center;
     align-items: left;
   }
 
-  .timelabel, .timebox {
+  .timelabel,
+  .timebox {
     margin-left: 10px;
     margin-right: 10px;
     flex: 1;
