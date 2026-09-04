@@ -90,7 +90,6 @@ function watchUI() {
   }, timeUntilNextTenthSecond);
 }
 
-
 async function loadPreferences() {
   // Must be loaded before preferredEndDate
   const preferredCalendar = localStorage.getItem("calendar");
