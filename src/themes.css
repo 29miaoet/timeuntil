@@ -134,3 +134,32 @@
   --dropdown-bg: #fffafa;
   --dropdown-item-hover: #f5d1d1;
 }
+
+:root[data-theme="accessible"] {
+  --font-color-black: #082f49;
+  --font-color-white: #ffffff;
+
+  --bg-grad: linear-gradient(to bottom, #f0f9ff, #bae6fd);
+
+  --bg-countdown: #075985;
+
+  --light-blue: #e0f2fe;
+
+  --progress-bg: #b91c1c;
+  --progress-bar-hover: #991b1b;
+  --progress-bar-bg: #bfdbfe;
+
+  --info-bg: #dbeafe;
+
+  --card-border: #475569;
+
+  --radius-classic: 10px;
+  --radius-mild: 4px;
+
+  --warning-text-color: #451a03;
+  --warning-border-color: #7c2d12;
+  --warning-bg-color: #fbbf24;
+
+  --dropdown-bg: #ffffff;
+  --dropdown-item-hover: #dbeafe;
+}

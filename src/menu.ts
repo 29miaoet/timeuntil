@@ -48,9 +48,11 @@ export default class Menu {
       if (this.menu.hidden) {
         this.menu.hidden = false;
         this.button.classList.add("open");
+        this.button.setAttribute("aria-expanded", "true");
       } else {
         this.menu.hidden = true;
         this.button.classList.remove("open");
+        this.button.setAttribute("aria-expanded", "false");
       }
     });
 
@@ -60,6 +62,7 @@ export default class Menu {
       if (!this.menu.contains(target) && !this.button.contains(target)) {
         this.menu.hidden = true;
         this.button.classList.remove("open");
+        this.button.setAttribute("aria-expanded", "false");
       }
     });
   }
