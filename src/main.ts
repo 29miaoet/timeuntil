@@ -28,10 +28,6 @@ let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
 
-const earlyDismissalTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-// 8:30 to 15:40
-const regularSchoolDayTime = [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000];
-
 let calendar = new Calendar(
   "./calendars/gci.json",
   [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
@@ -194,6 +190,16 @@ function getPreferredDates(value: string) {
 function setPreferredThemes(value: string) {
   document.documentElement.dataset.theme = value;
   localStorage.setItem("theme", value);
+  const color = getComputedStyle(document.documentElement).getPropertyValue("--bg-countdown");
+
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+  if (!metaThemeColor) {
+    console.error("Meta theme color tag is missing.")
+    return;
+  }
+  metaThemeColor.setAttribute('content', color);
+
 }
 
 async function setPreferredCalendars(value: string) {
@@ -368,9 +374,11 @@ function updateProgressBar() {
   }
 
   const percentFinished = `${fractionPercentage * 100}%`;
+  const ariaAmountFinished = String(fractionPercentage * 100);
 
   if (progressBar) {
     progressBar.style.width = percentFinished;
+    progressBar.setAttribute("aria-valuenow", ariaAmountFinished);
   } else {
     console.error("Progress bar not found");
   }
