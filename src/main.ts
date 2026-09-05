@@ -160,7 +160,7 @@ function initializeMenus() {
 function getPreferredDates(value: string) {
   switch (value) {
     case "summer":
-      endDate = new Date(2027, 5, 21, 15, 40);
+      endDate = new Date(calendar.lastDay);
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
@@ -244,9 +244,9 @@ function checkFinish() {
 function triggerFinish() {
   // Finished
   if (!container || !lastMessage) return;
-  container.hidden = true;
-  lastMessage.textContent = causeOfDeath;
-  lastMessage.hidden = false;
+  if (!container.hidden) container.hidden = true;
+  if (lastMessage.textContent !== causeOfDeath) lastMessage.textContent = causeOfDeath;
+  if (lastMessage.hidden) lastMessage.hidden = false;
 }
 
 function undoFinish() {
