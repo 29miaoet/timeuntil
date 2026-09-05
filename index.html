@@ -1,180 +1,227 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A client-side webpage to count down the days until school ends."
+    />
+    <meta name="google-site-verification" content="d6W-f_P_-ShbtMOYyo0yqaKPRt3SQ5--5r77UmngTuo" />
+    <meta name="theme-color" content="#5095eb" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="robots" content="index, follow">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A client-side webpage to count down the days until school ends.">
-  <meta name="google-site-verification" content="d6W-f_P_-ShbtMOYyo0yqaKPRt3SQ5--5r77UmngTuo">
-  <meta name="theme-color" content="#5095eb">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="canonical" href="https://29miaoet.github.io/timeuntil/" />
+    <link rel="preload" href="calendars/gci.json" as="fetch" crossorigin />
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="canonical" href="https://29miaoet.github.io/timeuntil/">
-  <link rel="preload" href="calendars/gci.json" as="fetch" crossorigin>
+    <title>Time Until</title>
+  </head>
+  <body>
+    <section class="menu" aria-label="Settings Panel">
+      <button
+        type="button"
+        class="option settings"
+        id="settings-button"
+        aria-label="Settings Button"
+        aria-expanded="false"
+        aria-controls="settings"
+      >
+        ⚙️
+      </button>
+      <div class="dropdown" id="settings" hidden>
+        <ul>
+          <li data-value="themes" id="theme-button">
+            <button aria-label="Themes" aria-expanded="false" aria-controls="themes" type="button">
+              Themes
+            </button>
+            <ul class="dropdown sub-dropdown" id="themes" hidden>
+              <li data-theme="default">
+                <button>Default</button>
+              </li>
+              <li data-theme="dark">
+                <button type="button">Dark</button>
+              </li>
+              <li data-theme="light">
+                <button type="button">Light</button>
+              </li>
+              <li data-theme="liquid-glass">
+                <button type="button">Liquid Glass</button>
+              </li>
+              <li data-theme="antique">
+                <button type="button">Antique</button>
+              </li>
+              <li data-theme="red">
+                <button type="button">Red</button>
+              </li>
+              <li data-theme="accessible">
+                <button type="button">Accessible</button>
+              </li>
+            </ul>
+          </li>
 
-  <title>Time Until</title>
-</head>
-<body>
-  <section class="menu" aria-label="Settings Panel">
-  <button type="button" class="option settings" id="settings-button"
-          aria-label="Settings Button" aria-expanded="false" aria-controls="settings">⚙️</button>
-    <div class="dropdown" id="settings" hidden>
-      <ul>
-        <li data-value="themes" id="theme-button">
-          <button aria-label="Themes"  aria-expanded="false" aria-controls="themes">Themes</button>
-          <ul class="dropdown sub-dropdown" id="themes" hidden>
-            <li data-theme="default"><button>Default</button></li>
-            <li data-theme="dark"><button>Dark</button></li>
-            <li data-theme="light"><button>Light</button></li>
-            <li data-theme="liquid-glass"><button>Liquid Glass</button></li>
-            <li data-theme="antique"><button>Antique</button></li>
-            <li data-theme="red"><button>Red</button></li>
-            <li data-theme="accessible"><button>Accessible</button></li>
-          </ul>
-        </li>
-
-        <li data-value="calendars" id="calendar-button">
-          <button aria-label="Themes"  aria-expanded="false" aria-controls="calendars">Calendars</button>
-          <ul class="dropdown sub-dropdown" id="calendars" hidden>
-            <li data-calendar="gci"><button>Glenlawn</button></li>
-            <li data-calendar="cjs"><button>CJS</button></li>
-            <li data-calendar="dci"><button>Dakota</button></li>
-            <li data-calendar="burland"><button>Burland</button></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <button type="button" class="option settings" id="time-toggle"
-      aria-label="Time Until Settings" aria-expanded="false" aria-controls="time-menu">⏳</button>
-    <div class="dropdown" id="time-menu" hidden>
-      <p>Show time until...</p>
-      <ul>
-        <li data-value="summer"><button>Summer</button></li>
-        <li data-value="spring"><button>Spring Break</button></li>
-        <li data-value="winter"><button>Winter Break</button></li>
-        <li data-value="noschool"><button>No School Day</button></li>
-        <li data-value="weekend"><button>Weekend</button></li>
-        <li data-value="lweekend"><button>Long Weekend</button></li>
-        <li data-value="term"><button>End of term</button></li>
-        <li data-value="start"><button>School Starts</button></li>
-      </ul>
-    </div>
-    <a class="option github-icon" href="https://github.com/29miaoet/timeuntil" target="_blank">
-      <img src="github.svg" alt="GitHub logo" width="25" height="25">
-    </a>
-  </section>
-
-  <header>
-    <h1>Time Until</h1>
-  </header>
-
-  <main class="card-container" id="card-container-main">
-  <section class="card countdown-container">
-    <h2>School Time Remaining</h2>
-    <hr>
-    <div class="school-time remaining-time" id="school-time-remaining">
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">days</span>
+          <li data-value="calendars" id="calendar-button">
+            <button
+              aria-label="Themes"
+              aria-expanded="false"
+              aria-controls="calendars"
+              type="button"
+            >
+              Calendars
+            </button>
+            <ul class="dropdown sub-dropdown" id="calendars" hidden>
+              <li data-calendar="gci"><button>Glenlawn</button></li>
+              <li data-calendar="cjs">
+                <button type="button">CJS</button>
+              </li>
+              <li data-calendar="dci">
+                <button type="button">Dakota</button>
+              </li>
+              <li data-calendar="burland">
+                <button type="button">Burland</button>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
-
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">hours</span>
+      <button
+        type="button"
+        class="option settings"
+        id="time-toggle"
+        aria-label="Time Until Settings"
+        aria-expanded="false"
+        aria-controls="time-menu"
+      >
+        ⏳
+      </button>
+      <div class="dropdown" id="time-menu" hidden>
+        <p>Show time until...</p>
+        <ul>
+          <li data-value="summer"><button type="button">Summer</button></li>
+          <li data-value="spring"><button type="button">Spring Break</button></li>
+          <li data-value="winter"><button type="button">Winter Break</button></li>
+          <li data-value="noschool"><button type="button">No School Day</button></li>
+          <li data-value="weekend"><button type="button">Weekend</button></li>
+          <li data-value="lweekend"><button type="button">Long Weekend</button></li>
+          <li data-value="term"><button type="button">End of term</button></li>
+          <li data-value="start"><button type="button">School Starts</button></li>
+        </ul>
       </div>
+      <a class="option github-icon" href="https://github.com/29miaoet/timeuntil" target="_blank">
+        <img src="github.svg" alt="GitHub logo" width="25" height="25" />
+      </a>
+    </section>
 
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">minutes</span>
-      </div>
+    <header>
+      <h1>Time Until</h1>
+    </header>
 
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">seconds</span>
-      </div>
-    </div>
+    <main class="card-container" id="card-container-main">
+      <section class="card countdown-container">
+        <h2>School Time Remaining</h2>
+        <hr />
+        <div class="school-time remaining-time" id="school-time-remaining">
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">days</span>
+          </div>
 
-    <h2>Total Time Remaining</h2>
-    <hr>
-    <div class="total-time remaining-time">
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">days</span>
-      </div>
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">hours</span>
+          </div>
 
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">hours</span>
-      </div>
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">minutes</span>
+          </div>
 
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">minutes</span>
-      </div>
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">seconds</span>
+          </div>
+        </div>
 
-      <div class="timeunit">
-        <output class="timebox">0</output>
-        <span class="timelabel">seconds</span>
-      </div>
-    </div>
+        <h2>Total Time Remaining</h2>
+        <hr />
+        <div class="total-time remaining-time">
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">days</span>
+          </div>
 
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">hours</span>
+          </div>
 
-    <h2>Absolute Time Remaining</h2>
-    <hr>
-    <div class="abs-time" id="abs-time-remaining">
-      <div class="times">
-        <output class="timebox">0</output>
-        <output class="timebox">0</output>
-        <output class="timebox">0</output>
-        <output class="timebox">0</output>
-      </div>
-      <div class="timelabels">
-        <div class="timelabel">days</div>
-        <div class="timelabel">hours</div>
-        <div class="timelabel">minutes</div>
-        <div class="timelabel">seconds</div>
-      </div>
-    </div>
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">minutes</span>
+          </div>
 
-  </section>
+          <div class="timeunit">
+            <output class="timebox">0</output>
+            <span class="timelabel">seconds</span>
+          </div>
+        </div>
 
-  <section class="card progress-bar">
-    <div class="bar">
-      <div class="progress" id="progress-bar-element" role="progressbar" aria-label="School year progress"
-     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-    </div>
-    <p><span id="percentage">0%</span> percent finished</p>
-  </section>
+        <h2>Absolute Time Remaining</h2>
+        <hr />
+        <div class="abs-time" id="abs-time-remaining">
+          <div class="times">
+            <output class="timebox">0</output>
+            <output class="timebox">0</output>
+            <output class="timebox">0</output>
+            <output class="timebox">0</output>
+          </div>
+          <div class="timelabels">
+            <div class="timelabel">days</div>
+            <div class="timelabel">hours</div>
+            <div class="timelabel">minutes</div>
+            <div class="timelabel">seconds</div>
+          </div>
+        </div>
+      </section>
 
-  <section class="card day-info" id="day-information">
-    <div class="day-card">
-      <p class="card-title">Status</p>
-      <hr>
-      <output class="card-content">loading...</output>
-    </div>
-    <div class="day-card">
-      <p class="card-title">Feature</p>
-      <hr>
-      <output class="card-content">loading...</output>
-    </div>
-    <div class="day-card">
-      <p class="card-title">Event</p>
-      <hr>
-      <output class="card-content">loading...</output>
-    </div>
-  </section>
-  </main>
+      <section class="card progress-bar">
+        <div class="bar">
+          <div
+            class="progress"
+            id="progress-bar-element"
+            role="progressbar"
+            aria-label="School year progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          ></div>
+        </div>
+        <p><span id="percentage">0%</span> percent finished</p>
+      </section>
 
-  <aside id="last-message" hidden></aside>
+      <section class="card day-info" id="day-information">
+        <div class="day-card">
+          <p class="card-title">Status</p>
+          <hr />
+          <output class="card-content">loading...</output>
+        </div>
+        <div class="day-card">
+          <p class="card-title">Feature</p>
+          <hr />
+          <output class="card-content">loading...</output>
+        </div>
+        <div class="day-card">
+          <p class="card-title">Event</p>
+          <hr />
+          <output class="card-content">loading...</output>
+        </div>
+      </section>
+    </main>
 
-  <footer>
-    &copy; 2026 — Ethan Miao — MIT License
-  </footer>
-  <script type="module" src="./src/main.ts"></script>
+    <aside id="last-message" hidden></aside>
 
-
-</body>
-
+    <footer>&copy; 2026 — Ethan Miao — MIT License</footer>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
 </html>

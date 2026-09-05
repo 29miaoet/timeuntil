@@ -50,7 +50,6 @@ git push -u origin your-branch-name
 - Use `error` for error catching and `event` for event handling, do not use `e`.
 - Use CSS variables instead of direct values.
 - Use LF line returns instead of CRLF or CR whenever possible, or ensure you have the correct git configurations.
-- Use HTML syntax instead of XHTML syntax.
 - Background color schemes should follow those of the existing `:root` elements.
 - Prefer aria-labels for accessibility over direct `<label>` tags.
 - New files or folders should be organized in the same fashion as the existing structure.
