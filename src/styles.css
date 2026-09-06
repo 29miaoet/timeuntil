@@ -271,7 +271,7 @@ hr {
 
 .progress {
   height: 100%;
-  width: 50%;
+  width: 0%;
   border-radius: var(--radius-mild) 0 0 var(--radius-mild);
   background-color: var(--progress-bg);
 }

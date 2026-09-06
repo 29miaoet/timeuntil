@@ -345,10 +345,18 @@ function populateTotalTimes(timeRemaining: number) {
       1000
   );
 
-  totalTimes[0].textContent = daysLeft.toString();
-  totalTimes[1].textContent = hoursLeft.toString();
-  totalTimes[2].textContent = minutesLeft.toString();
-  totalTimes[3].textContent = secondsLeft.toString();
+  if (totalTimes[0].textContent !== daysLeft.toString()) { 
+    totalTimes[0].textContent = daysLeft.toString();
+  }
+  if (totalTimes[1].textContent !== hoursLeft.toString()) {
+    totalTimes[1].textContent = hoursLeft.toString();
+  }
+  if (totalTimes[2].textContent !== minutesLeft.toString()) {
+    totalTimes[2].textContent = minutesLeft.toString();
+  }
+  if (totalTimes[3].textContent !== secondsLeft.toString()) {
+    totalTimes[3].textContent = secondsLeft.toString();
+  }
 }
 
 function populateSchoolDates(schoolDates: Array<number> | null) {
