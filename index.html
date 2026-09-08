@@ -63,7 +63,6 @@
 
           <li data-value="calendars" id="calendar-button">
             <button
-              aria-label="Themes"
               aria-expanded="false"
               aria-controls="calendars"
               type="button"
@@ -71,7 +70,9 @@
               Calendars
             </button>
             <ul class="dropdown sub-dropdown" id="calendars" hidden>
-              <li data-calendar="gci"><button>Glenlawn</button></li>
+              <li data-calendar="gci">
+                <button type="button">Glenlawn</button>
+              </li>
               <li data-calendar="cjs">
                 <button type="button">CJS</button>
               </li>
@@ -83,6 +84,39 @@
               </li>
             </ul>
           </li>
+
+          <li data-value="displays" id="display-button">
+            <button
+              aria-expanded="false"
+              aria-controls="displays"
+              type="button"
+            >
+              Displays
+            </button>
+            <ul class="dropdown sub-dropdown" id="displays" hidden>
+              <li data-display="days">
+                <input type="checkbox" id="display-days" checked>
+                <label for="display-days">Days</label>
+              </li>
+              <li data-display="hours">
+                <input type="checkbox" id="display-hours" checked>
+                <label for="display-hours">Hours</label>
+              </li>
+              <li data-display="minutes">
+                <input type="checkbox" id="display-minutes" checked>
+                <label for="display-minutes">Minutes</label>
+              </li>
+              <li data-display="seconds">
+                <input type="checkbox" id="display-seconds" checked>
+                <label for="display-seconds">Seconds</label>
+              </li>
+              <li data-display="milliseconds">
+                <input type="checkbox" id="display-milliseconds">
+                <label for="milliseconds">Milliseconds</label>
+              </li>
+            </ul>
+          </li>
+
         </ul>
       </div>
       <button
@@ -141,6 +175,11 @@
             <output class="timebox">0</output>
             <span class="timelabel">seconds</span>
           </div>
+
+          <div class="timeunit" hidden>
+            <output class="timebox">0</output>
+            <span class="timelabel">milliseconds</span>
+          </div>
         </div>
 
         <h2>Total Time Remaining</h2>
@@ -165,6 +204,11 @@
             <output class="timebox">0</output>
             <span class="timelabel">seconds</span>
           </div>
+
+          <div class="timeunit" hidden>
+            <output class="timebox">0</output>
+            <span class="timelabel">milliseconds</span>
+          </div>
         </div>
 
         <h2>Absolute Time Remaining</h2>
@@ -175,12 +219,14 @@
             <output class="timebox">0</output>
             <output class="timebox">0</output>
             <output class="timebox">0</output>
+            <output class="timebox" hidden>0</output>
           </div>
           <div class="timelabels">
             <div class="timelabel">days</div>
             <div class="timelabel">hours</div>
             <div class="timelabel">minutes</div>
             <div class="timelabel">seconds</div>
+            <div class="timelabel" hidden>milliseconds</div>
           </div>
         </div>
       </section>
