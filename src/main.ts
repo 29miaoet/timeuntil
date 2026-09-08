@@ -8,10 +8,10 @@ const welcomeText =
 
 const container = document.getElementById("card-container-main") as HTMLDivElement | null;
 
-const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
-const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
-const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
-const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info .day-card .card-content");
+const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time > .timeunit > .timebox");
+const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timebox");
+const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time > .times > .timebox");
+const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info > .day-card > .card-content");
 
 const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
 const progressText = document.getElementById("percentage") as HTMLDivElement | null;
@@ -155,7 +155,39 @@ function initializeMenus() {
   // SettingsMenu
   const settingsMenu = new Menu("#settings-button", "#settings");
   settingsMenu.addExpandCollapse();
+
+  // DisplaySelectionMenu
+  const displayMenu = new Menu("#display-button", "#displays");
+  displayMenu.addExpandCollapseForCheckbox();
+  displayMenu.addFunction((event) => {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const li = target.closest("li");
+    if (!li) return;
+    const checkboxes = li.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    toggleDisplaySettings(checkboxes);
+  });
 }
+
+function toggleDisplaySettings(checkboxes: NodeListOf<HTMLInputElement>) {
+  const allDays: Array<HTMLElement> = [schoolTimes[0], totalTimes[0], absoluteTimes[0]];
+  const allHours: Array<HTMLElement> = [schoolTimes[1], totalTimes[1], absoluteTimes[1]];
+  const allMinutes: Array<HTMLElement> = [schoolTimes[2], totalTimes[2], absoluteTimes[2]];
+  const allSeconds: Array<HTMLElement>= [schoolTimes[3], totalTimes[3], absoluteTimes[3]];
+  const allMilliseconds: Array<HTMLElement> = [schoolTimes[4], totalTimes[4], absoluteTimes[4]];
+  const allTimeUnits: Array<Array<HTMLElement>> = [allDays, allHours, allMinutes, allSeconds, allMilliseconds];
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked = false) {
+      // Hide the checkbox
+      // Use allTimeUnits with index to apply the attributes
+    } else {
+      // Show the checkbox
+      // optionally add DOM check to see if this is necessary
+    }
+  }
+}
+throw new Error("Finish writing toggleDisplaySettings function")
 
 function getPreferredDates(value: string) {
   switch (value) {

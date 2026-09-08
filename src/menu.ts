@@ -57,7 +57,6 @@ export default class Menu {
     });
 
     document.addEventListener("click", (event) => {
-      // Stop tsc from complaining
       const target = event.target as Node;
       if (!this.menu.contains(target) && !this.button.contains(target)) {
         this.menu.hidden = true;
@@ -67,7 +66,47 @@ export default class Menu {
     });
   }
 
+  addExpandCollapseForCheckbox(): void {
+    this.button.addEventListener("click", () => {
+      if (this.menu.hidden) {
+        this.menu.hidden = false;
+        this.button.classList.add("open");
+        this.button.setAttribute("aria-expanded", "true");
+      } else {
+        this.menu.hidden = true;
+        this.button.classList.remove("open");
+        this.button.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as Node;
+
+      if (!this.menu.contains(target) && !this.button.contains(target)) {
+        this.menu.hidden = true;
+        this.button.classList.remove("open");
+        this.button.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    this.menu.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      const li = target.closest("li");
+      if (!li) return;
+
+      const checkbox = li.querySelector<HTMLInputElement>(
+        'input[type="checkbox"]'
+      );
+      if (!checkbox) return;
+
+      if (target !== checkbox || target.tagName !== "LABEL") {
+        checkbox.checked = !checkbox.checked;
+      }
+    });
+  }
+
   addFunction(callback: (event: MouseEvent) => void): void {
     this.menu.addEventListener("click", (event) => callback(event));
   }
 }
+
