@@ -94,12 +94,10 @@ export default class Menu {
       const li = target.closest("li");
       if (!li) return;
 
-      const checkbox = li.querySelector<HTMLInputElement>(
-        'input[type="checkbox"]'
-      );
+      const checkbox = li.querySelector<HTMLInputElement>('input[type="checkbox"]');
       if (!checkbox) return;
 
-      if ((target !== checkbox) && (target.tagName !== "LABEL")) {
+      if (target !== checkbox && target.tagName !== "LABEL") {
         checkbox.checked = !checkbox.checked;
       }
     });
@@ -109,4 +107,3 @@ export default class Menu {
     this.menu.addEventListener("click", (event) => callback(event));
   }
 }
-

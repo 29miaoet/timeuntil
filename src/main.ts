@@ -8,14 +8,24 @@ const welcomeText =
 
 const container = document.getElementById("card-container-main") as HTMLDivElement | null;
 
-const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time > .timeunit > .timebox");
+const schoolTimes = document.querySelectorAll<HTMLDivElement>(
+  ".school-time > .timeunit > .timebox"
+);
 const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time > .times > .timebox");
-const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info > .day-card > .card-content");
+const dayStatuses = document.querySelectorAll<HTMLDivElement>(
+  ".day-info > .day-card > .card-content"
+);
 
-const schoolTimeLabels = document.querySelectorAll<HTMLDivElement>(".school-time > .timeunit > .timelabel");
-const totalTimeLabels = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timelabel");
-const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(".abs-time > .timelabels > .timelabel");
+const schoolTimeLabels = document.querySelectorAll<HTMLDivElement>(
+  ".school-time > .timeunit > .timelabel"
+);
+const totalTimeLabels = document.querySelectorAll<HTMLDivElement>(
+  ".total-time > .timeunit > .timelabel"
+);
+const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(
+  ".abs-time > .timelabels > .timelabel"
+);
 
 const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
 const progressText = document.getElementById("percentage") as HTMLDivElement | null;
@@ -171,11 +181,10 @@ function initializeMenus() {
     const checkboxes = li.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
     toggleDisplaySettings(checkboxes);
   });
-  
 }
 
 function toggleDisplaySettings(checkboxes: NodeListOf<HTMLInputElement>) {
-  throw new Error("Every option removes the Days element, find out why")
+  throw new Error("Every option removes the Days element, find out why");
   let allTimeLabels: Array<Array<HTMLElement>> = [];
   allTimeLabels[0] = [schoolTimeLabels[0], totalTimeLabels[0], absoluteTimeLabels[0]]; // Days
   allTimeLabels[1] = [schoolTimeLabels[1], totalTimeLabels[1], absoluteTimeLabels[1]]; // Hours
@@ -406,15 +415,14 @@ function populateTotalTimes(timeRemaining: number) {
       1000
   );
   const millisecondsLeft = Math.floor(
-    (timeRemaining - 
+    timeRemaining -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
-      minutesLeft * 1000 * 60 - 
+      minutesLeft * 1000 * 60 -
       secondsLeft * 1000
-    )
   );
 
-  if (totalTimes[0].textContent !== daysLeft.toString()) { 
+  if (totalTimes[0].textContent !== daysLeft.toString()) {
     totalTimes[0].textContent = daysLeft.toString();
   }
   if (totalTimes[1].textContent !== hoursLeft.toString()) {
