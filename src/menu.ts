@@ -99,7 +99,7 @@ export default class Menu {
       );
       if (!checkbox) return;
 
-      if (target !== checkbox || target.tagName !== "LABEL") {
+      if ((target !== checkbox) && (target.tagName !== "LABEL")) {
         checkbox.checked = !checkbox.checked;
       }
     });
