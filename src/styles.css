@@ -25,6 +25,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   font-weight: 600;
@@ -54,6 +58,10 @@ button {
   font: inherit;
   color: inherit;
   text-align: left;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .menu {
@@ -315,6 +323,10 @@ hr {
   height: 100%;
 }
 
+.dropdown > ul > li > button:hover {
+  cursor: pointer;
+}
+
 .dropdown > ul > li:has(> button:hover) {
   background-color: var(--dropdown-item-hover);
   cursor: pointer;
@@ -342,6 +354,21 @@ hr {
   padding: 5px;
   border-radius: var(--radius-mild);
   white-space: nowrap;
+}
+
+.sub-dropdown > li:hover,
+.sub-dropdown > li > button:hover {
+  cursor: pointer;
+}
+
+.sub-dropdown > li[data-display] {
+  padding-left: 0;
+}
+
+.sub-dropdown > li[data-display]:hover,
+.sub-dropdown > li > label:hover,
+.sub-dropdown > li > input:hover {
+  cursor: pointer;
 }
 
 .github-icon {

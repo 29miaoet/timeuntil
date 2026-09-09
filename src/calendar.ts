@@ -31,6 +31,7 @@ type SchoolTimeAsDateStruct = [number, number, number, number, number];
 type TimeUnitType = "day" | "hour" | "minute" | "second";
 type SchoolDateTuple = [number, number, number, number, number];
 type TermEndSpecification = [number, number, number, number, number];
+type SingleDateConstructor = [number, number, number];
 
 class CalendarError extends Error {
   constructor(message: string) {
@@ -85,7 +86,7 @@ export default class Calendar {
     }
 
     if (day.hasSchool) {
-      const foundDate = new Date(day.date);
+      const foundDate = new Date(...this.formatForDateConstructor(day.date));
       if (day.timeSlot === "Regular") {
         foundDate.setMilliseconds(this.regularSchoolDayTime[1]);
       } else if (day.timeSlot === "Early Dismissal") {
@@ -439,7 +440,7 @@ export default class Calendar {
   }
 
   getDayOfTheWeek(date: DayInfo): number {
-    const d = new Date(date.date);
+    const d = new Date(...this.formatForDateConstructor(date.date));
     return d.getDay();
   }
 
@@ -456,7 +457,7 @@ export default class Calendar {
         (this.getDayOfTheWeek(second) === 6 && this.getDayOfTheWeek(third) === 0);
 
       const dateNow = new Date(this.now);
-      const dateCandidate = new Date(first.date);
+      const dateCandidate = new Date(...this.formatForDateConstructor(first.date));
 
       const inTheFuture = dateCandidate > dateNow;
 
@@ -467,7 +468,7 @@ export default class Calendar {
       const previousFoundDay = new Date(this.lastDay);
       return previousFoundDay.getTime();
     }
-    const previousFoundDay = new Date(day.date);
+    const previousFoundDay = new Date(...this.formatForDateConstructor(day.date));
     return this.schoolTimeify(previousFoundDay).getTime();
   }
 
@@ -500,9 +501,9 @@ export default class Calendar {
   }
 
   findNextNoSchool(): number {
+    const dateNow = new Date(this.now);
     const day = Object.values(this.calendar).find((day) => {
-      const dateNow = new Date(this.now);
-      const dateCandidate = new Date(day.date);
+      const dateCandidate = new Date(...this.formatForDateConstructor(day.date));
       const inTheFuture = dateCandidate > dateNow;
       return !day.hasSchool && inTheFuture;
     });
@@ -511,8 +512,31 @@ export default class Calendar {
       const previousFoundDay = new Date(this.lastDay);
       return previousFoundDay.getTime();
     }
-    const foundDate = new Date(day.date);
+    const foundDate = new Date(...this.formatForDateConstructor(day.date));
     return this.schoolTimeify(foundDate).getTime();
+  }
+
+  formatForDateConstructor(dateStamp: string): SingleDateConstructor {
+    const strArgs = dateStamp.split("-");
+
+    if (strArgs.length !== 3) {
+      throw new CalendarError(`${dateStamp} is not of valid format.`);
+    }
+
+    let year = Number(strArgs[0]);
+    let month = Number(strArgs[1]);
+    const day = Number(strArgs[2]);
+
+    if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
+      throw new CalendarError(`${dateStamp} is not of valid format.`);
+    }
+
+    month -= 1;
+    if (month < 0) {
+      month = 11;
+      year -= 1;
+    }
+    return [year, month, day];
   }
 
   /**

@@ -8,10 +8,24 @@ const welcomeText =
 
 const container = document.getElementById("card-container-main") as HTMLDivElement | null;
 
-const schoolTimes = document.querySelectorAll<HTMLDivElement>(".school-time .timeunit .timebox");
-const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time .timeunit .timebox");
-const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time .times .timebox");
-const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info .day-card .card-content");
+const schoolTimes = document.querySelectorAll<HTMLDivElement>(
+  ".school-time > .timeunit > .timebox"
+);
+const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timebox");
+const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time > .times > .timebox");
+const dayStatuses = document.querySelectorAll<HTMLDivElement>(
+  ".day-info > .day-card > .card-content"
+);
+
+const schoolTimeLabels = document.querySelectorAll<HTMLDivElement>(
+  ".school-time > .timeunit > .timelabel"
+);
+const totalTimeLabels = document.querySelectorAll<HTMLDivElement>(
+  ".total-time > .timeunit > .timelabel"
+);
+const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(
+  ".abs-time > .timelabels > .timelabel"
+);
 
 const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
 const progressText = document.getElementById("percentage") as HTMLDivElement | null;
@@ -31,27 +45,27 @@ let schoolDates: Array<number> | null;
 let calendar = new Calendar(
   "./calendars/gci.json",
   [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-  [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
+  [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
 );
 
-let endDate: Date = new Date(2027, 5, 21, 15, 40);
+let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
-// When school starts, uncomment
-// let startingDate: Date = new Date(2026, 8, 9, 8, 30);
-let startingDate: Date = new Date(Date.now());
+let startingDate: Date = new Date(2026, 8, 9, 8, 30);
 let causeOfDeath: string;
 let lastUpdatedSchoolTime: number;
 let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
+
+let accuracy: number = 100;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
 type DateArgs = [number, number, number, number, number];
 
 const termEnds: Array<DateArgs> = [
-  [2026, 10, 18, 15, 40],
-  [2027, 1, 5, 15, 40],
-  [2027, 3, 13, 15, 40],
-  [2027, 5, 21, 15, 40],
+  [2026, 10, 18, 15, 30],
+  [2027, 1, 5, 15, 30],
+  [2027, 3, 13, 15, 30],
+  [2027, 5, 21, 15, 30],
 ];
 
 async function start() {
@@ -74,7 +88,7 @@ async function start() {
   initializeMenus();
   updateDOM();
   slowUpdateDOM();
-  // Recursive function, runs at start of every 10th second
+  // Recursive function, runs at start of every ${accuracy}th second
   watchUI();
 }
 
@@ -84,7 +98,7 @@ function watchUI() {
   } else {
     updateDOM();
   }
-  const timeUntilNextTenthSecond = 100 - (Date.now() % 100);
+  const timeUntilNextTenthSecond = accuracy - (Date.now() % accuracy);
   setTimeout(() => {
     watchUI();
   }, timeUntilNextTenthSecond);
@@ -105,6 +119,20 @@ async function loadPreferences() {
   const preferredEndDate = localStorage.getItem("date");
   if (preferredEndDate) {
     getPreferredDates(preferredEndDate);
+  }
+
+  const preferredHiddenItems = localStorage.getItem("hiddenItems");
+  const checkboxes = document.querySelectorAll<HTMLInputElement>(
+    '.sub-dropdown > li > input[type="checkbox"]'
+  );
+  if (preferredHiddenItems) {
+    const hiddenItems: Array<boolean> = JSON.parse(preferredHiddenItems);
+    toggleDisplaySettings(checkboxes, hiddenItems);
+  }
+
+  const preferredAccuracy = localStorage.getItem("accuracy");
+  if (preferredAccuracy) {
+    accuracy = Number(preferredAccuracy);
   }
 }
 
@@ -155,6 +183,108 @@ function initializeMenus() {
   // SettingsMenu
   const settingsMenu = new Menu("#settings-button", "#settings");
   settingsMenu.addExpandCollapse();
+
+  // DisplaySelectionMenu
+  const displayMenu = new Menu("#display-button", "#displays");
+  displayMenu.addExpandCollapseForCheckbox();
+  displayMenu.addFunction((event) => {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const ul = target.closest("ul");
+    if (!ul) return;
+    const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
+    toggleDisplaySettings(checkboxes);
+  });
+}
+
+function toggleDisplaySettings(
+  checkboxes: NodeListOf<HTMLInputElement>,
+  hiddenItems: null | Array<boolean> = null
+): void {
+  let allTimeLabels: Array<Array<HTMLElement>> = [];
+  allTimeLabels[0] = [schoolTimeLabels[0], totalTimeLabels[0], absoluteTimeLabels[0]]; // Days
+  allTimeLabels[1] = [schoolTimeLabels[1], totalTimeLabels[1], absoluteTimeLabels[1]]; // Hours
+  allTimeLabels[2] = [schoolTimeLabels[2], totalTimeLabels[2], absoluteTimeLabels[2]]; // Minutes
+  allTimeLabels[3] = [schoolTimeLabels[3], totalTimeLabels[3], absoluteTimeLabels[3]]; // Seconds
+  allTimeLabels[4] = [schoolTimeLabels[4], totalTimeLabels[4], absoluteTimeLabels[4]]; // Milliseconds
+
+  let allTimeUnits: Array<Array<HTMLElement>> = [];
+  allTimeUnits[0] = [schoolTimes[0], totalTimes[0], absoluteTimes[0]]; // Days
+  allTimeUnits[1] = [schoolTimes[1], totalTimes[1], absoluteTimes[1]]; // Hours
+  allTimeUnits[2] = [schoolTimes[2], totalTimes[2], absoluteTimes[2]]; // Minutes
+  allTimeUnits[3] = [schoolTimes[3], totalTimes[3], absoluteTimes[3]]; // Seconds
+  allTimeUnits[4] = [schoolTimes[4], totalTimes[4], absoluteTimes[4]]; // Milliseconds
+
+  // Which default items should be hidden and which should not
+  if (hiddenItems !== null) {
+    for (let i = 0; i < hiddenItems.length; i++) {
+      if (hiddenItems[i] === true) {
+        hiddenItems[i] = true;
+        checkboxes[i].checked = false;
+        allTimeUnits[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+      } else if (hiddenItems[i] === false) {
+        hiddenItems[i] = false;
+        checkboxes[i].checked = true;
+        allTimeUnits[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+      }
+    }
+  } else {
+    hiddenItems = [false, false, false, false, true];
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked === false) {
+        hiddenItems[i] = true;
+        allTimeUnits[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+      } else if (checkboxes[i].checked === true) {
+        hiddenItems[i] = false;
+        allTimeUnits[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+      }
+    }
+  }
+
+  if (!hiddenItems[0]) accuracy = 1000;
+  if (!hiddenItems[1]) accuracy = 1000;
+  if (!hiddenItems[2]) accuracy = 1000;
+  if (!hiddenItems[3]) accuracy = 100;
+  if (!hiddenItems[4]) accuracy = 0;
+
+  localStorage.setItem("hiddenItems", JSON.stringify(hiddenItems));
+  localStorage.setItem("accuracy", String(accuracy));
 }
 
 function getPreferredDates(value: string) {
@@ -164,11 +294,11 @@ function getPreferredDates(value: string) {
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
-      endDate = new Date(2026, 11, 18, 14, 30);
+      endDate = new Date(2027, 2, 25, 15, 30);
       causeOfDeath = "Spring Break";
       break;
     case "winter":
-      endDate = new Date(2027, 2, 25, 15, 40);
+      endDate = new Date(2026, 11, 18, 14, 30);
       causeOfDeath = "Winter Break";
       break;
     case "noschool":
@@ -193,6 +323,7 @@ function getPreferredDates(value: string) {
       break;
   }
   if (!checkFinish()) undoFinish();
+  updateProgressBar();
   localStorage.setItem("date", value);
 }
 
@@ -213,18 +344,17 @@ function setPreferredThemes(value: string) {
 async function setPreferredCalendars(value: string) {
   const school_name = `./calendars/${value}.json`;
   let tempCalendar: Calendar;
-
   if (school_name === "burland") {
     tempCalendar = new Calendar(
       school_name,
-      [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, (15 * 60 + 30) * 60 * 1000]
+      [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
+      [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
     );
   } else {
     tempCalendar = new Calendar(
       school_name,
       [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
+      [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
     );
   }
 
@@ -326,6 +456,7 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
   absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
   absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
+  absoluteTimes[4].textContent = String(schoolTimeRemaining);
 
   lastUpdatedSchoolTime = schoolTimeRemaining;
 }
@@ -344,8 +475,15 @@ function populateTotalTimes(timeRemaining: number) {
       minutesLeft * 1000 * 60) /
       1000
   );
+  const millisecondsLeft = Math.floor(
+    timeRemaining -
+      daysLeft * 1000 * 60 * 60 * 24 -
+      hoursLeft * 1000 * 60 * 60 -
+      minutesLeft * 1000 * 60 -
+      secondsLeft * 1000
+  );
 
-  if (totalTimes[0].textContent !== daysLeft.toString()) { 
+  if (totalTimes[0].textContent !== daysLeft.toString()) {
     totalTimes[0].textContent = daysLeft.toString();
   }
   if (totalTimes[1].textContent !== hoursLeft.toString()) {
@@ -356,6 +494,9 @@ function populateTotalTimes(timeRemaining: number) {
   }
   if (totalTimes[3].textContent !== secondsLeft.toString()) {
     totalTimes[3].textContent = secondsLeft.toString();
+  }
+  if (totalTimes[4].textContent !== secondsLeft.toString()) {
+    totalTimes[4].textContent = millisecondsLeft.toString();
   }
 }
 
@@ -375,7 +516,7 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
     return;
   }
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     if (schoolDates[i] === lastUpdatedSchoolDates[i]) continue;
     schoolTimes[i].textContent = schoolDates[i].toString();
     lastUpdatedSchoolDates[i] = schoolDates[i];

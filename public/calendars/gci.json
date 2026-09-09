@@ -314,10 +314,10 @@
   "2026-09-09": {
     "date": "2026-09-09",
     "hasSchool": true,
-    "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "timeSlot": "Early Dismissal",
+    "status": "Early Dismissal",
     "holidays": [],
-    "dayInfo": ["SAS Day / First Day of Classes", "School Photos", "Late Start Remembrance Day"]
+    "dayInfo": ["SAS Day", "School Photos"]
   },
   "2026-09-10": {
     "date": "2026-09-10",
@@ -325,7 +325,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Staggered Entry", "Half Day"]
   },
   "2026-09-11": {
     "date": "2026-09-11",
@@ -333,7 +333,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["First Official Day of School"]
   },
   "2026-09-12": {
     "date": "2026-09-12",
@@ -517,7 +517,7 @@
     "timeSlot": "Regular",
     "status": "No School",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["MMIWG2S Day of Awareness"]
   },
   "2026-10-05": {
     "date": "2026-10-05",
@@ -549,7 +549,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Grade 9 & 10 Parent Info Night"]
   },
   "2026-10-09": {
     "date": "2026-10-09",
@@ -613,7 +613,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Picture Retakes"]
   },
   "2026-10-17": {
     "date": "2026-10-17",
@@ -765,7 +765,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "University Fair", "Grade 9 TYK2WD"]
   },
   "2026-11-05": {
     "date": "2026-11-05",
@@ -797,7 +797,7 @@
     "timeSlot": "Regular",
     "status": "No School",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Indigenous Veterans Day"]
   },
   "2026-11-09": {
     "date": "2026-11-09",
@@ -833,9 +833,9 @@
   },
   "2026-11-13": {
     "date": "2026-11-13",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
@@ -981,7 +981,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Band Concert"]
   },
   "2026-12-02": {
     "date": "2026-12-02",
@@ -997,7 +997,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Jazz Band Concert"]
   },
   "2026-12-04": {
     "date": "2026-12-04",
@@ -1037,7 +1037,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Choir Concert"]
   },
   "2026-12-09": {
     "date": "2026-12-09",
@@ -1053,7 +1053,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Guitar Coffee House"]
   },
   "2026-12-11": {
     "date": "2026-12-11",
@@ -1421,7 +1421,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Grad Photos"]
   },
   "2027-01-26": {
     "date": "2027-01-26",
@@ -1429,7 +1429,7 @@
     "timeSlot": "Early Dismissal",
     "status": "Early Dismissal",
     "holidays": [],
-    "dayInfo": ["Staff Meeting"]
+    "dayInfo": ["Staff Meeting", "Grad Photos"]
   },
   "2027-01-27": {
     "date": "2027-01-27",
@@ -1437,7 +1437,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "Grad Photos"]
   },
   "2027-01-28": {
     "date": "2027-01-28",
@@ -1445,7 +1445,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Grad Photos"]
   },
   "2027-01-29": {
     "date": "2027-01-29",
@@ -1453,7 +1453,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Grad Photos"]
   },
   "2027-01-30": {
     "date": "2027-01-30",
@@ -1485,21 +1485,21 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Last Day of Semester 1"]
   },
   "2027-02-03": {
     "date": "2027-02-03",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Transition Day - Grade 8 Tours", "Late Start Remembrance Day"]
   },
   "2027-02-04": {
     "date": "2027-02-04",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Transition Day - Grade 8 Tours"]
   },
@@ -1653,7 +1653,7 @@
     "timeSlot": "Early Dismissal",
     "status": "Early Dismissal",
     "holidays": [],
-    "dayInfo": ["SAS Day", "Staff Meeting"]
+    "dayInfo": ["SAS Day", "Staff Meeting", "Spirit Week"]
   },
   "2027-02-24": {
     "date": "2027-02-24",
@@ -1661,7 +1661,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "Spirit Week"]
   },
   "2027-02-25": {
     "date": "2027-02-25",
@@ -1669,7 +1669,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Spirit Week"]
   },
   "2027-02-26": {
     "date": "2027-02-26",
@@ -1677,7 +1677,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Spirit Week"]
   },
   "2027-02-27": {
     "date": "2027-02-27",
@@ -1837,14 +1837,14 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Grad Photo Retakes"]
   },
   "2027-03-19": {
     "date": "2027-03-19",
     "hasSchool": false,
     "timeSlot": "Regular",
     "status": "No School",
-    "holidays": [],
+    "holidays": ["Grad Photo Retakes"],
     "dayInfo": []
   },
   "2027-03-20": {
@@ -2009,9 +2009,9 @@
   },
   "2027-04-09": {
     "date": "2027-04-09",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
@@ -2445,7 +2445,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "Band Concert"]
   },
   "2027-06-03": {
     "date": "2027-06-03",
@@ -2493,7 +2493,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Choir Concert"]
   },
   "2027-06-09": {
     "date": "2027-06-09",
@@ -2509,7 +2509,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Jazz Cabaret"]
   },
   "2027-06-11": {
     "date": "2027-06-11",
@@ -2557,7 +2557,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "Guitar Coffee House"]
   },
   "2027-06-17": {
     "date": "2027-06-17",
