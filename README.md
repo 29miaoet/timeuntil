@@ -71,7 +71,7 @@ timeuntil/
 
 ## Contributing
 
-Please Reference [CONTRIBUTING.md](https://github.com/29miaoet/timeuntil/blob/main/LICENSE).
+Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## Technology Stack
 
