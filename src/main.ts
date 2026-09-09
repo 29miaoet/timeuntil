@@ -13,6 +13,10 @@ const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time > .tim
 const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time > .times > .timebox");
 const dayStatuses = document.querySelectorAll<HTMLDivElement>(".day-info > .day-card > .card-content");
 
+const schoolTimeLabels = document.querySelectorAll<HTMLDivElement>(".school-time > .timeunit > .timelabel");
+const totalTimeLabels = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timelabel");
+const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(".abs-time > .timelabels > .timelabel");
+
 const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
 const progressText = document.getElementById("percentage") as HTMLDivElement | null;
 
@@ -167,27 +171,51 @@ function initializeMenus() {
     const checkboxes = li.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
     toggleDisplaySettings(checkboxes);
   });
+  
 }
 
 function toggleDisplaySettings(checkboxes: NodeListOf<HTMLInputElement>) {
-  const allDays: Array<HTMLElement> = [schoolTimes[0], totalTimes[0], absoluteTimes[0]];
-  const allHours: Array<HTMLElement> = [schoolTimes[1], totalTimes[1], absoluteTimes[1]];
-  const allMinutes: Array<HTMLElement> = [schoolTimes[2], totalTimes[2], absoluteTimes[2]];
-  const allSeconds: Array<HTMLElement>= [schoolTimes[3], totalTimes[3], absoluteTimes[3]];
-  const allMilliseconds: Array<HTMLElement> = [schoolTimes[4], totalTimes[4], absoluteTimes[4]];
-  const allTimeUnits: Array<Array<HTMLElement>> = [allDays, allHours, allMinutes, allSeconds, allMilliseconds];
+  throw new Error("Every option removes the Days element, find out why")
+  let allTimeLabels: Array<Array<HTMLElement>> = [];
+  allTimeLabels[0] = [schoolTimeLabels[0], totalTimeLabels[0], absoluteTimeLabels[0]]; // Days
+  allTimeLabels[1] = [schoolTimeLabels[1], totalTimeLabels[1], absoluteTimeLabels[1]]; // Hours
+  allTimeLabels[2] = [schoolTimeLabels[2], totalTimeLabels[2], absoluteTimeLabels[2]]; // Minutes
+  allTimeLabels[3] = [schoolTimeLabels[3], totalTimeLabels[3], absoluteTimeLabels[3]]; // Seconds
+  allTimeLabels[4] = [schoolTimeLabels[4], totalTimeLabels[4], absoluteTimeLabels[4]]; // Milliseconds
+
+  let allTimeUnits: Array<Array<HTMLElement>> = [];
+  allTimeUnits[0] = [schoolTimes[0], totalTimes[0], absoluteTimes[0]]; // Days
+  allTimeUnits[1] = [schoolTimes[1], totalTimes[1], absoluteTimes[1]]; // Hours
+  allTimeUnits[2] = [schoolTimes[2], totalTimes[2], absoluteTimes[2]]; // Minutes
+  allTimeUnits[3] = [schoolTimes[3], totalTimes[3], absoluteTimes[3]]; // Seconds
+  allTimeUnits[4] = [schoolTimes[4], totalTimes[4], absoluteTimes[4]]; // Milliseconds
 
   for (let i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked = false) {
-      // Hide the checkbox
-      // Use allTimeUnits with index to apply the attributes
-    } else {
-      // Show the checkbox
-      // optionally add DOM check to see if this is necessary
+    if (checkboxes[i].checked === false) {
+      allTimeUnits[i].forEach((item) => {
+        if (!item.hidden) {
+          item.hidden = true;
+        }
+      });
+      allTimeLabels[i].forEach((item) => {
+        if (!item.hidden) {
+          item.hidden = true;
+        }
+      });
+    } else if (checkboxes[i].checked === true) {
+      allTimeUnits[i].forEach((item) => {
+        if (item.hidden) {
+          item.hidden = false;
+        }
+      });
+      allTimeLabels[i].forEach((item) => {
+        if (item.hidden) {
+          item.hidden = false;
+        }
+      });
     }
   }
 }
-throw new Error("Finish writing toggleDisplaySettings function")
 
 function getPreferredDates(value: string) {
   switch (value) {
@@ -358,6 +386,7 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
   absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
   absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
+  absoluteTimes[4].textContent = String(schoolTimeRemaining);
 
   lastUpdatedSchoolTime = schoolTimeRemaining;
 }
@@ -376,6 +405,14 @@ function populateTotalTimes(timeRemaining: number) {
       minutesLeft * 1000 * 60) /
       1000
   );
+  const millisecondsLeft = Math.floor(
+    (timeRemaining - 
+      daysLeft * 1000 * 60 * 60 * 24 -
+      hoursLeft * 1000 * 60 * 60 -
+      minutesLeft * 1000 * 60 - 
+      secondsLeft * 1000
+    )
+  );
 
   if (totalTimes[0].textContent !== daysLeft.toString()) { 
     totalTimes[0].textContent = daysLeft.toString();
@@ -388,6 +425,9 @@ function populateTotalTimes(timeRemaining: number) {
   }
   if (totalTimes[3].textContent !== secondsLeft.toString()) {
     totalTimes[3].textContent = secondsLeft.toString();
+  }
+  if (totalTimes[4].textContent !== secondsLeft.toString()) {
+    totalTimes[4].textContent = secondsLeft.toString();
   }
 }
 
@@ -407,7 +447,7 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
     return;
   }
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     if (schoolDates[i] === lastUpdatedSchoolDates[i]) continue;
     schoolTimes[i].textContent = schoolDates[i].toString();
     lastUpdatedSchoolDates[i] = schoolDates[i];
