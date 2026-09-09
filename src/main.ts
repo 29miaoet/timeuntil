@@ -45,27 +45,27 @@ let schoolDates: Array<number> | null;
 let calendar = new Calendar(
   "./calendars/gci.json",
   [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-  [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
+  [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
 );
 
-let endDate: Date = new Date(2027, 5, 21, 15, 40);
+let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
-// When school starts, uncomment
-// let startingDate: Date = new Date(2026, 8, 9, 8, 30);
-let startingDate: Date = new Date(Date.now());
+let startingDate: Date = new Date(2026, 8, 9, 8, 30);
 let causeOfDeath: string;
 let lastUpdatedSchoolTime: number;
 let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
+
+let accuracy: number = 100;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
 type DateArgs = [number, number, number, number, number];
 
 const termEnds: Array<DateArgs> = [
-  [2026, 10, 18, 15, 40],
-  [2027, 1, 5, 15, 40],
-  [2027, 3, 13, 15, 40],
-  [2027, 5, 21, 15, 40],
+  [2026, 10, 18, 15, 30],
+  [2027, 1, 5, 15, 30],
+  [2027, 3, 13, 15, 30],
+  [2027, 5, 21, 15, 30],
 ];
 
 async function start() {
@@ -88,7 +88,7 @@ async function start() {
   initializeMenus();
   updateDOM();
   slowUpdateDOM();
-  // Recursive function, runs at start of every 10th second
+  // Recursive function, runs at start of every ${accuracy}th second
   watchUI();
 }
 
@@ -98,7 +98,7 @@ function watchUI() {
   } else {
     updateDOM();
   }
-  const timeUntilNextTenthSecond = 100 - (Date.now() % 100);
+  const timeUntilNextTenthSecond = accuracy - (Date.now() % accuracy);
   setTimeout(() => {
     watchUI();
   }, timeUntilNextTenthSecond);
@@ -119,6 +119,20 @@ async function loadPreferences() {
   const preferredEndDate = localStorage.getItem("date");
   if (preferredEndDate) {
     getPreferredDates(preferredEndDate);
+  }
+
+  const preferredHiddenItems = localStorage.getItem("hiddenItems");
+  const checkboxes = document.querySelectorAll<HTMLInputElement>(
+    '.sub-dropdown > li > input[type="checkbox"]'
+  );
+  if (preferredHiddenItems) {
+    const hiddenItems: Array<boolean> = JSON.parse(preferredHiddenItems);
+    toggleDisplaySettings(checkboxes, hiddenItems);
+  }
+
+  const preferredAccuracy = localStorage.getItem("accuracy");
+  if (preferredAccuracy) {
+    accuracy = Number(preferredAccuracy);
   }
 }
 
@@ -176,15 +190,17 @@ function initializeMenus() {
   displayMenu.addFunction((event) => {
     event.stopPropagation();
     const target = event.target as HTMLElement;
-    const li = target.closest("li");
-    if (!li) return;
-    const checkboxes = li.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    const ul = target.closest("ul");
+    if (!ul) return;
+    const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
     toggleDisplaySettings(checkboxes);
   });
 }
 
-function toggleDisplaySettings(checkboxes: NodeListOf<HTMLInputElement>) {
-  throw new Error("Every option removes the Days element, find out why");
+function toggleDisplaySettings(
+  checkboxes: NodeListOf<HTMLInputElement>,
+  hiddenItems: null | Array<boolean> = null
+): void {
   let allTimeLabels: Array<Array<HTMLElement>> = [];
   allTimeLabels[0] = [schoolTimeLabels[0], totalTimeLabels[0], absoluteTimeLabels[0]]; // Days
   allTimeLabels[1] = [schoolTimeLabels[1], totalTimeLabels[1], absoluteTimeLabels[1]]; // Hours
@@ -199,31 +215,76 @@ function toggleDisplaySettings(checkboxes: NodeListOf<HTMLInputElement>) {
   allTimeUnits[3] = [schoolTimes[3], totalTimes[3], absoluteTimes[3]]; // Seconds
   allTimeUnits[4] = [schoolTimes[4], totalTimes[4], absoluteTimes[4]]; // Milliseconds
 
-  for (let i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked === false) {
-      allTimeUnits[i].forEach((item) => {
-        if (!item.hidden) {
-          item.hidden = true;
-        }
-      });
-      allTimeLabels[i].forEach((item) => {
-        if (!item.hidden) {
-          item.hidden = true;
-        }
-      });
-    } else if (checkboxes[i].checked === true) {
-      allTimeUnits[i].forEach((item) => {
-        if (item.hidden) {
-          item.hidden = false;
-        }
-      });
-      allTimeLabels[i].forEach((item) => {
-        if (item.hidden) {
-          item.hidden = false;
-        }
-      });
+  // Which default items should be hidden and which should not
+  if (hiddenItems !== null) {
+    for (let i = 0; i < hiddenItems.length; i++) {
+      if (hiddenItems[i] === true) {
+        hiddenItems[i] = true;
+        checkboxes[i].checked = false;
+        allTimeUnits[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+      } else if (hiddenItems[i] === false) {
+        hiddenItems[i] = false;
+        checkboxes[i].checked = true;
+        allTimeUnits[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+      }
+    }
+  } else {
+    hiddenItems = [false, false, false, false, true];
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked === false) {
+        hiddenItems[i] = true;
+        allTimeUnits[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (!item.hidden) {
+            item.hidden = true;
+          }
+        });
+      } else if (checkboxes[i].checked === true) {
+        hiddenItems[i] = false;
+        allTimeUnits[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+        allTimeLabels[i].forEach((item) => {
+          if (item.hidden) {
+            item.hidden = false;
+          }
+        });
+      }
     }
   }
+
+  if (!hiddenItems[0]) accuracy = 1000;
+  if (!hiddenItems[1]) accuracy = 1000;
+  if (!hiddenItems[2]) accuracy = 1000;
+  if (!hiddenItems[3]) accuracy = 100;
+  if (!hiddenItems[4]) accuracy = 0;
+
+  localStorage.setItem("hiddenItems", JSON.stringify(hiddenItems));
+  localStorage.setItem("accuracy", String(accuracy));
 }
 
 function getPreferredDates(value: string) {
@@ -233,11 +294,11 @@ function getPreferredDates(value: string) {
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
-      endDate = new Date(2026, 11, 18, 14, 30);
+      endDate = new Date(2027, 2, 25, 15, 30);
       causeOfDeath = "Spring Break";
       break;
     case "winter":
-      endDate = new Date(2027, 2, 25, 15, 40);
+      endDate = new Date(2026, 11, 18, 14, 30);
       causeOfDeath = "Winter Break";
       break;
     case "noschool":
@@ -262,6 +323,7 @@ function getPreferredDates(value: string) {
       break;
   }
   if (!checkFinish()) undoFinish();
+  updateProgressBar();
   localStorage.setItem("date", value);
 }
 
@@ -282,18 +344,17 @@ function setPreferredThemes(value: string) {
 async function setPreferredCalendars(value: string) {
   const school_name = `./calendars/${value}.json`;
   let tempCalendar: Calendar;
-
   if (school_name === "burland") {
     tempCalendar = new Calendar(
       school_name,
-      [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, (15 * 60 + 30) * 60 * 1000]
+      [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
+      [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
     );
   } else {
     tempCalendar = new Calendar(
       school_name,
       [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, (15 * 60 + 40) * 60 * 1000]
+      [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
     );
   }
 
@@ -435,7 +496,7 @@ function populateTotalTimes(timeRemaining: number) {
     totalTimes[3].textContent = secondsLeft.toString();
   }
   if (totalTimes[4].textContent !== secondsLeft.toString()) {
-    totalTimes[4].textContent = secondsLeft.toString();
+    totalTimes[4].textContent = millisecondsLeft.toString();
   }
 }
 
