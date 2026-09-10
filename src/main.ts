@@ -213,6 +213,7 @@ function initializeMenus() {
     setPreferredThemes("default");
     getPreferredDates("summer");
     toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
+    accuracy = 100;
   });
 }
 
