@@ -1,5 +1,6 @@
 import re
 import requests
+import csv
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
@@ -32,6 +33,10 @@ def get_site_info(school: str):
 
 
 if __name__ == "__main__":
-    info = get_site_info("gci")
-    print(info)
+    arr = []
+    with open("schools.csv", mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            info = get_site_info(row["School"])
+            arr.append(info)
     input()
