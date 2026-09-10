@@ -1,9 +1,3 @@
-> **This project is still in its pre-release stages.**
->
-> Some UI features will look broken.
->
-> Feel free to test out the site.
-
 # timeuntil
 
 🎉 Welcome to [**timeuntil**](https://29miaoet.github.io/timeuntil)!
@@ -120,6 +114,6 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## License
 
-This project is published under the MIT license, for more details, view the [LICENSE](https://github.com/29miaoet/timeuntil/blob/main/LICENSE).
+This project is published under the MIT license, for more details, view the [LICENSE](.github/LICENSE).
 
 _<p align="center"><sub>©2026 – Ethan Miao - MIT License</sub></p>_
