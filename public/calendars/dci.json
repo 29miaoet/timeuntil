@@ -69,7 +69,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "Student Orientation G9"]
   },
   "2026-09-10": {
     "date": "2026-09-10",
@@ -77,7 +77,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["School Pictures", "Semester 1 Starts G9", "Student Orientation G10"]
   },
   "2026-09-11": {
     "date": "2026-09-11",
@@ -85,7 +85,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Rosh Hashanah", "School Pictures", "Semester 1 Starts G10-12"]
   },
   "2026-09-12": {
     "date": "2026-09-12",
@@ -93,7 +93,7 @@
     "timeSlot": "Regular",
     "status": "No School",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Rosh Hashanah"]
   },
   "2026-09-13": {
     "date": "2026-09-13",
@@ -101,7 +101,7 @@
     "timeSlot": "Regular",
     "status": "No School",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Rosh Hashanah"]
   },
   "2026-09-14": {
     "date": "2026-09-14",
@@ -109,7 +109,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Terry Fox Week"]
   },
   "2026-09-15": {
     "date": "2026-09-15",
@@ -117,7 +117,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Terry Fox Week"]
   },
   "2026-09-16": {
     "date": "2026-09-16",
@@ -125,7 +125,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "Terry Fox Week"]
   },
   "2026-09-17": {
     "date": "2026-09-17",
@@ -133,7 +133,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Terry Fox Week"]
   },
   "2026-09-18": {
     "date": "2026-09-18",
@@ -141,7 +141,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Terry Fox Week"]
   },
   "2026-09-19": {
     "date": "2026-09-19",
@@ -165,7 +165,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["National Truth and Reconciliation Week", "Yom Kippur"]
   },
   "2026-09-22": {
     "date": "2026-09-22",
@@ -173,7 +173,7 @@
     "timeSlot": "Early Dismissal",
     "status": "Early Dismissal",
     "holidays": [],
-    "dayInfo": ["Early Dismissal"]
+    "dayInfo": ["Early Dismissal", "Fall Equinox", "National Truth and Reconciliation Week"]
   },
   "2026-09-23": {
     "date": "2026-09-23",
@@ -181,7 +181,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": ["Late Start Remembrance Day"]
+    "dayInfo": ["Late Start Remembrance Day", "National Truth and Reconciliation Week"]
   },
   "2026-09-24": {
     "date": "2026-09-24",
@@ -189,7 +189,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["National Truth and Reconciliation Week"]
   },
   "2026-09-25": {
     "date": "2026-09-25",
@@ -197,7 +197,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["National Truth and Reconciliation Week"]
   },
   "2026-09-26": {
     "date": "2026-09-26",
@@ -229,7 +229,7 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Orange Shirt Day"]
   },
   "2026-09-30": {
     "date": "2026-09-30",
@@ -2349,37 +2349,37 @@
     "timeSlot": "Regular",
     "status": "Normal School Day",
     "holidays": [],
-    "dayInfo": []
+    "dayInfo": ["Last Day of School"]
   },
   "2027-06-22": {
     "date": "2027-06-22",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
   "2027-06-23": {
     "date": "2027-06-23",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Late Start Remembrance Day"]
   },
   "2027-06-24": {
     "date": "2027-06-24",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
   "2027-06-25": {
     "date": "2027-06-25",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
@@ -2401,25 +2401,25 @@
   },
   "2027-06-28": {
     "date": "2027-06-28",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
   "2027-06-29": {
     "date": "2027-06-29",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Regular",
-    "status": "Normal School Day",
+    "status": "No School",
     "holidays": [],
     "dayInfo": []
   },
   "2027-06-30": {
     "date": "2027-06-30",
-    "hasSchool": true,
+    "hasSchool": false,
     "timeSlot": "Early Dismissal",
-    "status": "Early Dismissal",
+    "status": "No School",
     "holidays": [],
     "dayInfo": ["Early Dismissal", "Late Start Remembrance Day"]
   }
