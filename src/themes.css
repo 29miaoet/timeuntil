@@ -16,6 +16,7 @@
   --warning-text-color: #78350f;
   --warning-border-color: #a41502;
   --warning-bg-color: #f59e0b;
+  --danger-color: #b60208;
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
@@ -39,6 +40,7 @@
   --warning-text-color: #78350f;
   --warning-border-color: #a41502;
   --warning-bg-color: #f59e0b;
+  --danger-color: #b60208;
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
@@ -62,6 +64,7 @@
   --warning-text-color: #fef3c7;
   --warning-border-color: #b42318;
   --warning-bg-color: #b86b00;
+  --danger-color: #b60208;
 
   --dropdown-bg: #363636;
   --dropdown-item-hover: #293541;
@@ -84,6 +87,7 @@
   --warning-text-color: #6b3a00;
   --warning-border-color: rgba(164, 21, 2, 0.6);
   --warning-bg-color: rgba(245, 158, 11, 0.75);
+  --danger-color: #b60208;
 
   --dropdown-bg: rgba(255, 255, 255, 0.7);
   --dropdown-item-hover: rgba(255, 255, 255, 0.5);
@@ -107,6 +111,7 @@
   --warning-text-color: #5c2200;
   --warning-border-color: #8c1d18;
   --warning-bg-color: #d98b00;
+  --danger-color: #b60208;
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #dcdcdc;
@@ -130,6 +135,7 @@
   --warning-text-color: #5c1a00;
   --warning-border-color: #8f1609;
   --warning-bg-color: #e58a00;
+  --danger-color: #b60208;
 
   --dropdown-bg: #fffafa;
   --dropdown-item-hover: #f5d1d1;
@@ -159,6 +165,7 @@
   --warning-text-color: #451a03;
   --warning-border-color: #7c2d12;
   --warning-bg-color: #fbbf24;
+  --danger-color: #b60208;
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #dbeafe;
