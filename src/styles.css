@@ -16,6 +16,7 @@
   --warning-text-color: #78350f;
   --warning-border-color: #a41502;
   --warning-bg-color: #f59e0b;
+  --danger-color: #b60208;
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
@@ -383,6 +384,10 @@ hr {
 
 .github-icon:hover {
   transform: scale(1.05);
+}
+
+#danger-button {
+  color: var(--danger-color);
 }
 
 footer {

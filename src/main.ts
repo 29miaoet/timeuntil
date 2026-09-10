@@ -27,6 +27,10 @@ const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(
   ".abs-time > .timelabels > .timelabel"
 );
 
+const checkboxes = document.querySelectorAll<HTMLInputElement>(
+  '.sub-dropdown > li > input[type="checkbox"]'
+);
+
 const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
 const progressText = document.getElementById("percentage") as HTMLDivElement | null;
 
@@ -122,9 +126,6 @@ async function loadPreferences() {
   }
 
   const preferredHiddenItems = localStorage.getItem("hiddenItems");
-  const checkboxes = document.querySelectorAll<HTMLInputElement>(
-    '.sub-dropdown > li > input[type="checkbox"]'
-  );
   if (preferredHiddenItems) {
     const hiddenItems: Array<boolean> = JSON.parse(preferredHiddenItems);
     toggleDisplaySettings(checkboxes, hiddenItems);
@@ -194,6 +195,24 @@ function initializeMenus() {
     if (!ul) return;
     const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
     toggleDisplaySettings(checkboxes);
+  });
+
+  // RestoreToDefault
+  const restoreButton = document.getElementById("danger-button");
+  if (!restoreButton) return;
+  restoreButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    // Get rid of stored items 1 by 1
+    localStorage.removeItem("accuracy");
+    localStorage.removeItem("hiddenItems");
+    localStorage.removeItem("calendar");
+    localStorage.removeItem("themes");
+    localStorage.removeItem("date");
+
+    setPreferredCalendars("gci");
+    setPreferredThemes("default");
+    getPreferredDates("summer");
+    toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
   });
 }
 
