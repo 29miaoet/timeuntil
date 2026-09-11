@@ -199,6 +199,10 @@ function initializeMenus() {
     watchUI();
   });
 
+  // AccuracySlider
+  const accuracyToggle = new Menu("#accuracy-button", ".accuracy-slider");
+  accuracyToggle.addExpandCollapse();
+
   // RestoreToDefault
   const restoreButton = document.getElementById("danger-button");
   if (!restoreButton) return;

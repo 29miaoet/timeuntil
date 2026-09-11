@@ -113,8 +113,20 @@
           </li>
 
           <li>
+            <button type="button" id="accuracy-button" />
+              <label for="accuracy">Accuracy</label>
+            </button>
+            <div class="accuracy-slider" hidden>
+              <p>Best</p>
+              <input type="range" id="accuracy" name="accuracy" min="0" max="1000" value="100" step="1" orient="vertical" />
+              <p>Worst</p>
+            </div>
+          </li>
+
+          <li>
             <button type="button" id="danger-button">Restore Defaults</button>
           </li>
+
         </ul>
       </div>
       <button
