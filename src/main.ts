@@ -195,6 +195,8 @@ function initializeMenus() {
     if (!ul) return;
     const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
     toggleDisplaySettings(checkboxes);
+    // Immediately update dom since elements are not changed if they are hidden
+    watchUI();
   });
 
   // RestoreToDefault
@@ -472,11 +474,21 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   } else if (schoolTimeRemaining === lastUpdatedSchoolTime) {
     return;
   }
-  absoluteTimes[0].textContent = String(schoolTimeRemaining / 1000 / 60 / 60 / 24);
-  absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
-  absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
-  absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
-  absoluteTimes[4].textContent = String(schoolTimeRemaining);
+  if (!absoluteTimes[0].hidden) {
+    absoluteTimes[0].textContent = String(schoolTimeRemaining / 1000 / 60 / 60 / 24);
+  }
+  if (!absoluteTimes[1].hidden) {
+    absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
+  }
+  if (!absoluteTimes[2].hidden) {
+    absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
+  }
+  if (!absoluteTimes[3].hidden) {
+    absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
+  }
+  if (!absoluteTimes[4].hidden) {
+    absoluteTimes[4].textContent = String(schoolTimeRemaining);
+  }
 
   lastUpdatedSchoolTime = schoolTimeRemaining;
 }
@@ -503,19 +515,19 @@ function populateTotalTimes(timeRemaining: number) {
       secondsLeft * 1000
   );
 
-  if (totalTimes[0].textContent !== daysLeft.toString()) {
+  if ((totalTimes[0].textContent !== daysLeft.toString()) && !totalTimes[0].hidden) {
     totalTimes[0].textContent = daysLeft.toString();
   }
-  if (totalTimes[1].textContent !== hoursLeft.toString()) {
+  if ((totalTimes[1].textContent !== hoursLeft.toString()) && !totalTimes[1].hidden) {
     totalTimes[1].textContent = hoursLeft.toString();
   }
-  if (totalTimes[2].textContent !== minutesLeft.toString()) {
+  if ((totalTimes[2].textContent !== minutesLeft.toString()) && !totalTimes[2].hidden) {
     totalTimes[2].textContent = minutesLeft.toString();
   }
-  if (totalTimes[3].textContent !== secondsLeft.toString()) {
+  if ((totalTimes[3].textContent !== secondsLeft.toString()) && !totalTimes[3].hidden) {
     totalTimes[3].textContent = secondsLeft.toString();
   }
-  if (totalTimes[4].textContent !== secondsLeft.toString()) {
+  if ((totalTimes[4].textContent !== secondsLeft.toString()) && !totalTimes[4].hidden) {
     totalTimes[4].textContent = millisecondsLeft.toString();
   }
 }
@@ -537,7 +549,7 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
   }
 
   for (let i = 0; i < 5; i++) {
-    if (schoolDates[i] === lastUpdatedSchoolDates[i]) continue;
+    if ((schoolDates[i] === lastUpdatedSchoolDates[i]) || schoolTimes[i].hidden) continue;
     schoolTimes[i].textContent = schoolDates[i].toString();
     lastUpdatedSchoolDates[i] = schoolDates[i];
   }
