@@ -1,0 +1,260 @@
+{
+  "Archwood School": {
+    "codeName": "archwood",
+    "id": 38,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Coll\u00e8ge B\u00e9liveau": {
+    "codeName": "cb",
+    "id": 44,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Coll\u00e8ge Jeanne-Sauv\u00e9": {
+    "codeName": "cjs",
+    "id": 46,
+    "preBuilt": true,
+    "highSchool": true
+  },
+  "Dakota Collegiate Institute": {
+    "codeName": "dci",
+    "id": 48,
+    "preBuilt": true,
+    "highSchool": true
+  },
+  "Darwin School": {
+    "codeName": "darwin",
+    "id": 50,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Dr. D. W. Penner School": {
+    "codeName": "penner",
+    "id": 52,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole George-McDowell": {
+    "codeName": "mcdowell",
+    "id": 54,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Guyot": {
+    "codeName": "guyot",
+    "id": 56,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Henri-Bergeron": {
+    "codeName": "bergeron",
+    "id": 58,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Howden": {
+    "codeName": "howden",
+    "id": 60,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Julie-Riel": {
+    "codeName": "julieriel",
+    "id": 62,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Marie-Anne-Gaboury": {
+    "codeName": "gaboury",
+    "id": 64,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Mazina-Giizhik": {
+    "codeName": "mazina",
+    "id": 832400,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Provencher": {
+    "codeName": "provencher",
+    "id": 66,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole St. Germain": {
+    "codeName": "stgermain",
+    "id": 70,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Van Belleghem": {
+    "codeName": "belleghem",
+    "id": 72,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "\u00c9cole Varennes": {
+    "codeName": "varennes",
+    "id": 74,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Frontenac School": {
+    "codeName": "frontenac",
+    "id": 76,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "General Vanier School": {
+    "codeName": "vanier",
+    "id": 78,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Glenlawn Collegiate Institute": {
+    "codeName": "gci",
+    "id": 80,
+    "preBuilt": true,
+    "highSchool": true
+  },
+  "Glenwood School": {
+    "codeName": "glenwood",
+    "id": 82,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "H. S. Paul School": {
+    "codeName": "hspaul",
+    "id": 84,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Hastings School": {
+    "codeName": "hastings",
+    "id": 86,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Highbury School": {
+    "codeName": "highbury",
+    "id": 88,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "International Student Program": {
+    "codeName": "isp",
+    "id": 90,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Island Lakes Community School": {
+    "codeName": "island",
+    "id": 92,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "J. H. Bruns Collegiate": {
+    "codeName": "jhb",
+    "id": 94,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Lavallee School": {
+    "codeName": "lavallee",
+    "id": 96,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Louis Riel Arts & Technology Centre": {
+    "codeName": "atc",
+    "id": 100,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Marion School": {
+    "codeName": "marion",
+    "id": 102,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Minnetonka School": {
+    "codeName": "minnetonka",
+    "id": 104,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Nelson McIntyre Collegiate": {
+    "codeName": "nmc",
+    "id": 106,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Niakwa Place School": {
+    "codeName": "niakwa",
+    "id": 108,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Nordale School": {
+    "codeName": "nordale",
+    "id": 110,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Ren\u00e9 Deleurme Centre": {
+    "codeName": "rdc",
+    "id": 98,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Sage Creek School": {
+    "codeName": "sagecreek",
+    "id": 68,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Samuel Burland School": {
+    "codeName": "burland",
+    "id": 114,
+    "preBuilt": true,
+    "highSchool": false
+  },
+  "Shamrock School": {
+    "codeName": "shamrock",
+    "id": 116,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "St. George School": {
+    "codeName": "stgeorge",
+    "id": 118,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Victor H.L. Wyatt School": {
+    "codeName": "wyatt",
+    "id": 120,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Victor Mager School": {
+    "codeName": "mager",
+    "id": 122,
+    "preBuilt": false,
+    "highSchool": false
+  },
+  "Windsor Park Collegiate": {
+    "codeName": "wpc",
+    "id": 124,
+    "preBuilt": false,
+    "highSchool": true
+  },
+  "Windsor School": {
+    "codeName": "windsor",
+    "id": 126,
+    "preBuilt": false,
+    "highSchool": false
+  }
+}
