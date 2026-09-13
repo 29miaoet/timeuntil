@@ -6,6 +6,7 @@
  * loaded with calendar.loadData(), the file path must be
  * provided in the constructor.
  */
+import { getCalendar } from "./fetchCalendar";
 
 interface DayInfo {
   date: string;
@@ -48,6 +49,13 @@ export default class Calendar {
   private regularSchoolDayTime: FixedTime;
   public now: number;
 
+  /**
+   * Initiates the calendar with required properties.
+   *
+   * Important!
+   * dbPath can be either the path to the preBuilt calendar, or 
+   * the school name used by the LRSD API, loadData() will handle it.
+   */
   constructor(dbPath: string, earlyDismissalTime: FixedTime, regularSchoolDayTime: FixedTime) {
     this.dbPath = dbPath;
     this.earlyDismissalTime = earlyDismissalTime;
@@ -62,12 +70,23 @@ export default class Calendar {
   async loadData(): Promise<void> {
     try {
       const response = await fetch(this.dbPath);
-      if (!response.ok) {
+      const contentType = response.headers.get("content-type");
+      // Should replace with something less fragile
+      if (response.status === 404 || !contentType?.includes("application/json")) {
+        try {
+          this.calendar = await getCalendar(this.dbPath);
+          this.lastDay = this.getLastDay(-1);
+        } catch(error) {
+          throw new CalendarError(`Calendar ${this.dbPath} not found`);
+        }
+      } else if (response.ok) {
+        this.calendar = await response.json();
+        this.lastDay = this.getLastDay(-1);
+      } else {
         throw new CalendarError("Network response error" + response.statusText);
       }
-      this.calendar = await response.json();
-      this.lastDay = this.getLastDay(-1);
     } catch (error) {
+      console.error(error);
       throw new CalendarError("Calendar fetch error.");
     }
   }
