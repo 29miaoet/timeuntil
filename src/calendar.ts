@@ -6,6 +6,7 @@
  * loaded with calendar.loadData(), the file path must be
  * provided in the constructor.
  */
+import { getCalendar } from "./fetchCalendar";
 
 interface DayInfo {
   date: string;
@@ -48,6 +49,13 @@ export default class Calendar {
   private regularSchoolDayTime: FixedTime;
   public now: number;
 
+  /**
+   * Initiates the calendar with required properties.
+   *
+   * Important!
+   * dbPath can be either the path to the preBuilt calendar, or
+   * the school name used by the LRSD API, loadData() will handle it.
+   */
   constructor(dbPath: string, earlyDismissalTime: FixedTime, regularSchoolDayTime: FixedTime) {
     this.dbPath = dbPath;
     this.earlyDismissalTime = earlyDismissalTime;
@@ -62,12 +70,24 @@ export default class Calendar {
   async loadData(): Promise<void> {
     try {
       const response = await fetch(this.dbPath);
-      if (!response.ok) {
+      const contentType = response.headers.get("content-type");
+      // Should replace with something less fragile
+      if (response.status === 404 || !contentType?.includes("application/json")) {
+        // Fallback to scraping the external API
+        try {
+          this.calendar = await getCalendar(this.dbPath);
+          this.lastDay = this.getLastDay(-1);
+        } catch (error) {
+          throw new CalendarError(`Calendar ${this.dbPath} not found`);
+        }
+      } else if (response.ok) {
+        this.calendar = await response.json();
+        this.lastDay = this.getLastDay(-1);
+      } else {
         throw new CalendarError("Network response error" + response.statusText);
       }
-      this.calendar = await response.json();
-      this.lastDay = this.getLastDay(-1);
     } catch (error) {
+      console.error(error);
       throw new CalendarError("Calendar fetch error.");
     }
   }
@@ -445,6 +465,7 @@ export default class Calendar {
   }
 
   findNextLongWeekend(): number {
+    let isToday: boolean = false;
     const day = Object.values(this.calendar).find((_day, index, array) => {
       // Use indexes for consistency
       const first = array[index];
@@ -458,6 +479,17 @@ export default class Calendar {
 
       const dateNow = new Date(this.now);
       const dateCandidate = new Date(...this.formatForDateConstructor(first.date));
+      const dateStampNow = this.strftime(this.now);
+      if (
+        (dateStampNow === first.date ||
+          dateStampNow === second.date ||
+          dateStampNow === third.date) &&
+        schoolNotExists &&
+        onWeekend
+      ) {
+        isToday = true;
+        return true;
+      }
 
       const inTheFuture = dateCandidate > dateNow;
 
@@ -468,6 +500,8 @@ export default class Calendar {
       const previousFoundDay = new Date(this.lastDay);
       return previousFoundDay.getTime();
     }
+
+    if (isToday) return this.now;
     const previousFoundDay = new Date(...this.formatForDateConstructor(day.date));
     return this.schoolTimeify(previousFoundDay).getTime();
   }
@@ -502,6 +536,10 @@ export default class Calendar {
 
   findNextNoSchool(): number {
     const dateNow = new Date(this.now);
+    // Check if there is no school today
+    if (!this.calendar[this.strftime(dateNow.getTime())].hasSchool) {
+      return this.now;
+    }
     const day = Object.values(this.calendar).find((day) => {
       const dateCandidate = new Date(...this.formatForDateConstructor(day.date));
       const inTheFuture = dateCandidate > dateNow;
