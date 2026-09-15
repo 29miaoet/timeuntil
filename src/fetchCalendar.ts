@@ -11,7 +11,7 @@ interface SchoolObj {
   [schoolName: string]: School;
 }
 
-export const schoolData = rawSchoolData as unknown as SchoolObj;
+export const schoolData: SchoolObj = rawSchoolData;
 
 interface CalendarDay {
   date: string;
