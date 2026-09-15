@@ -100,18 +100,17 @@ async function start() {
 }
 
 function watchUI() {
+  const timeUntilNextBench = accuracy - (Date.now() % accuracy);
+  setTimeout(watchUI, timeUntilNextBench);
+
   if (checkFinish()) {
     triggerFinish();
   } else {
     updateDOM();
   }
-  const timeUntilNextTenthSecond = accuracy - (Date.now() % accuracy);
-  setTimeout(() => {
-    watchUI();
-  }, timeUntilNextTenthSecond);
 }
 
-async function loadPreferences() {
+async function loadPreferences(): Promise<void> {
   // Must be loaded before preferredEndDate
   const preferredCalendar = localStorage.getItem("calendar");
   if (preferredCalendar) {
