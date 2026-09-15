@@ -17,7 +17,7 @@
     "preBuilt": true,
     "highSchool": true
   },
-  "Dakota Collegiate Institute": {
+  "Dakota Collegiate": {
     "codeName": "dci",
     "id": 48,
     "preBuilt": true,
@@ -167,7 +167,7 @@
     "preBuilt": false,
     "highSchool": false
   },
-  "Louis Riel Arts & Technology Centre": {
+  "Louis Riel ATC": {
     "codeName": "atc",
     "id": 100,
     "preBuilt": false,
