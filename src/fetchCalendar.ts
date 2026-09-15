@@ -42,14 +42,13 @@ const START_DATE = "2026-09-05";
 const END_DATE = "2027-06-30";
 
 // Hijack lrsd school calendar URLs
-const DISTRICT_URL =
-  "https://cicmsapi.azurewebsites.net/lrsd/_ci/15/ci/vsb/webservice.ashx";
+const DISTRICT_URL = "https://cicmsapi.azurewebsites.net/lrsd/_ci/15/ci/vsb/webservice.ashx";
 
 const HEADERS = {
-  "Accept": "*/*",
+  Accept: "*/*",
   "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-  "Origin": "https://www.lrsd.net",
-  "Referer": "https://www.lrsd.net/",
+  Origin: "https://www.lrsd.net",
+  Referer: "https://www.lrsd.net/",
 };
 
 function toISODate(d: Date): string {
@@ -60,7 +59,7 @@ function toISODate(d: Date): string {
 }
 
 function getSchoolId(schoolName: string): number {
-  const schoolObj = Object.values(schoolData).find((school) => school.codeName === schoolName)
+  const schoolObj = Object.values(schoolData).find((school) => school.codeName === schoolName);
   if (!schoolObj) {
     throw new RangeError(`${schoolName} does not exist.`);
   }
@@ -96,24 +95,24 @@ export async function getCalendar(schoolName: string): Promise<CalendarIndex> {
   }
 
   const search = {
-    "Keyword": "",
-    "Category": "",
-    "StartDate": START_DATE,
-    "EndDate": END_DATE,
-    "SelectedChildren": [],
-    "SelectedCalendars": [],
-    "SchoolClasses": [],
-    "ForMonthView": true,
-    "NoRecurExpand": false,
-    "SiteId": siteID,
-    "CategoryGuids": [],
+    Keyword: "",
+    Category: "",
+    StartDate: START_DATE,
+    EndDate: END_DATE,
+    SelectedChildren: [],
+    SelectedCalendars: [],
+    SchoolClasses: [],
+    ForMonthView: true,
+    NoRecurExpand: false,
+    SiteId: siteID,
+    CategoryGuids: [],
   };
 
   const eventPayload = {
-    "CategoryName": "EventsAdvancedSerach",
-    "MethodName": "Search",
-    "Parameters": {
-      "json": JSON.stringify(search),
+    CategoryName: "EventsAdvancedSerach",
+    MethodName: "Search",
+    Parameters: {
+      json: JSON.stringify(search),
     },
   };
 
