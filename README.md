@@ -9,7 +9,8 @@ timeuntil/
 ├── .github/
 │   ├── workflows/
 │   │   ├── deploy.yml
-│   │   └── format.yml
+│   │   ├── format.yml
+│   │   └── release.yml
 │   │ 
 │   ├── dependabot.yml
 │   └── CONTRIBUTING.md
@@ -18,6 +19,8 @@ timeuntil/
 │   ├── main.ts
 │   ├── menu.ts
 │   ├── calendar.ts
+│   ├── fetchCalendar.ts
+│   ├── schools.json
 │   ├── themes.css
 │   ├── styles.css
 │   └── vite-env.d.ts
