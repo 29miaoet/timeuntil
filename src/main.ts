@@ -146,6 +146,7 @@ function addMoreSchools() {
   const fragment = document.createDocumentFragment();
 
   for (const obj in schoolData) {
+    if (schoolData[obj].preBuilt) continue;
     const codeName = schoolData[obj].codeName;
 
     const listItem = document.createElement("li");
@@ -375,18 +376,18 @@ async function setPreferredCalendars(value: string) {
   const matchedSchool = Object.values(schoolData).find((school) => {
     return school.codeName === value;
   });
-  
+
   if (!matchedSchool) {
     console.error(`Bad codeName ${value}.`);
     return;
   }
 
   if (!matchedSchool.highSchool) {
-    startingTime = [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000]
-    endingTime = [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
+    startingTime = [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
+    endingTime = [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
   } else {
-    startingTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000]
-    endingTime = [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
+    startingTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
+    endingTime = [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
   }
 
   if (matchedSchool.preBuilt) {
