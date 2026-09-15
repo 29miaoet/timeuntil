@@ -349,6 +349,28 @@ hr {
   left: calc(100% + 5px);
   padding: 10px 25px;
   list-style-type: none;
+  max-height: 50vh;
+  max-width: 300px;
+  flex-wrap: wrap;
+  overflow-y: auto;
+
+  /* For Firefox */
+  scrollbar-width: auto;
+  scrollbar-color: var(--progress-bar-bg) transparent;
+}
+
+/* For Chromium & Safari */
+.sub-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sub-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sub-dropdown::-webkit-scrollbar-thumb {
+  background: var(--progress-bar-bg);
+  border-radius: var(--radius-classic);
 }
 
 .sub-dropdown > li {
@@ -463,5 +485,14 @@ footer {
     padding-left: 20px;
     padding-right: 20px;
     flex: 1;
+  }
+}
+
+@media (max-width: 450px) {
+  .sub-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 10px;
+    max-width: 300px;
   }
 }

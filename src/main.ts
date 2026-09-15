@@ -2,6 +2,7 @@ import "./styles.css";
 import "./themes.css";
 import Calendar from "./calendar";
 import Menu from "./menu";
+import { schoolData } from "./fetchCalendar";
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
@@ -64,6 +65,7 @@ let accuracy: number = 100;
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
 type DateArgs = [number, number, number, number, number];
+type StartEnd = [number, number];
 
 const termEnds: Array<DateArgs> = [
   [2026, 10, 18, 15, 30],
@@ -92,6 +94,7 @@ async function start() {
   initializeMenus();
   updateDOM();
   slowUpdateDOM();
+  addMoreSchools();
   // Recursive function, runs at start of every ${accuracy}th second
   watchUI();
 }
@@ -135,6 +138,30 @@ async function loadPreferences() {
   if (preferredAccuracy) {
     accuracy = Number(preferredAccuracy);
   }
+}
+
+function addMoreSchools() {
+  const dropdownList = document.getElementById("calendars");
+  if (!dropdownList) return;
+
+  const fragment = document.createDocumentFragment();
+
+  for (const obj in schoolData) {
+    if (schoolData[obj].preBuilt) continue;
+    const codeName = schoolData[obj].codeName;
+
+    const listItem = document.createElement("li");
+    listItem.dataset.calendar = codeName;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = obj;
+
+    listItem.appendChild(button);
+    fragment.appendChild(listItem);
+  }
+
+  dropdownList.appendChild(fragment);
 }
 
 function initializeMenus() {
@@ -362,20 +389,32 @@ function setPreferredThemes(value: string) {
 }
 
 async function setPreferredCalendars(value: string) {
-  const school_name = `./calendars/${value}.json`;
   let tempCalendar: Calendar;
-  if (school_name === "burland") {
-    tempCalendar = new Calendar(
-      school_name,
-      [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
-    );
+  let startingTime: StartEnd;
+  let endingTime: StartEnd;
+
+  const matchedSchool = Object.values(schoolData).find((school) => {
+    return school.codeName === value;
+  });
+
+  if (!matchedSchool) {
+    console.error(`Bad codeName ${value}.`);
+    return;
+  }
+
+  if (!matchedSchool.highSchool) {
+    startingTime = [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
+    endingTime = [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
   } else {
-    tempCalendar = new Calendar(
-      school_name,
-      [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-      [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
-    );
+    startingTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
+    endingTime = [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
+  }
+
+  if (matchedSchool.preBuilt) {
+    const school_name = `./calendars/${value}.json`;
+    tempCalendar = new Calendar(school_name, startingTime, endingTime);
+  } else {
+    tempCalendar = new Calendar(value, startingTime, endingTime);
   }
 
   await tempCalendar.loadData();

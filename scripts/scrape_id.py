@@ -1,5 +1,6 @@
 import re
 import requests
+import json
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
@@ -32,6 +33,10 @@ def get_site_info(school: str):
 
 
 if __name__ == "__main__":
-    info = get_site_info("gci")
-    print(info)
-    input()
+    with open("../public/schools.json", "r", encoding="utf-8") as file:
+        schools = json.load(file)
+    for key in schools:
+        id = get_site_info(schools[key]["codeName"])["site_id"]
+        schools[key]["id"] = id
+    with open("../public/output.json", "w", encoding="utf-8") as stream:
+        json.dump(schools, stream, indent=2)

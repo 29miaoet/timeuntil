@@ -90,6 +90,7 @@ events_response = requests.post(
 events_response.raise_for_status()
 
 events = events_response.json()["Events"]
+print(events)
 print("Calendar data aquired.")
 
 # Keyword Matching via Regex
