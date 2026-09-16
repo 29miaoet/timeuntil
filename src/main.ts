@@ -42,6 +42,9 @@ const schoolTimeContainer = document.getElementById(
   "school-time-remaining"
 ) as HTMLDivElement | null;
 const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
+const accuracySlider = document.getElementById("accuracy") as HTMLInputElement;
+
+const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
@@ -61,8 +64,6 @@ let lastUpdatedSchoolTime: number;
 let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 let accuracy: number = 100;
-
-const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
 type DateArgs = [number, number, number, number, number];
 type StartEnd = [number, number];
@@ -135,8 +136,9 @@ async function loadPreferences(): Promise<void> {
 
   const preferredAccuracy = localStorage.getItem("accuracy");
   if (preferredAccuracy) {
-    accuracy = Number(preferredAccuracy);
+    setPreferredAccuracy(Number(preferredAccuracy), accuracySlider);
   }
+
 }
 
 function addMoreSchools() {
@@ -228,25 +230,32 @@ function initializeMenus() {
   // AccuracySlider
   const accuracyToggle = new Menu("#accuracy-button", ".accuracy-slider");
   accuracyToggle.addExpandCollapse();
+  if (accuracySlider) {
+    accuracySlider.addEventListener("input", (event) => {
+      event.stopPropagation();
+      setPreferredAccuracy(2000 - Number(accuracySlider.value));
+    });
+  }
 
   // RestoreToDefault
   const restoreButton = document.getElementById("danger-button");
-  if (!restoreButton) return;
-  restoreButton.addEventListener("click", (event) => {
-    event.stopPropagation();
-    // Get rid of stored items 1 by 1
-    localStorage.removeItem("accuracy");
-    localStorage.removeItem("hiddenItems");
-    localStorage.removeItem("calendar");
-    localStorage.removeItem("themes");
-    localStorage.removeItem("date");
+  if (restoreButton) {
+    restoreButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      // Get rid of stored items 1 by 1
+      localStorage.removeItem("accuracy");
+      localStorage.removeItem("hiddenItems");
+      localStorage.removeItem("calendar");
+      localStorage.removeItem("themes");
+      localStorage.removeItem("date");
 
-    setPreferredCalendars("gci");
-    setPreferredThemes("default");
-    getPreferredDates("summer");
-    toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
-    accuracy = 100;
-  });
+      setPreferredCalendars("gci");
+      setPreferredThemes("default");
+      getPreferredDates("summer");
+      toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
+      setPreferredAccuracy(100, accuracySlider);
+    });
+  }
 }
 
 function toggleDisplaySettings(
@@ -298,6 +307,12 @@ function toggleDisplaySettings(
         });
       }
     }
+
+    if (!hiddenItems[0]) setPreferredAccuracy(2000, accuracySlider, false);
+    if (!hiddenItems[1]) setPreferredAccuracy(2000, accuracySlider, false);
+    if (!hiddenItems[2]) setPreferredAccuracy(1000, accuracySlider, false);
+    if (!hiddenItems[3]) setPreferredAccuracy(100, accuracySlider, false);
+    if (!hiddenItems[4]) setPreferredAccuracy(0, accuracySlider, false);
   } else {
     hiddenItems = [false, false, false, false, true];
     for (let i = 0; i < checkboxes.length; i++) {
@@ -327,16 +342,15 @@ function toggleDisplaySettings(
         });
       }
     }
+
+    if (!hiddenItems[0]) setPreferredAccuracy(2000, accuracySlider);
+    if (!hiddenItems[1]) setPreferredAccuracy(2000, accuracySlider);
+    if (!hiddenItems[2]) setPreferredAccuracy(1000, accuracySlider);
+    if (!hiddenItems[3]) setPreferredAccuracy(100, accuracySlider);
+    if (!hiddenItems[4]) setPreferredAccuracy(0, accuracySlider);
   }
 
-  if (!hiddenItems[0]) accuracy = 1000;
-  if (!hiddenItems[1]) accuracy = 1000;
-  if (!hiddenItems[2]) accuracy = 1000;
-  if (!hiddenItems[3]) accuracy = 100;
-  if (!hiddenItems[4]) accuracy = 0;
-
   localStorage.setItem("hiddenItems", JSON.stringify(hiddenItems));
-  localStorage.setItem("accuracy", String(accuracy));
 }
 
 function getPreferredDates(value: string) {
@@ -391,6 +405,24 @@ function setPreferredThemes(value: string) {
     return;
   }
   metaThemeColor.setAttribute("content", color);
+}
+
+function setPreferredAccuracy(value: number, slider: HTMLInputElement | null = null, updateLocalStorage: boolean = true) {
+  if (Number.isNaN(value)) {
+    console.error(`Function setPreferredAccuracy recieve invalid argument ${value}.`);
+    return;
+  }
+
+  accuracy = value;
+  if (updateLocalStorage) {
+    localStorage.setItem("accuracy", String(value));
+  }
+
+  if (slider !== null) {
+    slider.value = String(2000 - value);
+  }
+
+  watchUI();
 }
 
 async function setPreferredCalendars(value: string) {
