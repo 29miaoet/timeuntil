@@ -138,7 +138,6 @@ async function loadPreferences(): Promise<void> {
   if (preferredAccuracy) {
     setPreferredAccuracy(Number(preferredAccuracy), accuracySlider);
   }
-
 }
 
 function addMoreSchools() {
@@ -407,7 +406,11 @@ function setPreferredThemes(value: string) {
   metaThemeColor.setAttribute("content", color);
 }
 
-function setPreferredAccuracy(value: number, slider: HTMLInputElement | null = null, updateLocalStorage: boolean = true) {
+function setPreferredAccuracy(
+  value: number,
+  slider: HTMLInputElement | null = null,
+  updateLocalStorage: boolean = true
+) {
   if (Number.isNaN(value)) {
     console.error(`Function setPreferredAccuracy recieve invalid argument ${value}.`);
     return;
@@ -589,19 +592,19 @@ function populateTotalTimes(timeRemaining: number) {
       secondsLeft * 1000
   );
 
-  if ((totalTimes[0].textContent !== daysLeft.toString()) && !totalTimes[0].hidden) {
+  if (totalTimes[0].textContent !== daysLeft.toString() && !totalTimes[0].hidden) {
     totalTimes[0].textContent = daysLeft.toString();
   }
-  if ((totalTimes[1].textContent !== hoursLeft.toString()) && !totalTimes[1].hidden) {
+  if (totalTimes[1].textContent !== hoursLeft.toString() && !totalTimes[1].hidden) {
     totalTimes[1].textContent = hoursLeft.toString();
   }
-  if ((totalTimes[2].textContent !== minutesLeft.toString()) && !totalTimes[2].hidden) {
+  if (totalTimes[2].textContent !== minutesLeft.toString() && !totalTimes[2].hidden) {
     totalTimes[2].textContent = minutesLeft.toString();
   }
-  if ((totalTimes[3].textContent !== secondsLeft.toString()) && !totalTimes[3].hidden) {
+  if (totalTimes[3].textContent !== secondsLeft.toString() && !totalTimes[3].hidden) {
     totalTimes[3].textContent = secondsLeft.toString();
   }
-  if ((totalTimes[4].textContent !== secondsLeft.toString()) && !totalTimes[4].hidden) {
+  if (totalTimes[4].textContent !== secondsLeft.toString() && !totalTimes[4].hidden) {
     totalTimes[4].textContent = millisecondsLeft.toString();
   }
 }
@@ -623,7 +626,7 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
   }
 
   for (let i = 0; i < 5; i++) {
-    if ((schoolDates[i] === lastUpdatedSchoolDates[i]) || schoolTimes[i].hidden) continue;
+    if (schoolDates[i] === lastUpdatedSchoolDates[i] || schoolTimes[i].hidden) continue;
     schoolTimes[i].textContent = schoolDates[i].toString();
     lastUpdatedSchoolDates[i] = schoolDates[i];
   }
