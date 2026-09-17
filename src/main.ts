@@ -64,6 +64,7 @@ let lastUpdatedSchoolTime: number;
 let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 let accuracy: number = 100;
+let lastUpdate: ReturnType<typeof setTimeout>;
 
 type DateArgs = [number, number, number, number, number];
 type StartEnd = [number, number];
@@ -102,7 +103,7 @@ async function start() {
 
 function watchUI() {
   const timeUntilNextBench = accuracy - (Date.now() % accuracy);
-  setTimeout(watchUI, timeUntilNextBench);
+  lastUpdate = setTimeout(watchUI, timeUntilNextBench);
 
   if (checkFinish()) {
     triggerFinish();
@@ -223,6 +224,8 @@ function initializeMenus() {
     const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
     toggleDisplaySettings(checkboxes);
     // Immediately update dom since elements are not changed if they are hidden
+    // Also clear the previous timeout so function calls don't pile up
+    clearTimeout(lastUpdate);
     watchUI();
   });
 
@@ -425,6 +428,9 @@ function setPreferredAccuracy(
     slider.value = String(2000 - value);
   }
 
+  // Clear the previous function scheduling, important since setPreferredAccuracy 
+  // is called very often.
+  clearTimeout(lastUpdate)
   watchUI();
 }
 
