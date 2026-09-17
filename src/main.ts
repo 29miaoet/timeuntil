@@ -428,9 +428,9 @@ function setPreferredAccuracy(
     slider.value = String(2000 - value);
   }
 
-  // Clear the previous function scheduling, important since setPreferredAccuracy 
+  // Clear the previous function scheduling, important since setPreferredAccuracy
   // is called very often.
-  clearTimeout(lastUpdate)
+  clearTimeout(lastUpdate);
   watchUI();
 }
 
