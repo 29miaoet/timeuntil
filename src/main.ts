@@ -58,7 +58,7 @@ let calendar = new Calendar(
 
 let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
-let startingDate: Date = new Date(2026, 8, 9, 8, 30);
+let startDate: Date = new Date(2026, 8, 9, 8, 30);
 let causeOfDeath: string;
 let lastUpdatedSchoolTime: number;
 let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
@@ -359,34 +359,42 @@ function getPreferredDates(value: string) {
   switch (value) {
     case "summer":
       endDate = new Date(calendar.lastDay);
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
       endDate = new Date(2027, 2, 25, 15, 30);
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "Spring Break";
       break;
     case "winter":
       endDate = new Date(2026, 11, 18, 14, 30);
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "Winter Break";
       break;
     case "noschool":
       endDate = new Date(calendar.findNextNoSchool());
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "No School Right Now";
       break;
     case "weekend":
       endDate = new Date(calendar.findNextWeekend());
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "Weekend";
       break;
     case "lweekend":
       endDate = new Date(calendar.findNextLongWeekend());
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "Long Weekend";
       break;
     case "term":
       endDate = new Date(calendar.findEndTerm(...termEnds));
+      startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
       endDate = new Date(2026, 8, 9, 8, 30);
+      startDate = new Date(2026, 5, 21, 3, 40);
       causeOfDeath = "(Sadly) School Has Started";
       break;
   }
@@ -634,7 +642,7 @@ function populateSchoolDates(schoolDates: Array<number> | null) {
 }
 
 function updateProgressBar() {
-  const start = startingDate;
+  const start = startDate;
 
   const end = endDate;
   let fractionPercentage: number;
