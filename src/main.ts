@@ -519,7 +519,6 @@ function slowUpdateDOM() {
 
   const delay = tomorrow.getTime() - Date.now();
 
-
   setTimeout(() => {
     slowUpdateDOM();
   }, delay);

@@ -174,13 +174,19 @@ export default class Calendar {
 
   schoolNow(): boolean {
     const currentDate = this.strftime(this.now);
-    const millisecondsElapsed = this.modTimestamp("day", this.now)
+    const millisecondsElapsed = this.modTimestamp("day", this.now);
     if (!this.calendar[currentDate].hasSchool) {
       return false;
     } else if (this.calendar[currentDate].timeSlot === "Regular") {
-      return this.regularSchoolDayTime[0] < millisecondsElapsed && this.regularSchoolDayTime[1] > millisecondsElapsed;
+      return (
+        this.regularSchoolDayTime[0] < millisecondsElapsed &&
+        this.regularSchoolDayTime[1] > millisecondsElapsed
+      );
     } else if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-      return this.earlyDismissalTime[0] < millisecondsElapsed && this.earlyDismissalTime[1] > millisecondsElapsed;
+      return (
+        this.earlyDismissalTime[0] < millisecondsElapsed &&
+        this.earlyDismissalTime[1] > millisecondsElapsed
+      );
     }
     return false;
   }
