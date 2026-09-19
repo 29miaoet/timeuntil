@@ -511,6 +511,7 @@ function slowUpdateDOM() {
 
   const delay = tomorrow.getTime() - Date.now();
 
+
   setTimeout(() => {
     slowUpdateDOM();
   }, delay);
@@ -518,12 +519,6 @@ function slowUpdateDOM() {
 
 function updateTimer() {
   calendar.freeze();
-  // Add 2 months for testing, and a random amount of time,
-  // so that it makes the timer change.
-
-  // Uncomment these 2 lines for testing
-  // calendar.now = Date.now() + 2*31*24*60*60*1000 - 5*60*60*1000;
-  // console.log(new Date(calendar.now));
 
   try {
     schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());

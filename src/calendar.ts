@@ -174,12 +174,13 @@ export default class Calendar {
 
   schoolNow(): boolean {
     const currentDate = this.strftime(this.now);
+    const millisecondsElapsed = this.modTimestamp("day", this.now)
     if (!this.calendar[currentDate].hasSchool) {
       return false;
     } else if (this.calendar[currentDate].timeSlot === "Regular") {
-      return this.regularSchoolDayTime[0] < this.now && this.regularSchoolDayTime[1] > this.now;
+      return this.regularSchoolDayTime[0] < millisecondsElapsed && this.regularSchoolDayTime[1] > millisecondsElapsed;
     } else if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-      return this.earlyDismissalTime[0] < this.now && this.earlyDismissalTime[1] > this.now;
+      return this.earlyDismissalTime[0] < millisecondsElapsed && this.earlyDismissalTime[1] > millisecondsElapsed;
     }
     return false;
   }
@@ -515,10 +516,6 @@ export default class Calendar {
   schoolTimeify(dateObj: Date): Date {
     // Rollback to previous day
     dateObj.setDate(dateObj.getDate() - 1);
-    // Add check for whether it falls on the same day as right now
-    if (this.floorTimestamp("day", dateObj.getTime()) === this.floorTimestamp("day", this.now)) {
-      return new Date(this.now);
-    }
     const stamp = this.strftime(dateObj.getTime());
 
     if (this.calendar[stamp].hasSchool) {
@@ -537,7 +534,7 @@ export default class Calendar {
   findNextNoSchool(): number {
     const dateNow = new Date(this.now);
     // Check if there is no school today
-    if (!this.calendar[this.strftime(dateNow.getTime())].hasSchool) {
+    if (!this.schoolNow()) {
       return this.now;
     }
     const day = Object.values(this.calendar).find((day) => {
