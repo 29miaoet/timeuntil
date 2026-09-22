@@ -374,7 +374,7 @@ function getPreferredDates(value: string) {
       break;
     case "noschool":
       endDate = new Date(calendar.findNextNoSchool());
-      startDate = new Date(2026, 8, 9, 8, 30);
+      startDate = new Date(calendar.findNextNoSchool(true));
       causeOfDeath = "No School Right Now";
       break;
     case "weekend":
@@ -384,7 +384,8 @@ function getPreferredDates(value: string) {
       break;
     case "lweekend":
       endDate = new Date(calendar.findNextLongWeekend());
-      startDate = new Date(2026, 8, 9, 8, 30);
+      startDate = new Date(calendar.findNextLongWeekend(true));
+      console.log(startDate)
       causeOfDeath = "Long Weekend";
       break;
     case "term":

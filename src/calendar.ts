@@ -175,6 +175,7 @@ export default class Calendar {
   schoolNow(): boolean {
     const currentDate = this.strftime(this.now);
     const millisecondsElapsed = this.modTimestamp("day", this.now);
+
     if (!this.calendar[currentDate].hasSchool) {
       return false;
     } else if (this.calendar[currentDate].timeSlot === "Regular") {
@@ -471,9 +472,10 @@ export default class Calendar {
     return d.getDay();
   }
 
-  findNextLongWeekend(): number {
+  findNextLongWeekend(reverse: boolean = false): number {
     let isToday: boolean = false;
-    const day = Object.values(this.calendar).find((_day, index, array) => {
+    const calendarArray = Object.values(this.calendar);
+    const day = calendarArray.find((_day, index, array) => {
       // Use indexes for consistency
       const first = array[index];
       const second = array[index + 1];
@@ -498,7 +500,7 @@ export default class Calendar {
         return true;
       }
 
-      const inTheFuture = dateCandidate > dateNow;
+      const inTheFuture = reverse ? (dateCandidate < dateNow) : (dateCandidate > dateNow);
 
       return schoolNotExists && onWeekend && inTheFuture;
     });
@@ -518,11 +520,19 @@ export default class Calendar {
    * that has hours and minutes set to the end school time of either
    * late start or early dismissal. It is the only method in this
    * class that converses in Date objects rather than timestamps.
+   * If the last day does not have school, it recurses with the 
+   * previous day.
    */
   schoolTimeify(dateObj: Date): Date {
     // Rollback to previous day
     dateObj.setDate(dateObj.getDate() - 1);
+    throw new Error("Justify yourself")
+    const nextDate = new Date(dateObj.setDate(dateObj.getDate() + 2));
     const stamp = this.strftime(dateObj.getTime());
+
+    if (!this.calendar[stamp]) {
+      return this.schoolTimeify(nextDate);
+    }
 
     if (this.calendar[stamp].hasSchool) {
       if (this.calendar[stamp].timeSlot === "Regular") {
@@ -531,21 +541,31 @@ export default class Calendar {
         dateObj.setMilliseconds(this.earlyDismissalTime[1]);
       }
     } else {
-      dateObj.setHours(24);
+      return this.schoolTimeify(dateObj);
     }
 
     return dateObj;
   }
 
-  findNextNoSchool(): number {
+  findNextNoSchool(reverse: boolean = false): number {
     const dateNow = new Date(this.now);
     // Check if there is no school today
-    if (!this.schoolNow()) {
-      return this.now;
+    // Don't use this.schoolNow() since we are checking whether there is 
+    // school TODAY, and not RIGHT NOW.
+    const currentDatestamp = this.strftime(this.now);
+    if (!this.calendar[currentDatestamp]) {
+      throw new CalendarError(`Current time ${dateNow} is not in calendar scope.`);
+    } else {
+      if (!this.calendar[currentDatestamp].hasSchool) {
+        return this.now;
+      }
     }
-    const day = Object.values(this.calendar).find((day) => {
+
+    const calendarArray = Object.values(this.calendar);
+    if (reverse) calendarArray.reverse();
+    const day = calendarArray.find((day) => {
       const dateCandidate = new Date(...this.formatForDateConstructor(day.date));
-      const inTheFuture = dateCandidate > dateNow;
+      const inTheFuture = reverse ? (dateCandidate < dateNow) : (dateCandidate > dateNow);
       return !day.hasSchool && inTheFuture;
     });
 
