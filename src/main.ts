@@ -391,7 +391,6 @@ function getPreferredDates(value: string) {
     case "term":
       endDate = new Date(calendar.findEndTerm(...termEnds));
       startDate = new Date(calendar.getCurrentTerm(...termEnds));
-      // console.log(`${startDate} - ${endDate}`)
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
@@ -402,6 +401,10 @@ function getPreferredDates(value: string) {
   }
   if (!checkFinish()) undoFinish();
   updateProgressBar();
+
+  if (checkFinish()) triggerFinish();
+  else updateDOM();
+
   localStorage.setItem("date", value);
 }
 
