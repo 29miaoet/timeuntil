@@ -70,6 +70,7 @@ type DateArgs = [number, number, number, number, number];
 type StartEnd = [number, number];
 
 const termEnds: Array<DateArgs> = [
+  [2026, 8, 9, 15, 30],
   [2026, 10, 18, 15, 30],
   [2027, 1, 5, 15, 30],
   [2027, 3, 13, 15, 30],
@@ -379,18 +380,18 @@ function getPreferredDates(value: string) {
       break;
     case "weekend":
       endDate = new Date(calendar.findNextWeekend());
-      startDate = new Date(2026, 8, 9, 8, 30);
+      startDate = new Date(calendar.findNextWeekend(true));
       causeOfDeath = "Weekend";
       break;
     case "lweekend":
       endDate = new Date(calendar.findNextLongWeekend());
       startDate = new Date(calendar.findNextLongWeekend(true));
-      console.log(startDate)
       causeOfDeath = "Long Weekend";
       break;
     case "term":
       endDate = new Date(calendar.findEndTerm(...termEnds));
-      startDate = new Date(2026, 8, 9, 8, 30);
+      startDate = new Date(calendar.getCurrentTerm(...termEnds));
+      // console.log(`${startDate} - ${endDate}`)
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
