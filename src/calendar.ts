@@ -247,7 +247,7 @@ export default class Calendar {
     if (this.contains(this.now)) {
       // Use schoolTime
       const timeElapsed = schoolTimeToElapse - this.getSchoolTimeTo(endingTimeStamp);
-      return timeElapsed / timeToElapse;
+      return timeElapsed / schoolTimeToElapse;
     } else {
       // Use absoluteTime
       const timeElapsed = timeToElapse - this.getAbsoluteTimeTo(endingTimeStamp);
@@ -452,13 +452,16 @@ export default class Calendar {
     return schoolDateRemaining;
   }
 
-  findNextWeekend(): number {
+  findNextWeekend(reverse: boolean = false): number {
     const currentDate = new Date(this.now);
     const currentWeekday = currentDate.getDay();
     const tempEnd = new Date(this.floorTimestamp("day", this.now));
 
     if (currentWeekday === 6 || currentWeekday === 0) {
       return this.now;
+    } else if (reverse) {
+      const daysToSubtract = currentDate.getDay() + 1;
+      tempEnd.setDate(tempEnd.getDate() - daysToSubtract);
     } else {
       const daysToAdd = 6 - currentDate.getDay();
       tempEnd.setDate(tempEnd.getDate() + daysToAdd);
@@ -500,7 +503,7 @@ export default class Calendar {
         return true;
       }
 
-      const inTheFuture = reverse ? (dateCandidate < dateNow) : (dateCandidate > dateNow);
+      const inTheFuture = reverse ? dateCandidate < dateNow : dateCandidate > dateNow;
 
       return schoolNotExists && onWeekend && inTheFuture;
     });
@@ -520,37 +523,34 @@ export default class Calendar {
    * that has hours and minutes set to the end school time of either
    * late start or early dismissal. It is the only method in this
    * class that converses in Date objects rather than timestamps.
-   * If the last day does not have school, it recurses with the 
+   * If the last day does not have school, it recurses with the
    * previous day.
    */
   schoolTimeify(dateObj: Date): Date {
     // Rollback to previous day
-    dateObj.setDate(dateObj.getDate() - 1);
-    throw new Error("Justify yourself")
-    const nextDate = new Date(dateObj.setDate(dateObj.getDate() + 2));
-    const stamp = this.strftime(dateObj.getTime());
+    const previousDateObj = new Date(dateObj);
+    previousDateObj.setDate(previousDateObj.getDate() - 1);
+    const stamp = this.strftime(previousDateObj.getTime());
 
-    if (!this.calendar[stamp]) {
-      return this.schoolTimeify(nextDate);
-    }
+    if (!this.calendar[stamp]) return dateObj;
 
     if (this.calendar[stamp].hasSchool) {
       if (this.calendar[stamp].timeSlot === "Regular") {
-        dateObj.setMilliseconds(this.regularSchoolDayTime[1]);
+        previousDateObj.setMilliseconds(this.regularSchoolDayTime[1]);
       } else if (this.calendar[stamp].timeSlot === "Early Dismissal") {
-        dateObj.setMilliseconds(this.earlyDismissalTime[1]);
+        previousDateObj.setMilliseconds(this.earlyDismissalTime[1]);
       }
     } else {
-      return this.schoolTimeify(dateObj);
+      return this.schoolTimeify(previousDateObj);
     }
 
-    return dateObj;
+    return previousDateObj;
   }
 
   findNextNoSchool(reverse: boolean = false): number {
     const dateNow = new Date(this.now);
     // Check if there is no school today
-    // Don't use this.schoolNow() since we are checking whether there is 
+    // Don't use this.schoolNow() since we are checking whether there is
     // school TODAY, and not RIGHT NOW.
     const currentDatestamp = this.strftime(this.now);
     if (!this.calendar[currentDatestamp]) {
@@ -565,7 +565,7 @@ export default class Calendar {
     if (reverse) calendarArray.reverse();
     const day = calendarArray.find((day) => {
       const dateCandidate = new Date(...this.formatForDateConstructor(day.date));
-      const inTheFuture = reverse ? (dateCandidate < dateNow) : (dateCandidate > dateNow);
+      const inTheFuture = reverse ? dateCandidate < dateNow : dateCandidate > dateNow;
       return !day.hasSchool && inTheFuture;
     });
 
@@ -621,6 +621,27 @@ export default class Calendar {
     }
 
     return this.now;
+  }
+
+  getCurrentTerm(...termEnds: Array<TermEndSpecification>): number {
+    const now = new Date(this.now);
+    let termEndDates: Array<Date> = [];
+    for (const arr of termEnds) {
+      const date = new Date(...arr);
+      termEndDates.push(date);
+    }
+
+    const currentTerm = termEndDates.find((_value, index, array) => {
+      const currentTerm = index;
+      const nextTerm = ++index;
+      if (!nextTerm) {
+        return array[currentTerm] < now;
+      }
+      return array[currentTerm] < now && array[nextTerm] > now;
+    });
+
+    if (!currentTerm) return this.now;
+    return currentTerm.getTime();
   }
 
   getDateAt(dateStamp: string): DayInfo {
