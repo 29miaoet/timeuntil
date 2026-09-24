@@ -29,4 +29,3 @@ describe("Last day fetcher", () => {
     expect(calendar.getLastDay(-1)).toBe(1813609800000);
   });
 });
-
