@@ -17,7 +17,7 @@ interface DayInfo {
   dayInfo: Array<string>;
 }
 
-interface CalendarObject {
+export interface CalendarObject {
   [date: string]: DayInfo;
 }
 
@@ -159,8 +159,10 @@ export default class Calendar {
   }
 
   // Snapshot the current time to prevent mismatches between displays
-  freeze() {
-    this.now = Date.now();
+  // SpecifiedTime is mostly for vitest
+  freeze(specifiedTime: number | null = null) {
+    if (specifiedTime !== null) this.now = specifiedTime;
+    else this.now = Date.now();
   }
 
   contains(schoolDate: number): boolean {
