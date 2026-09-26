@@ -2418,7 +2418,7 @@
   "2027-06-30": {
     "date": "2027-06-30",
     "hasSchool": false,
-    "timeSlot": "Early Dismissal",
+    "timeSlot": "Regular",
     "status": "No School",
     "holidays": [],
     "dayInfo": ["SAS Day", "Late Start Remembrance Day"]
