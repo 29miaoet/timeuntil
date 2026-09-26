@@ -1,9 +1,13 @@
 :root[data-theme="default"] {
   --font-color-black: #03324d;
   --font-color-white: #eeefff;
+
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
+  --bg-day-current: #80b6f5;
+  --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
+
   --progress-bg: #ff4d6d;
   --progress-bar-hover: #ee3c5c;
   --progress-bar-bg: #b1d7ff;
@@ -25,9 +29,13 @@
 :root[data-theme="light"] {
   --font-color-black: #03324d;
   --font-color-white: #cccddd;
+
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #eeefff);
   --bg-countdown: #cdf0fe;
   --light-blue: #e0f0ff;
+  --bg-day-current: #a8d0f7;
+  --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.18);
+
   --progress-bg: #ffb9b9;
   --progress-bar-hover: #ee9292;
   --progress-bar-bg: #d2e9ff;
@@ -49,9 +57,13 @@
 :root[data-theme="dark"] {
   --font-color-black: #e8edf5;
   --font-color-white: #ffffff;
+
   --bg-grad: linear-gradient(to bottom, #18202b, #0b1118);
   --bg-countdown: #101010;
   --light-blue: #1d2b3a;
+  --bg-day-current: #29415b;
+  --timebox-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
+
   --progress-bg: #ff4d6d;
   --progress-bar-hover: #ff667f;
   --progress-bar-bg: #334863;
@@ -73,14 +85,19 @@
 :root[data-theme="liquid-glass"] {
   --font-color-black: #19324a;
   --font-color-white: #ffffff;
+
   --bg-grad: linear-gradient(135deg, #dff6ff 0%, #b9ddff 35%, #dee3ff 100%);
   --bg-countdown: rgba(80, 149, 235, 0.1);
   --light-blue: rgba(255, 255, 255, 0.5);
+  --bg-day-current: rgba(128, 182, 245, 0.45);
+  --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.2);
+
   --progress-bg: #ff5f7a;
   --progress-bar-hover: #ff7690;
   --progress-bar-bg: rgba(255, 255, 255, 0.1);
   --info-bg: rgba(230, 230, 255, 0.1);
   --card-border: rgba(255, 255, 255, 0.5);
+
   --radius-classic: 18px;
   --radius-mild: 10px;
 
@@ -96,9 +113,13 @@
 :root[data-theme="antique"] {
   --font-color-black: #222222;
   --font-color-white: #ffffff;
+
   --bg-grad: linear-gradient(to bottom, #f4f4f4, #d8d8d8);
   --bg-countdown: #666666;
   --light-blue: #eeeeee;
+  --bg-day-current: #cccccc;
+  --timebox-shadow: 0 0 20px rgba(50, 50, 50, 0.25);
+
   --progress-bg: #555555;
   --progress-bar-hover: #444444;
   --progress-bar-bg: #bbbbbb;
@@ -120,9 +141,13 @@
 :root[data-theme="red"] {
   --font-color-black: #4a1010;
   --font-color-white: #fff5f5;
+
   --bg-grad: linear-gradient(to bottom, #ffe5e5, #ff9f9f);
   --bg-countdown: #d94141;
   --light-blue: #ffe1e1;
+  --bg-day-current: #f28b8b;
+  --timebox-shadow: 0 0 20px rgba(150, 30, 30, 0.25);
+
   --progress-bg: #b91c1c;
   --progress-bar-hover: #991b1b;
   --progress-bar-bg: #f5a3a3;
@@ -146,17 +171,15 @@
   --font-color-white: #ffffff;
 
   --bg-grad: linear-gradient(to bottom, #f0f9ff, #bae6fd);
-
   --bg-countdown: #075985;
-
   --light-blue: #e0f2fe;
+  --bg-day-current: #7dd3fc;
+  --timebox-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
 
   --progress-bg: #b91c1c;
   --progress-bar-hover: #991b1b;
   --progress-bar-bg: #bfdbfe;
-
   --info-bg: #dbeafe;
-
   --card-border: #475569;
 
   --radius-classic: 10px;
