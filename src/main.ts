@@ -1,8 +1,12 @@
 import "./styles/styles.css";
 import "./styles/themes.css";
 import Calendar from "./calendar";
+import Day from "./day"
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
+
+// const testday = new Day("Regular")
+// console.log(testday.getSlotAt(9.6*60*60*1000));
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
