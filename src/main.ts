@@ -1,5 +1,5 @@
-import "./styles.css";
-import "./themes.css";
+import "./styles/styles.css";
+import "./styles/themes.css";
 import Calendar from "./calendar";
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
