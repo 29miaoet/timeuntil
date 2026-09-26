@@ -16,13 +16,20 @@ timeuntil/
 │   └── CONTRIBUTING.md
 │
 ├── src/
+│   ├── styles/
+│   │   ├── styles.css
+│   │   └── themes.css
+│   │ 
+│   ├── data/
+│   │   ├── schools.json
+│   │   └── schedule.json
+│   │ 
 │   ├── main.ts
-│   ├── menu.ts
 │   ├── calendar.ts
+│   ├── day.ts
+│   ├── menu.ts
 │   ├── fetchCalendar.ts
-│   ├── schools.json
-│   ├── themes.css
-│   ├── styles.css
+│   │ 
 │   └── vite-env.d.ts
 │
 ├── public/
@@ -82,11 +89,12 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 - [x] Add functionality to UI buttons.
 - [x] Finish basic website UI.
-- ~~Migrate UI handlers to React.~~
 - [x] Organize and shorten code by using more functions.
-- [ ] Harden code logic.
+- [x] Harden code logic.
+- [x] Add and configure vitest.
+- [ ] Add and configure ESlint after TypeScript 7.1 is released.
+- ~~Migrate UI handlers to React.~~
 - ~~Transform static CSS into Sass.~~
-- [ ] Add more theme and styling options.
 
 ## Stats
 
@@ -112,6 +120,7 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 - [TypeScript](https://github.com/microsoft/TypeScript)
 - [Vite](https://github.com/vitejs/vite)
 - [Prettier](https://github.com/prettier/prettier)
+- [Vitest](https://github.com/vitest-dev/vitest)
 - [Dependabot](https://github.com/dependabot)
 - [GitHub Actions](https://github.com/actions)
 
