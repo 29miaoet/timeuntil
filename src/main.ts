@@ -1,12 +1,9 @@
 import "./styles/styles.css";
 import "./styles/themes.css";
 import Calendar from "./calendar";
-import Day from "./day"
+import Day from "./day";
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
-
-// const testday = new Day("Regular")
-// console.log(testday.getSlotAt(9.6*60*60*1000));
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
@@ -59,6 +56,7 @@ let calendar = new Calendar(
   [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
   [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
 );
+let day: Day;
 
 let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
@@ -91,6 +89,7 @@ async function start() {
   );
 
   await calendar.loadData();
+  initializeSchoolDay();
 
   if (!calendar.contains(calendar.now)) {
     console.error("Outside of calendar time frame, school time unavailable.");
@@ -514,10 +513,12 @@ function updateDOM() {
   populateAbsoluteTimes(schoolTimeRemaining);
   populateSchoolDates(schoolDates);
   populateTotalTimes(totalTimeRemaining);
+  updateSchoolDay();
 }
 
 // Only runs once a day to conserve resources
 function slowUpdateDOM() {
+  initializeSchoolDay();
   updateProgressBar();
   updateDayInfos();
 
@@ -711,6 +712,16 @@ function updateDayInfos() {
   dayStatuses[0].textContent = daystatus;
   dayStatuses[1].textContent = feature;
   dayStatuses[2].textContent = event;
+}
+
+function initializeSchoolDay() {
+  const currentDateStamp = calendar.strftime(calendar.now);
+  const currentTimeSlot = calendar.calendar[currentDateStamp].timeSlot;
+  day = new Day(currentTimeSlot);
+}
+
+function updateSchoolDay() {
+  day.freeze(calendar.now);
 }
 
 start();
