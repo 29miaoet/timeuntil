@@ -47,6 +47,10 @@ const accuracySlider = document.getElementById("accuracy") as HTMLInputElement;
 
 const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
 
+const slotElement = document.getElementById("class-slot");
+const classEndTimes = document.querySelectorAll<HTMLDivElement>("#class-end > .timebox");
+const schoolEndTimes = document.querySelectorAll<HTMLDivElement>("#school-end > .timebox");
+
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
@@ -588,42 +592,43 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   lastUpdatedSchoolTime = schoolTimeRemaining;
 }
 
-function populateTotalTimes(timeRemaining: number) {
-  // Worst code I have ever written, MUST fix later
-  const daysLeft = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
-  const hoursLeft = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
+function makeReadable(timestamp: number): Array<number> {
+  const daysLeft = Math.floor(timestamp / 1000 / 60 / 60 / 24);
+  const hoursLeft = Math.floor((timestamp - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
   const minutesLeft = Math.floor(
-    (timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
+    (timestamp - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
   );
   const secondsLeft = Math.floor(
-    (timeRemaining -
+    (timestamp -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
       minutesLeft * 1000 * 60) /
       1000
   );
   const millisecondsLeft = Math.floor(
-    timeRemaining -
+    timestamp -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
       minutesLeft * 1000 * 60 -
       secondsLeft * 1000
   );
+  const returnArray = [];
+  if (daysLeft !== 0) returnArray.push(daysLeft);
+  if (hoursLeft !== 0) returnArray.push(hoursLeft);
+  if (minutesLeft !== 0) returnArray.push(minutesLeft);
+  if (secondsLeft !== 0) returnArray.push(secondsLeft);
+  if (millisecondsLeft !== 0) returnArray.push(millisecondsLeft);
 
-  if (totalTimes[0].textContent !== daysLeft.toString() && !totalTimes[0].hidden) {
-    totalTimes[0].textContent = daysLeft.toString();
-  }
-  if (totalTimes[1].textContent !== hoursLeft.toString() && !totalTimes[1].hidden) {
-    totalTimes[1].textContent = hoursLeft.toString();
-  }
-  if (totalTimes[2].textContent !== minutesLeft.toString() && !totalTimes[2].hidden) {
-    totalTimes[2].textContent = minutesLeft.toString();
-  }
-  if (totalTimes[3].textContent !== secondsLeft.toString() && !totalTimes[3].hidden) {
-    totalTimes[3].textContent = secondsLeft.toString();
-  }
-  if (totalTimes[4].textContent !== secondsLeft.toString() && !totalTimes[4].hidden) {
-    totalTimes[4].textContent = millisecondsLeft.toString();
+  return returnArray;
+}
+
+function populateTotalTimes(timeRemaining: number) {
+  const timesRemaining = makeReadable(timeRemaining);
+
+  for (let i = 0; i < timesRemaining.length; i++) {
+    if (totalTimes[i].textContent !== timesRemaining[i].toString() && !totalTimes[i].hidden) {
+      totalTimes[i].textContent = timesRemaining[i].toString();
+    }
   }
 }
 
@@ -722,6 +727,14 @@ function initializeSchoolDay() {
 
 function updateSchoolDay() {
   day.freeze(calendar.now);
+  const currentSlot = day.getCurrentSlot();
+  const classEnds = day.getTimeUntilClassEnds();
+  const schoolEnds = day.getTimeUntilSchoolEnds();
+
+  if (slotElement) {
+    console.error("One or more school day dom elements not found.");
+    return;
+  }
 }
 
 start();
