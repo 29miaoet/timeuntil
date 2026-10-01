@@ -53,6 +53,7 @@ export default class Day {
     this.end = lastSlot[1];
   }
 
+  // Parameter should be milliseconds after 00:00 rather than a Unix timestamp
   freeze(milliseconds: number) {
     this.milliseconds = milliseconds;
   }
@@ -71,10 +72,10 @@ export default class Day {
   getTimeUntilClassEnds(): number {
     const currentSlot = this.getCurrentSlot();
     if (currentSlot === undefined) {
-      throw new DayError("Cannot find current slot.");
+      throw new DayError("Cannot find current class slot.");
     }
 
-    const classEnd = this.schedule[currentSlot][0];
+    const classEnd = this.schedule[currentSlot][1];
     return classEnd - this.milliseconds;
   }
 
