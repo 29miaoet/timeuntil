@@ -8,24 +8,22 @@ import { schoolData } from "./fetchCalendar";
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
 
-const container = document.getElementById("card-container-main") as HTMLDivElement | null;
+const container = document.getElementById("card-container-main") as HTMLElement | null;
 
-const schoolTimes = document.querySelectorAll<HTMLDivElement>(
-  ".school-time > .timeunit > .timebox"
-);
-const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timebox");
-const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time > .times > .timebox");
-const dayStatuses = document.querySelectorAll<HTMLDivElement>(
-  ".day-info > .day-card > .card-content"
-);
+const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
+const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
+const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
+const dayStatuses = document.querySelectorAll<HTMLElement>(".day-info > .day-card > .card-content");
+const dayClassTimes = document.querySelectorAll<HTMLElement>("#class-end > span");
+const daySchoolTimes = document.querySelectorAll<HTMLElement>("#school-end > span");
 
-const schoolTimeLabels = document.querySelectorAll<HTMLDivElement>(
+const schoolTimeLabels = document.querySelectorAll<HTMLElement>(
   ".school-time > .timeunit > .timelabel"
 );
-const totalTimeLabels = document.querySelectorAll<HTMLDivElement>(
+const totalTimeLabels = document.querySelectorAll<HTMLElement>(
   ".total-time > .timeunit > .timelabel"
 );
-const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(
+const absoluteTimeLabels = document.querySelectorAll<HTMLElement>(
   ".abs-time > .timelabels > .timelabel"
 );
 
@@ -33,23 +31,20 @@ const checkboxes = document.querySelectorAll<HTMLInputElement>(
   '.sub-dropdown > li > input[type="checkbox"]'
 );
 
-const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
-const progressText = document.getElementById("percentage") as HTMLDivElement | null;
+const progressBar = document.getElementById("progress-bar-element");
+const progressText = document.getElementById("percentage");
 
-const absoluteTimeContainer = document.getElementById(
-  "abs-time-remaining"
-) as HTMLDivElement | null;
-const schoolTimeContainer = document.getElementById(
-  "school-time-remaining"
-) as HTMLDivElement | null;
-const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
-const accuracySlider = document.getElementById("accuracy") as HTMLInputElement;
+const absoluteTimeContainer = document.getElementById("abs-time-remaining");
+const schoolTimeContainer = document.getElementById("school-time-remaining");
+const dayInfoContainer = document.getElementById("day-information");
+const accuracySlider = document.getElementById("accuracy") as HTMLInputElement | null;
 
-const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
+const lastMessage = document.getElementById("last-message");
 
+const currentDayContainer = document.getElementById("current-day-container");
 const slotElement = document.getElementById("class-slot");
-const classEndTimes = document.querySelectorAll<HTMLDivElement>("#class-end > .timebox");
-const schoolEndTimes = document.querySelectorAll<HTMLDivElement>("#school-end > .timebox");
+const classEndTimes = document.querySelectorAll<HTMLElement>("#class-end .timebox");
+const schoolEndTimes = document.querySelectorAll<HTMLElement>("#school-end .timebox");
 
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
@@ -281,10 +276,34 @@ function toggleDisplaySettings(
 
   let allTimeUnits: Array<Array<HTMLElement>> = [];
   allTimeUnits[0] = [schoolTimes[0], totalTimes[0], absoluteTimes[0]]; // Days
-  allTimeUnits[1] = [schoolTimes[1], totalTimes[1], absoluteTimes[1]]; // Hours
-  allTimeUnits[2] = [schoolTimes[2], totalTimes[2], absoluteTimes[2]]; // Minutes
-  allTimeUnits[3] = [schoolTimes[3], totalTimes[3], absoluteTimes[3]]; // Seconds
-  allTimeUnits[4] = [schoolTimes[4], totalTimes[4], absoluteTimes[4]]; // Milliseconds
+  allTimeUnits[1] = [
+    schoolTimes[1],
+    totalTimes[1],
+    absoluteTimes[1],
+    classEndTimes[0],
+    schoolEndTimes[0],
+  ]; // Hours
+  allTimeUnits[2] = [
+    schoolTimes[2],
+    totalTimes[2],
+    absoluteTimes[2],
+    classEndTimes[1],
+    schoolEndTimes[1],
+  ]; // Minutes
+  allTimeUnits[3] = [
+    schoolTimes[3],
+    totalTimes[3],
+    absoluteTimes[3],
+    dayClassTimes[2],
+    daySchoolTimes[2],
+  ]; // Seconds
+  allTimeUnits[4] = [
+    schoolTimes[4],
+    totalTimes[4],
+    absoluteTimes[4],
+    dayClassTimes[3],
+    daySchoolTimes[3],
+  ]; // Milliseconds
 
   // Which default items should be hidden and which should not
   if (hiddenItems !== null) {
@@ -613,11 +632,11 @@ function makeReadable(timestamp: number): Array<number> {
       secondsLeft * 1000
   );
   const returnArray = [];
-  if (daysLeft !== 0) returnArray.push(daysLeft);
-  if (hoursLeft !== 0) returnArray.push(hoursLeft);
-  if (minutesLeft !== 0) returnArray.push(minutesLeft);
-  if (secondsLeft !== 0) returnArray.push(secondsLeft);
-  if (millisecondsLeft !== 0) returnArray.push(millisecondsLeft);
+  returnArray.push(daysLeft);
+  returnArray.push(hoursLeft);
+  returnArray.push(minutesLeft);
+  returnArray.push(secondsLeft);
+  returnArray.push(millisecondsLeft);
 
   return returnArray;
 }
@@ -720,20 +739,70 @@ function updateDayInfos() {
 }
 
 function initializeSchoolDay() {
+  if (!calendar.schoolNow()) return;
   const currentDateStamp = calendar.strftime(calendar.now);
   const currentTimeSlot = calendar.calendar[currentDateStamp].timeSlot;
   day = new Day(currentTimeSlot);
 }
 
 function updateSchoolDay() {
-  day.freeze(calendar.now);
-  const currentSlot = day.getCurrentSlot();
-  const classEnds = day.getTimeUntilClassEnds();
-  const schoolEnds = day.getTimeUntilSchoolEnds();
+  if (!currentDayContainer) {
+    console.error("Current day container not found.");
+    return;
+  }
 
-  if (slotElement) {
+  if (calendar.schoolNow()) {
+    if (currentDayContainer.hidden) {
+      currentDayContainer.hidden = false;
+    }
+  } else {
+    if (!currentDayContainer.hidden) {
+      currentDayContainer.hidden = true;
+    }
+    return;
+  }
+
+  day.freeze(calendar.modTimestamp("day", calendar.now));
+  let currentSlot: string | undefined = day.getCurrentSlot();
+
+  if (!slotElement) {
     console.error("One or more school day dom elements not found.");
     return;
+  }
+
+  if (currentSlot === undefined) {
+    console.error("Slot calculation failure.");
+    currentSlot = "-";
+  } else {
+    slotElement.textContent = currentSlot;
+
+    const classEnds = day.getTimeUntilClassEnds();
+    const formattedClassEnds = makeReadable(classEnds);
+
+    for (let i = 1; i < formattedClassEnds.length; i++) {
+      // Subtract one because the display does not have a day output.
+      const k = i - 1;
+      if (
+        classEndTimes[k].textContent !== formattedClassEnds[i].toString() &&
+        !classEndTimes[k].hidden
+      ) {
+        classEndTimes[k].textContent = formattedClassEnds[i].toString();
+      }
+    }
+  }
+
+  const schoolEnds = day.getTimeUntilSchoolEnds();
+  const formattedSchoolEnds = makeReadable(schoolEnds);
+
+  for (let i = 1; i < formattedSchoolEnds.length; i++) {
+    // Subtract one because the display does not have a day output.
+    const k = i - 1;
+    if (
+      schoolEndTimes[k].textContent !== formattedSchoolEnds[i].toString() &&
+      !schoolEndTimes[k].hidden
+    ) {
+      schoolEndTimes[k].textContent = formattedSchoolEnds[i].toString();
+    }
   }
 }
 
