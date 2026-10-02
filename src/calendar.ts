@@ -150,19 +150,19 @@ export default class Calendar {
     console.log(this.calendar);
   }
 
+  // Snapshot the current time to prevent mismatches between displays
+  // SpecifiedTime is mostly for vitest
+  freeze(specifiedTime: number | null = null) {
+    if (specifiedTime !== null) this.now = specifiedTime;
+    else this.now = Date.now();
+  }
+
   strftime(timeStamp: number): string {
     const date = new Date(timeStamp);
     const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
-  }
-
-  // Snapshot the current time to prevent mismatches between displays
-  // SpecifiedTime is mostly for vitest
-  freeze(specifiedTime: number | null = null) {
-    if (specifiedTime !== null) this.now = specifiedTime;
-    else this.now = Date.now();
   }
 
   contains(schoolDate: number): boolean {
@@ -172,39 +172,6 @@ export default class Calendar {
     } catch (e) {
       return false;
     }
-  }
-
-  schoolNow(): boolean {
-    const currentDate = this.strftime(this.now);
-    const millisecondsElapsed = this.modTimestamp("day", this.now);
-
-    if (!this.calendar[currentDate].hasSchool) {
-      return false;
-    } else if (this.calendar[currentDate].timeSlot === "Regular") {
-      return (
-        this.regularSchoolDayTime[0] < millisecondsElapsed &&
-        this.regularSchoolDayTime[1] > millisecondsElapsed
-      );
-    } else if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
-      return (
-        this.earlyDismissalTime[0] < millisecondsElapsed &&
-        this.earlyDismissalTime[1] > millisecondsElapsed
-      );
-    }
-    return false;
-  }
-
-  getAbsoluteTimeTo(timeStamp: number): number {
-    const absTime = timeStamp - this.now;
-    return absTime;
-  }
-
-  getDayInfo(dateStamp: string): DayInfoStruct {
-    return {
-      daystatus: this.calendar[dateStamp]["status"],
-      feature: this.calendar[dateStamp]["holidays"],
-      event: this.calendar[dateStamp]["dayInfo"],
-    };
   }
 
   floorTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
@@ -231,6 +198,69 @@ export default class Calendar {
 
   modTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
     return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
+  }
+
+  formatForDateConstructor(dateStamp: string): SingleDateConstructor {
+    const strArgs = dateStamp.split("-");
+
+    if (strArgs.length !== 3) {
+      throw new CalendarError(`${dateStamp} is not of valid format.`);
+    }
+
+    let year = Number(strArgs[0]);
+    let month = Number(strArgs[1]);
+    const day = Number(strArgs[2]);
+
+    if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
+      throw new CalendarError(`${dateStamp} is not of valid format.`);
+    }
+
+    month -= 1;
+    if (month < 0) {
+      month = 11;
+      year -= 1;
+    }
+    return [year, month, day];
+  }
+
+  schoolNow(): boolean {
+    const currentDate = this.strftime(this.now);
+    const millisecondsElapsed = this.modTimestamp("day", this.now);
+
+    if (!this.calendar[currentDate].hasSchool) {
+      return false;
+    } else if (this.calendar[currentDate].timeSlot === "Regular") {
+      return (
+        this.regularSchoolDayTime[0] < millisecondsElapsed &&
+        this.regularSchoolDayTime[1] > millisecondsElapsed
+      );
+    } else if (this.calendar[currentDate].timeSlot === "Early Dismissal") {
+      return (
+        this.earlyDismissalTime[0] < millisecondsElapsed &&
+        this.earlyDismissalTime[1] > millisecondsElapsed
+      );
+    }
+    return false;
+  }
+
+  getDateAt(dateStamp: string): DayInfo {
+    if (!this.calendar[dateStamp]) {
+      throw new RangeError(`Calendar does not contain ${dateStamp}.`);
+    }
+    return this.calendar[dateStamp];
+  }
+
+  getAbsoluteTimeTo(timeStamp: number): number {
+    const absTime = timeStamp - this.now;
+    return absTime;
+  }
+
+  getDayInfo(dateStamp: string): DayInfoStruct {
+    return {
+      daystatus: this.calendar[dateStamp]["status"],
+      feature: this.calendar[dateStamp]["holidays"],
+      event: this.calendar[dateStamp]["dayInfo"],
+    };
   }
 
   getPercentCompletion(startingTimeStamp: number, endingTimeStamp: number): number {
@@ -454,70 +484,9 @@ export default class Calendar {
     return schoolDateRemaining;
   }
 
-  findNextWeekend(reverse: boolean = false): number {
-    const currentDate = new Date(this.now);
-    const currentWeekday = currentDate.getDay();
-    const tempEnd = new Date(this.floorTimestamp("day", this.now));
-
-    if (currentWeekday === 6 || currentWeekday === 0) {
-      return this.now;
-    } else if (reverse) {
-      const daysToSubtract = currentDate.getDay() + 1;
-      tempEnd.setDate(tempEnd.getDate() - daysToSubtract);
-    } else {
-      const daysToAdd = 6 - currentDate.getDay();
-      tempEnd.setDate(tempEnd.getDate() + daysToAdd);
-    }
-
-    return this.schoolTimeify(tempEnd).getTime();
-  }
-
   getDayOfTheWeek(date: DayInfo): number {
     const d = new Date(...this.formatForDateConstructor(date.date));
     return d.getDay();
-  }
-
-  findNextLongWeekend(reverse: boolean = false): number {
-    let isToday: boolean = false;
-    const calendarArray = Object.values(this.calendar);
-    const day = calendarArray.find((_day, index, array) => {
-      // Use indexes for consistency
-      const first = array[index];
-      const second = array[index + 1];
-      const third = array[index + 2];
-      if (!second || !third) return false;
-      const schoolNotExists = !first.hasSchool && !second?.hasSchool && !third?.hasSchool;
-      const onWeekend =
-        (this.getDayOfTheWeek(first) === 6 && this.getDayOfTheWeek(second) === 0) ||
-        (this.getDayOfTheWeek(second) === 6 && this.getDayOfTheWeek(third) === 0);
-
-      const dateNow = new Date(this.now);
-      const dateCandidate = new Date(...this.formatForDateConstructor(first.date));
-      const dateStampNow = this.strftime(this.now);
-      if (
-        (dateStampNow === first.date ||
-          dateStampNow === second.date ||
-          dateStampNow === third.date) &&
-        schoolNotExists &&
-        onWeekend
-      ) {
-        isToday = true;
-        return true;
-      }
-
-      const inTheFuture = reverse ? dateCandidate < dateNow : dateCandidate > dateNow;
-
-      return schoolNotExists && onWeekend && inTheFuture;
-    });
-
-    if (!day) {
-      const previousFoundDay = new Date(this.lastDay);
-      return previousFoundDay.getTime();
-    }
-
-    if (isToday) return this.now;
-    const previousFoundDay = new Date(...this.formatForDateConstructor(day.date));
-    return this.schoolTimeify(previousFoundDay).getTime();
   }
 
   /**
@@ -579,27 +548,65 @@ export default class Calendar {
     return this.schoolTimeify(foundDate).getTime();
   }
 
-  formatForDateConstructor(dateStamp: string): SingleDateConstructor {
-    const strArgs = dateStamp.split("-");
+  findNextWeekend(reverse: boolean = false): number {
+    const currentDate = new Date(this.now);
+    const currentWeekday = currentDate.getDay();
+    const tempEnd = new Date(this.floorTimestamp("day", this.now));
 
-    if (strArgs.length !== 3) {
-      throw new CalendarError(`${dateStamp} is not of valid format.`);
+    if (currentWeekday === 6 || currentWeekday === 0) {
+      return this.now;
+    } else if (reverse) {
+      const daysToSubtract = currentDate.getDay() + 1;
+      tempEnd.setDate(tempEnd.getDate() - daysToSubtract);
+    } else {
+      const daysToAdd = 6 - currentDate.getDay();
+      tempEnd.setDate(tempEnd.getDate() + daysToAdd);
     }
 
-    let year = Number(strArgs[0]);
-    let month = Number(strArgs[1]);
-    const day = Number(strArgs[2]);
+    return this.schoolTimeify(tempEnd).getTime();
+  }
 
-    if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day)) {
-      throw new CalendarError(`${dateStamp} is not of valid format.`);
+  findNextLongWeekend(reverse: boolean = false): number {
+    let isToday: boolean = false;
+    const calendarArray = Object.values(this.calendar);
+    const day = calendarArray.find((_day, index, array) => {
+      // Use indexes for consistency
+      const first = array[index];
+      const second = array[index + 1];
+      const third = array[index + 2];
+      if (!second || !third) return false;
+      const schoolNotExists = !first.hasSchool && !second?.hasSchool && !third?.hasSchool;
+      const onWeekend =
+        (this.getDayOfTheWeek(first) === 6 && this.getDayOfTheWeek(second) === 0) ||
+        (this.getDayOfTheWeek(second) === 6 && this.getDayOfTheWeek(third) === 0);
+
+      const dateNow = new Date(this.now);
+      const dateCandidate = new Date(...this.formatForDateConstructor(first.date));
+      const dateStampNow = this.strftime(this.now);
+      if (
+        (dateStampNow === first.date ||
+          dateStampNow === second.date ||
+          dateStampNow === third.date) &&
+        schoolNotExists &&
+        onWeekend
+      ) {
+        isToday = true;
+        return true;
+      }
+
+      const inTheFuture = reverse ? dateCandidate < dateNow : dateCandidate > dateNow;
+
+      return schoolNotExists && onWeekend && inTheFuture;
+    });
+
+    if (!day) {
+      const previousFoundDay = new Date(this.lastDay);
+      return previousFoundDay.getTime();
     }
 
-    month -= 1;
-    if (month < 0) {
-      month = 11;
-      year -= 1;
-    }
-    return [year, month, day];
+    if (isToday) return this.now;
+    const previousFoundDay = new Date(...this.formatForDateConstructor(day.date));
+    return this.schoolTimeify(previousFoundDay).getTime();
   }
 
   /**
@@ -644,12 +651,5 @@ export default class Calendar {
 
     if (!currentTerm) return this.now;
     return currentTerm.getTime();
-  }
-
-  getDateAt(dateStamp: string): DayInfo {
-    if (!this.calendar[dateStamp]) {
-      throw new RangeError(`Calendar does not contain ${dateStamp}.`);
-    }
-    return this.calendar[dateStamp];
   }
 }

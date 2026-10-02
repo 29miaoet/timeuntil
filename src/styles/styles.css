@@ -1,9 +1,13 @@
 :root {
   --font-color-black: #03324d;
   --font-color-white: #eeefff;
+
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
+  --bg-day-current: #80b6f5;
+  --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
+
   --progress-bg: #ff4d6d;
   --progress-bar-hover: #ee3c5c;
   --progress-bar-bg: #b1d7ff;
@@ -192,7 +196,7 @@ hr {
   color: var(--font-color-black);
   flex: 1 1 0;
   min-width: 0;
-  box-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
+  box-shadow: var(--timebox-shadow);
 }
 
 .timelabel {
@@ -288,6 +292,31 @@ hr {
 .progress:hover {
   transform: scaleY(1.05);
   background-color: var(--progress-bar-hover);
+}
+
+.day-current {
+  background-color: var(--bg-day-current);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.daylabels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.daylabel {
+  display: block;
+  font-size: 1.125rem;
+  line-height: 2.5;
+}
+
+.daytitle {
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 .dropdown {
@@ -469,6 +498,10 @@ footer {
 
   .timebox {
     flex: 1;
+  }
+
+  .daytitle {
+    display: block;
   }
 }
 
