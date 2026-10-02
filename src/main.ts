@@ -4,6 +4,7 @@ import Calendar from "./calendar";
 import Day from "./day";
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
+import * as Countdown from "./countdown";
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
@@ -11,10 +12,10 @@ const welcomeText =
 const container = document.getElementById("card-container-main") as HTMLElement | null;
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
-const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
 const dayStatuses = document.querySelectorAll<HTMLElement>(".day-info > .day-card > .card-content");
 const dayClassTimes = document.querySelectorAll<HTMLElement>("#class-end > .daytime-unit");
+const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
 const daySchoolTimes = document.querySelectorAll<HTMLElement>("#school-end > .daytime-unit");
 
 const schoolTimeLabels = document.querySelectorAll<HTMLElement>(
@@ -34,8 +35,6 @@ const checkboxes = document.querySelectorAll<HTMLInputElement>(
 const progressBar = document.getElementById("progress-bar-element");
 const progressText = document.getElementById("percentage");
 
-const absoluteTimeContainer = document.getElementById("abs-time-remaining");
-const schoolTimeContainer = document.getElementById("school-time-remaining");
 const dayInfoContainer = document.getElementById("day-information");
 const accuracySlider = document.getElementById("accuracy") as HTMLInputElement | null;
 
@@ -61,8 +60,6 @@ let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
 let startDate: Date = new Date(2026, 8, 9, 8, 30);
 let causeOfDeath: string;
-let lastUpdatedSchoolTime: number;
-let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 let accuracy: number = 100;
 let lastUpdate: ReturnType<typeof setTimeout>;
@@ -533,9 +530,9 @@ function undoFinish() {
 function updateDOM() {
   updateTimer();
 
-  populateAbsoluteTimes(schoolTimeRemaining);
-  populateSchoolDates(schoolDates);
-  populateTotalTimes(totalTimeRemaining);
+  Countdown.populateAbsoluteTimes(schoolTimeRemaining);
+  Countdown.populateSchoolDates(schoolDates);
+  Countdown.populateTotalTimes(totalTimeRemaining);
   updateSchoolDay();
 }
 
@@ -572,108 +569,6 @@ function updateTimer() {
   totalTimeRemaining = calendar.getAbsoluteTimeTo(endDate.getTime());
 }
 
-function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
-  if (schoolTimeRemaining === null) {
-    if (!absoluteTimeContainer) {
-      console.error("Absolute times container not found.");
-      return;
-    }
-
-    // Cancel hard width declaration and add top padding
-    absoluteTimeContainer.style.width = "auto";
-    absoluteTimeContainer.style.paddingTop = "20px";
-
-    absoluteTimeContainer.innerHTML = `
-      <div class="warning-box">
-        <p>Unable to fetch absolute times</p>
-      </div> `;
-
-    return;
-  } else if (schoolTimeRemaining === lastUpdatedSchoolTime) {
-    return;
-  }
-  if (!absoluteTimes[0].hidden) {
-    absoluteTimes[0].textContent = String(schoolTimeRemaining / 1000 / 60 / 60 / 24);
-  }
-  if (!absoluteTimes[1].hidden) {
-    absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
-  }
-  if (!absoluteTimes[2].hidden) {
-    absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
-  }
-  if (!absoluteTimes[3].hidden) {
-    absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
-  }
-  if (!absoluteTimes[4].hidden) {
-    absoluteTimes[4].textContent = String(schoolTimeRemaining);
-  }
-
-  lastUpdatedSchoolTime = schoolTimeRemaining;
-}
-
-function makeReadable(timestamp: number): Array<number> {
-  const daysLeft = Math.floor(timestamp / 1000 / 60 / 60 / 24);
-  const hoursLeft = Math.floor((timestamp - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
-  const minutesLeft = Math.floor(
-    (timestamp - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
-  );
-  const secondsLeft = Math.floor(
-    (timestamp -
-      daysLeft * 1000 * 60 * 60 * 24 -
-      hoursLeft * 1000 * 60 * 60 -
-      minutesLeft * 1000 * 60) /
-      1000
-  );
-  const millisecondsLeft = Math.floor(
-    timestamp -
-      daysLeft * 1000 * 60 * 60 * 24 -
-      hoursLeft * 1000 * 60 * 60 -
-      minutesLeft * 1000 * 60 -
-      secondsLeft * 1000
-  );
-  const returnArray = [];
-  returnArray.push(daysLeft);
-  returnArray.push(hoursLeft);
-  returnArray.push(minutesLeft);
-  returnArray.push(secondsLeft);
-  returnArray.push(millisecondsLeft);
-
-  return returnArray;
-}
-
-function populateTotalTimes(timeRemaining: number) {
-  const timesRemaining = makeReadable(timeRemaining);
-
-  for (let i = 0; i < timesRemaining.length; i++) {
-    if (totalTimes[i].textContent !== timesRemaining[i].toString() && !totalTimes[i].hidden) {
-      totalTimes[i].textContent = timesRemaining[i].toString();
-    }
-  }
-}
-
-function populateSchoolDates(schoolDates: Array<number> | null) {
-  if (!schoolDates) {
-    if (!schoolTimeContainer) {
-      console.error("School times container not found.");
-      return;
-    }
-
-    // Cancel default stretch style
-    schoolTimeContainer.style.alignItems = "center";
-    schoolTimeContainer.innerHTML = `
-      <div class="warning-box">
-        <p>Unable to fetch school time</p>
-      </div> `;
-    return;
-  }
-
-  for (let i = 0; i < 5; i++) {
-    if (schoolDates[i] === lastUpdatedSchoolDates[i] || schoolTimes[i].hidden) continue;
-    schoolTimes[i].textContent = schoolDates[i].toString();
-    lastUpdatedSchoolDates[i] = schoolDates[i];
-  }
-}
-
 function updateProgressBar() {
   const start = startDate;
 
@@ -702,7 +597,7 @@ function updateProgressBar() {
   }
 }
 
-function updateDayInfos() {
+export function updateDayInfos() {
   if (!calendar.contains(calendar.now)) {
     if (!dayInfoContainer) {
       console.error("Day info container not found.");
@@ -716,7 +611,7 @@ function updateDayInfos() {
     return;
   }
 
-  const dayInfos = calendar.getDayInfo(calendar.strftime(calendar.now));
+  const dayInfos = calendar.getDayInfo(Calendar.strftime(calendar.now));
   const daystatus = dayInfos.daystatus;
 
   let feature;
@@ -740,7 +635,7 @@ function updateDayInfos() {
 
 function initializeSchoolDay() {
   if (!calendar.schoolNow()) return;
-  const currentDateStamp = calendar.strftime(calendar.now);
+  const currentDateStamp = Calendar.strftime(calendar.now);
   const currentTimeSlot = calendar.calendar[currentDateStamp].timeSlot;
   day = new Day(currentTimeSlot);
 }
@@ -762,7 +657,7 @@ function updateSchoolDay() {
     return;
   }
 
-  day.freeze(calendar.modTimestamp("day", calendar.now));
+  day.freeze(Calendar.modTimestamp("day", calendar.now));
   let currentSlot: string | undefined = day.getCurrentSlot();
 
   if (!slotElement) {
@@ -777,7 +672,7 @@ function updateSchoolDay() {
     slotElement.textContent = currentSlot;
 
     const classEnds = day.getTimeUntilClassEnds();
-    const formattedClassEnds = makeReadable(classEnds);
+    const formattedClassEnds = Countdown.makeReadable(classEnds);
 
     for (let i = 1; i < formattedClassEnds.length; i++) {
       // Subtract one because the display does not have a day output.
@@ -792,7 +687,7 @@ function updateSchoolDay() {
   }
 
   const schoolEnds = day.getTimeUntilSchoolEnds();
-  const formattedSchoolEnds = makeReadable(schoolEnds);
+  const formattedSchoolEnds = Countdown.makeReadable(schoolEnds);
 
   for (let i = 1; i < formattedSchoolEnds.length; i++) {
     // Subtract one because the display does not have a day output.
