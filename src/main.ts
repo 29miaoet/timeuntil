@@ -14,8 +14,8 @@ const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .time
 const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
 const dayStatuses = document.querySelectorAll<HTMLElement>(".day-info > .day-card > .card-content");
-const dayClassTimes = document.querySelectorAll<HTMLElement>("#class-end > span");
-const daySchoolTimes = document.querySelectorAll<HTMLElement>("#school-end > span");
+const dayClassTimes = document.querySelectorAll<HTMLElement>("#class-end > .daytime-unit");
+const daySchoolTimes = document.querySelectorAll<HTMLElement>("#school-end > .daytime-unit");
 
 const schoolTimeLabels = document.querySelectorAll<HTMLElement>(
   ".school-time > .timeunit > .timelabel"
@@ -280,15 +280,15 @@ function toggleDisplaySettings(
     schoolTimes[1],
     totalTimes[1],
     absoluteTimes[1],
-    classEndTimes[0],
-    schoolEndTimes[0],
+    dayClassTimes[0],
+    daySchoolTimes[0],
   ]; // Hours
   allTimeUnits[2] = [
     schoolTimes[2],
     totalTimes[2],
     absoluteTimes[2],
-    classEndTimes[1],
-    schoolEndTimes[1],
+    dayClassTimes[1],
+    daySchoolTimes[1],
   ]; // Minutes
   allTimeUnits[3] = [
     schoolTimes[3],
