@@ -1,30 +1,29 @@
-import "./styles.css";
-import "./themes.css";
+import "./styles/styles.css";
+import "./styles/themes.css";
 import Calendar from "./calendar";
+import Day from "./day";
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
 
-const container = document.getElementById("card-container-main") as HTMLDivElement | null;
+const container = document.getElementById("card-container-main") as HTMLElement | null;
 
-const schoolTimes = document.querySelectorAll<HTMLDivElement>(
-  ".school-time > .timeunit > .timebox"
-);
-const totalTimes = document.querySelectorAll<HTMLDivElement>(".total-time > .timeunit > .timebox");
-const absoluteTimes = document.querySelectorAll<HTMLDivElement>(".abs-time > .times > .timebox");
-const dayStatuses = document.querySelectorAll<HTMLDivElement>(
-  ".day-info > .day-card > .card-content"
-);
+const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
+const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
+const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
+const dayStatuses = document.querySelectorAll<HTMLElement>(".day-info > .day-card > .card-content");
+const dayClassTimes = document.querySelectorAll<HTMLElement>("#class-end > .daytime-unit");
+const daySchoolTimes = document.querySelectorAll<HTMLElement>("#school-end > .daytime-unit");
 
-const schoolTimeLabels = document.querySelectorAll<HTMLDivElement>(
+const schoolTimeLabels = document.querySelectorAll<HTMLElement>(
   ".school-time > .timeunit > .timelabel"
 );
-const totalTimeLabels = document.querySelectorAll<HTMLDivElement>(
+const totalTimeLabels = document.querySelectorAll<HTMLElement>(
   ".total-time > .timeunit > .timelabel"
 );
-const absoluteTimeLabels = document.querySelectorAll<HTMLDivElement>(
+const absoluteTimeLabels = document.querySelectorAll<HTMLElement>(
   ".abs-time > .timelabels > .timelabel"
 );
 
@@ -32,19 +31,20 @@ const checkboxes = document.querySelectorAll<HTMLInputElement>(
   '.sub-dropdown > li > input[type="checkbox"]'
 );
 
-const progressBar = document.getElementById("progress-bar-element") as HTMLDivElement | null;
-const progressText = document.getElementById("percentage") as HTMLDivElement | null;
+const progressBar = document.getElementById("progress-bar-element");
+const progressText = document.getElementById("percentage");
 
-const absoluteTimeContainer = document.getElementById(
-  "abs-time-remaining"
-) as HTMLDivElement | null;
-const schoolTimeContainer = document.getElementById(
-  "school-time-remaining"
-) as HTMLDivElement | null;
-const dayInfoContainer = document.getElementById("day-information") as HTMLDivElement | null;
-const accuracySlider = document.getElementById("accuracy") as HTMLInputElement;
+const absoluteTimeContainer = document.getElementById("abs-time-remaining");
+const schoolTimeContainer = document.getElementById("school-time-remaining");
+const dayInfoContainer = document.getElementById("day-information");
+const accuracySlider = document.getElementById("accuracy") as HTMLInputElement | null;
 
-const lastMessage = document.getElementById("last-message") as HTMLDivElement | null;
+const lastMessage = document.getElementById("last-message");
+
+const currentDayContainer = document.getElementById("current-day-container");
+const slotElement = document.getElementById("class-slot");
+const classEndTimes = document.querySelectorAll<HTMLElement>("#class-end .timebox");
+const schoolEndTimes = document.querySelectorAll<HTMLElement>("#school-end .timebox");
 
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
@@ -55,6 +55,7 @@ let calendar = new Calendar(
   [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
   [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
 );
+let day: Day;
 
 let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
@@ -87,6 +88,7 @@ async function start() {
   );
 
   await calendar.loadData();
+  initializeSchoolDay();
 
   if (!calendar.contains(calendar.now)) {
     console.error("Outside of calendar time frame, school time unavailable.");
@@ -274,10 +276,34 @@ function toggleDisplaySettings(
 
   let allTimeUnits: Array<Array<HTMLElement>> = [];
   allTimeUnits[0] = [schoolTimes[0], totalTimes[0], absoluteTimes[0]]; // Days
-  allTimeUnits[1] = [schoolTimes[1], totalTimes[1], absoluteTimes[1]]; // Hours
-  allTimeUnits[2] = [schoolTimes[2], totalTimes[2], absoluteTimes[2]]; // Minutes
-  allTimeUnits[3] = [schoolTimes[3], totalTimes[3], absoluteTimes[3]]; // Seconds
-  allTimeUnits[4] = [schoolTimes[4], totalTimes[4], absoluteTimes[4]]; // Milliseconds
+  allTimeUnits[1] = [
+    schoolTimes[1],
+    totalTimes[1],
+    absoluteTimes[1],
+    dayClassTimes[0],
+    daySchoolTimes[0],
+  ]; // Hours
+  allTimeUnits[2] = [
+    schoolTimes[2],
+    totalTimes[2],
+    absoluteTimes[2],
+    dayClassTimes[1],
+    daySchoolTimes[1],
+  ]; // Minutes
+  allTimeUnits[3] = [
+    schoolTimes[3],
+    totalTimes[3],
+    absoluteTimes[3],
+    dayClassTimes[2],
+    daySchoolTimes[2],
+  ]; // Seconds
+  allTimeUnits[4] = [
+    schoolTimes[4],
+    totalTimes[4],
+    absoluteTimes[4],
+    dayClassTimes[3],
+    daySchoolTimes[3],
+  ]; // Milliseconds
 
   // Which default items should be hidden and which should not
   if (hiddenItems !== null) {
@@ -510,10 +536,12 @@ function updateDOM() {
   populateAbsoluteTimes(schoolTimeRemaining);
   populateSchoolDates(schoolDates);
   populateTotalTimes(totalTimeRemaining);
+  updateSchoolDay();
 }
 
 // Only runs once a day to conserve resources
 function slowUpdateDOM() {
+  initializeSchoolDay();
   updateProgressBar();
   updateDayInfos();
 
@@ -583,42 +611,43 @@ function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   lastUpdatedSchoolTime = schoolTimeRemaining;
 }
 
-function populateTotalTimes(timeRemaining: number) {
-  // Worst code I have ever written, MUST fix later
-  const daysLeft = Math.floor(timeRemaining / 1000 / 60 / 60 / 24);
-  const hoursLeft = Math.floor((timeRemaining - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
+function makeReadable(timestamp: number): Array<number> {
+  const daysLeft = Math.floor(timestamp / 1000 / 60 / 60 / 24);
+  const hoursLeft = Math.floor((timestamp - daysLeft * 1000 * 60 * 60 * 24) / 1000 / 60 / 60);
   const minutesLeft = Math.floor(
-    (timeRemaining - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
+    (timestamp - daysLeft * 1000 * 60 * 60 * 24 - hoursLeft * 1000 * 60 * 60) / 1000 / 60
   );
   const secondsLeft = Math.floor(
-    (timeRemaining -
+    (timestamp -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
       minutesLeft * 1000 * 60) /
       1000
   );
   const millisecondsLeft = Math.floor(
-    timeRemaining -
+    timestamp -
       daysLeft * 1000 * 60 * 60 * 24 -
       hoursLeft * 1000 * 60 * 60 -
       minutesLeft * 1000 * 60 -
       secondsLeft * 1000
   );
+  const returnArray = [];
+  returnArray.push(daysLeft);
+  returnArray.push(hoursLeft);
+  returnArray.push(minutesLeft);
+  returnArray.push(secondsLeft);
+  returnArray.push(millisecondsLeft);
 
-  if (totalTimes[0].textContent !== daysLeft.toString() && !totalTimes[0].hidden) {
-    totalTimes[0].textContent = daysLeft.toString();
-  }
-  if (totalTimes[1].textContent !== hoursLeft.toString() && !totalTimes[1].hidden) {
-    totalTimes[1].textContent = hoursLeft.toString();
-  }
-  if (totalTimes[2].textContent !== minutesLeft.toString() && !totalTimes[2].hidden) {
-    totalTimes[2].textContent = minutesLeft.toString();
-  }
-  if (totalTimes[3].textContent !== secondsLeft.toString() && !totalTimes[3].hidden) {
-    totalTimes[3].textContent = secondsLeft.toString();
-  }
-  if (totalTimes[4].textContent !== secondsLeft.toString() && !totalTimes[4].hidden) {
-    totalTimes[4].textContent = millisecondsLeft.toString();
+  return returnArray;
+}
+
+function populateTotalTimes(timeRemaining: number) {
+  const timesRemaining = makeReadable(timeRemaining);
+
+  for (let i = 0; i < timesRemaining.length; i++) {
+    if (totalTimes[i].textContent !== timesRemaining[i].toString() && !totalTimes[i].hidden) {
+      totalTimes[i].textContent = timesRemaining[i].toString();
+    }
   }
 }
 
@@ -707,6 +736,74 @@ function updateDayInfos() {
   dayStatuses[0].textContent = daystatus;
   dayStatuses[1].textContent = feature;
   dayStatuses[2].textContent = event;
+}
+
+function initializeSchoolDay() {
+  if (!calendar.schoolNow()) return;
+  const currentDateStamp = calendar.strftime(calendar.now);
+  const currentTimeSlot = calendar.calendar[currentDateStamp].timeSlot;
+  day = new Day(currentTimeSlot);
+}
+
+function updateSchoolDay() {
+  if (!currentDayContainer) {
+    console.error("Current day container not found.");
+    return;
+  }
+
+  if (calendar.schoolNow()) {
+    if (currentDayContainer.hidden) {
+      currentDayContainer.hidden = false;
+    }
+  } else {
+    if (!currentDayContainer.hidden) {
+      currentDayContainer.hidden = true;
+    }
+    return;
+  }
+
+  day.freeze(calendar.modTimestamp("day", calendar.now));
+  let currentSlot: string | undefined = day.getCurrentSlot();
+
+  if (!slotElement) {
+    console.error("One or more school day dom elements not found.");
+    return;
+  }
+
+  if (currentSlot === undefined) {
+    console.error("Slot calculation failure.");
+    currentSlot = "-";
+  } else {
+    slotElement.textContent = currentSlot;
+
+    const classEnds = day.getTimeUntilClassEnds();
+    const formattedClassEnds = makeReadable(classEnds);
+
+    for (let i = 1; i < formattedClassEnds.length; i++) {
+      // Subtract one because the display does not have a day output.
+      const k = i - 1;
+      if (
+        classEndTimes[k].textContent !== formattedClassEnds[i].toString() &&
+        !classEndTimes[k].hidden
+      ) {
+        classEndTimes[k].textContent = formattedClassEnds[i].toString();
+      }
+    }
+  }
+
+  const schoolEnds = day.getTimeUntilSchoolEnds();
+  const formattedSchoolEnds = makeReadable(schoolEnds);
+
+  for (let i = 1; i < formattedSchoolEnds.length; i++) {
+    // Subtract one because the display does not have a day output.
+    const k = i - 1;
+    if (
+      schoolEndTimes[k].textContent !== formattedSchoolEnds[i].toString() &&
+      !schoolEndTimes[k].hidden
+    ) {
+      schoolEndTimes[k].textContent = formattedSchoolEnds[i].toString();
+    }
+  }
 }
 
 start();
