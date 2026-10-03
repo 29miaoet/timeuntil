@@ -8,25 +8,6 @@
  */
 import { getCalendar } from "./fetchCalendar";
 
-interface DayInfo {
-  date: string;
-  hasSchool: boolean;
-  timeSlot: "Regular" | "Early Dismissal";
-  status: "Normal School Day" | "No School" | "Early Dismissal";
-  holidays: Array<string>;
-  dayInfo: Array<string>;
-}
-
-export interface CalendarObject {
-  [date: string]: DayInfo;
-}
-
-interface DayInfoStruct {
-  daystatus: string;
-  feature: Array<string>;
-  event: Array<string>;
-}
-
 type FixedTime = readonly [number, number];
 type SchoolTimeAsDateStruct = [number, number, number, number, number];
 type TimeUnitType = "day" | "hour" | "minute" | "second";
