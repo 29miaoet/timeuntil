@@ -4,7 +4,8 @@ import Calendar from "./calendar";
 import Day from "./day";
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
-import * as Countdown from "./countdown";
+import * as DomUpdate from "./DomUpdate";
+import * as SlowDomUpdate from "./SlowDomUpdate";
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
@@ -13,7 +14,6 @@ const container = document.getElementById("card-container-main") as HTMLElement 
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
-const dayStatuses = document.querySelectorAll<HTMLElement>(".day-info > .day-card > .card-content");
 const dayClassTimes = document.querySelectorAll<HTMLElement>("#class-end > .daytime-unit");
 const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
 const daySchoolTimes = document.querySelectorAll<HTMLElement>("#school-end > .daytime-unit");
@@ -32,10 +32,6 @@ const checkboxes = document.querySelectorAll<HTMLInputElement>(
   '.sub-dropdown > li > input[type="checkbox"]'
 );
 
-const progressBar = document.getElementById("progress-bar-element");
-const progressText = document.getElementById("percentage");
-
-const dayInfoContainer = document.getElementById("day-information");
 const accuracySlider = document.getElementById("accuracy") as HTMLInputElement | null;
 
 const lastMessage = document.getElementById("last-message");
@@ -423,7 +419,14 @@ function getPreferredDates(value: string) {
       break;
   }
   if (!checkFinish()) undoFinish();
-  updateProgressBar();
+
+  try {
+    const fractionPercentage = calendar.getPercentCompletion(
+      startDate.getTime(),
+      endDate.getTime()
+    );
+    SlowDomUpdate.updateProgressBar(fractionPercentage);
+  } catch (error) {}
 
   if (checkFinish()) triggerFinish();
   else updateDOM();
@@ -530,17 +533,24 @@ function undoFinish() {
 function updateDOM() {
   updateTimer();
 
-  Countdown.populateAbsoluteTimes(schoolTimeRemaining);
-  Countdown.populateSchoolDates(schoolDates);
-  Countdown.populateTotalTimes(totalTimeRemaining);
+  DomUpdate.populateAbsoluteTimes(schoolTimeRemaining);
+  DomUpdate.populateSchoolDates(schoolDates);
+  DomUpdate.populateTotalTimes(totalTimeRemaining);
   updateSchoolDay();
 }
 
 // Only runs once a day to conserve resources
 function slowUpdateDOM() {
   initializeSchoolDay();
-  updateProgressBar();
-  updateDayInfos();
+  try {
+    const fractionPercentage = calendar.getPercentCompletion(
+      startDate.getTime(),
+      endDate.getTime()
+    );
+    SlowDomUpdate.updateProgressBar(fractionPercentage);
+  } catch (error) {}
+  const dayInfos = calendar.getDayInfo(Calendar.strftime(calendar.now));
+  SlowDomUpdate.updateDayInfos(dayInfos);
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -567,70 +577,6 @@ function updateTimer() {
   }
 
   totalTimeRemaining = calendar.getAbsoluteTimeTo(endDate.getTime());
-}
-
-function updateProgressBar() {
-  const start = startDate;
-
-  const end = endDate;
-  let fractionPercentage: number;
-  try {
-    fractionPercentage = calendar.getPercentCompletion(start.getTime(), end.getTime());
-  } catch (error) {
-    return;
-  }
-
-  const percentFinished = `${fractionPercentage * 100}%`;
-  const ariaAmountFinished = String(fractionPercentage * 100);
-
-  if (progressBar) {
-    progressBar.style.width = percentFinished;
-    progressBar.setAttribute("aria-valuenow", ariaAmountFinished);
-  } else {
-    console.error("Progress bar not found");
-  }
-
-  if (progressText) {
-    progressText.textContent = percentFinished;
-  } else {
-    console.error("Progress text not found");
-  }
-}
-
-export function updateDayInfos() {
-  if (!calendar.contains(calendar.now)) {
-    if (!dayInfoContainer) {
-      console.error("Day info container not found.");
-      return;
-    }
-
-    dayInfoContainer.innerHTML = `
-      <div class="warning-box">
-        <p>Unable to fetch school day information</p>
-      </div> `;
-    return;
-  }
-
-  const dayInfos = calendar.getDayInfo(Calendar.strftime(calendar.now));
-  const daystatus = dayInfos.daystatus;
-
-  let feature;
-  if (dayInfos.feature.length !== 0) {
-    feature = dayInfos.feature.join("\n");
-  } else {
-    feature = "Nothing Interesting";
-  }
-
-  let event;
-  if (dayInfos.event.length !== 0) {
-    event = dayInfos.event.join("\n");
-  } else {
-    event = "No Events";
-  }
-
-  dayStatuses[0].textContent = daystatus;
-  dayStatuses[1].textContent = feature;
-  dayStatuses[2].textContent = event;
 }
 
 function initializeSchoolDay() {
@@ -672,7 +618,7 @@ function updateSchoolDay() {
     slotElement.textContent = currentSlot;
 
     const classEnds = day.getTimeUntilClassEnds();
-    const formattedClassEnds = Countdown.makeReadable(classEnds);
+    const formattedClassEnds = DomUpdate.makeReadable(classEnds);
 
     for (let i = 1; i < formattedClassEnds.length; i++) {
       // Subtract one because the display does not have a day output.
@@ -687,7 +633,7 @@ function updateSchoolDay() {
   }
 
   const schoolEnds = day.getTimeUntilSchoolEnds();
-  const formattedSchoolEnds = Countdown.makeReadable(schoolEnds);
+  const formattedSchoolEnds = DomUpdate.makeReadable(schoolEnds);
 
   for (let i = 1; i < formattedSchoolEnds.length; i++) {
     // Subtract one because the display does not have a day output.
