@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import Calendar, { CalendarObject } from "./calendar";
+import Calendar from "./calendar";
 import calendarData from "../public/calendars/gci.json";
 
 const calendar = new Calendar(
@@ -17,13 +17,13 @@ calendar._calendar = calendarData as CalendarObject;
 describe("Timestamp to string formatter", () => {
   test("Returns an ordered timestamp for an arbitrary day", () => {
     // Convert timezones manually
-    expect(calendar.strftime(calendar.now + 5 * 60 * 60 * 1000)).toBe("2026-09-15");
+    expect(Calendar.strftime(calendar.now + 5 * 60 * 60 * 1000)).toBe("2026-09-15");
   });
 
   test("Returns correct timestamp for Unix Epoch", () => {
     const epoch = new Date("1970-01-01T00:00:00.000-05:00");
     // Convert timezones manually
-    expect(calendar.strftime(epoch.getTime() + 5 * 60 * 60 * 1000)).toBe("1970-01-01");
+    expect(Calendar.strftime(epoch.getTime() + 5 * 60 * 60 * 1000)).toBe("1970-01-01");
   });
 });
 
