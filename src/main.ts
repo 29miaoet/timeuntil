@@ -1,11 +1,12 @@
 import "./styles/styles.css";
 import "./styles/themes.css";
 import Calendar from "./calendar";
-import Day from "./day";
 import Menu from "./menu";
 import { schoolData } from "./fetchCalendar";
 import * as DomUpdate from "./DomUpdate";
 import * as SlowDomUpdate from "./SlowDomUpdate";
+import * as DayActions from "./DayActions";
+import { state } from "./state";
 
 const welcomeText =
   "%c🥕 Welcome to timeuntil! 🥕\n%cContribute at %chttps://github.com/29miaoet/timeuntil/";
@@ -36,21 +37,9 @@ const accuracySlider = document.getElementById("accuracy") as HTMLInputElement |
 
 const lastMessage = document.getElementById("last-message");
 
-const currentDayContainer = document.getElementById("current-day-container");
-const slotElement = document.getElementById("class-slot");
-const classEndTimes = document.querySelectorAll<HTMLElement>("#class-end .timebox");
-const schoolEndTimes = document.querySelectorAll<HTMLElement>("#school-end .timebox");
-
 let schoolTimeRemaining: number | null;
 let totalTimeRemaining: number;
 let schoolDates: Array<number> | null;
-
-let calendar = new Calendar(
-  "./calendars/gci.json",
-  [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-  [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
-);
-let day: Day;
 
 let endDate: Date = new Date(2027, 5, 21, 15, 30);
 
@@ -80,10 +69,10 @@ async function start() {
     "font-style: italic;"
   );
 
-  await calendar.loadData();
-  initializeSchoolDay();
+  await state.calendar.loadData();
+  DayActions.initializeSchoolDay();
 
-  if (!calendar.contains(calendar.now)) {
+  if (!state.calendar.contains(state.calendar.now)) {
     console.error("Outside of calendar time frame, school time unavailable.");
   }
 
@@ -378,7 +367,7 @@ function toggleDisplaySettings(
 function getPreferredDates(value: string) {
   switch (value) {
     case "summer":
-      endDate = new Date(calendar.lastDay);
+      endDate = new Date(state.calendar.lastDay);
       startDate = new Date(2026, 8, 9, 8, 30);
       causeOfDeath = "🎉School Has Ended🎉";
       break;
@@ -393,23 +382,23 @@ function getPreferredDates(value: string) {
       causeOfDeath = "Winter Break";
       break;
     case "noschool":
-      endDate = new Date(calendar.findNextNoSchool());
-      startDate = new Date(calendar.findNextNoSchool(true));
+      endDate = new Date(state.calendar.findNextNoSchool());
+      startDate = new Date(state.calendar.findNextNoSchool(true));
       causeOfDeath = "No School Right Now";
       break;
     case "weekend":
-      endDate = new Date(calendar.findNextWeekend());
-      startDate = new Date(calendar.findNextWeekend(true));
+      endDate = new Date(state.calendar.findNextWeekend());
+      startDate = new Date(state.calendar.findNextWeekend(true));
       causeOfDeath = "Weekend";
       break;
     case "lweekend":
-      endDate = new Date(calendar.findNextLongWeekend());
-      startDate = new Date(calendar.findNextLongWeekend(true));
+      endDate = new Date(state.calendar.findNextLongWeekend());
+      startDate = new Date(state.calendar.findNextLongWeekend(true));
       causeOfDeath = "Long Weekend";
       break;
     case "term":
-      endDate = new Date(calendar.findEndTerm(...termEnds));
-      startDate = new Date(calendar.getCurrentTerm(...termEnds));
+      endDate = new Date(state.calendar.findEndTerm(...termEnds));
+      startDate = new Date(state.calendar.getCurrentTerm(...termEnds));
       causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
@@ -421,7 +410,7 @@ function getPreferredDates(value: string) {
   if (!checkFinish()) undoFinish();
 
   try {
-    const fractionPercentage = calendar.getPercentCompletion(
+    const fractionPercentage = state.calendar.getPercentCompletion(
       startDate.getTime(),
       endDate.getTime()
     );
@@ -505,13 +494,13 @@ async function setPreferredCalendars(value: string) {
   await tempCalendar.loadData();
   // Wait until the data is initialized and loaded before assigning
   // to prevent crashes caused by an incomplete object.
-  calendar = tempCalendar;
+  state.calendar = tempCalendar;
 
   localStorage.setItem("calendar", value);
 }
 
 function checkFinish() {
-  const now = new Date(calendar.now);
+  const now = new Date(state.calendar.now);
   return now >= endDate;
 }
 
@@ -536,20 +525,20 @@ function updateDOM() {
   DomUpdate.populateAbsoluteTimes(schoolTimeRemaining);
   DomUpdate.populateSchoolDates(schoolDates);
   DomUpdate.populateTotalTimes(totalTimeRemaining);
-  updateSchoolDay();
+  DayActions.updateSchoolDay();
 }
 
 // Only runs once a day to conserve resources
 function slowUpdateDOM() {
-  initializeSchoolDay();
+  DayActions.initializeSchoolDay();
   try {
-    const fractionPercentage = calendar.getPercentCompletion(
+    const fractionPercentage = state.calendar.getPercentCompletion(
       startDate.getTime(),
       endDate.getTime()
     );
     SlowDomUpdate.updateProgressBar(fractionPercentage);
   } catch (error) {}
-  const dayInfos = calendar.getDayInfo(Calendar.strftime(calendar.now));
+  const dayInfos = state.calendar.getDayInfo(Calendar.strftime(state.calendar.now));
   SlowDomUpdate.updateDayInfos(dayInfos);
 
   const tomorrow = new Date();
@@ -565,86 +554,18 @@ function slowUpdateDOM() {
 }
 
 function updateTimer() {
-  calendar.freeze();
+  state.calendar.freeze();
 
   try {
-    schoolTimeRemaining = calendar.getSchoolTimeTo(endDate.getTime());
-    schoolDates = calendar.getSchoolTimeAsDate(endDate.getTime());
+    schoolTimeRemaining = state.calendar.getSchoolTimeTo(endDate.getTime());
+    schoolDates = state.calendar.getSchoolTimeAsDate(endDate.getTime());
   } catch (error) {
     console.error(error);
     schoolTimeRemaining = null;
     schoolDates = null;
   }
 
-  totalTimeRemaining = calendar.getAbsoluteTimeTo(endDate.getTime());
-}
-
-function initializeSchoolDay() {
-  if (!calendar.schoolNow()) return;
-  const currentDateStamp = Calendar.strftime(calendar.now);
-  const currentTimeSlot = calendar.calendar[currentDateStamp].timeSlot;
-  day = new Day(currentTimeSlot);
-}
-
-function updateSchoolDay() {
-  if (!currentDayContainer) {
-    console.error("Current day container not found.");
-    return;
-  }
-
-  if (calendar.schoolNow()) {
-    if (currentDayContainer.hidden) {
-      currentDayContainer.hidden = false;
-    }
-  } else {
-    if (!currentDayContainer.hidden) {
-      currentDayContainer.hidden = true;
-    }
-    return;
-  }
-
-  day.freeze(Calendar.modTimestamp("day", calendar.now));
-  let currentSlot: string | undefined = day.getCurrentSlot();
-
-  if (!slotElement) {
-    console.error("One or more school day dom elements not found.");
-    return;
-  }
-
-  if (currentSlot === undefined) {
-    console.error("Slot calculation failure.");
-    currentSlot = "-";
-  } else {
-    slotElement.textContent = currentSlot;
-
-    const classEnds = day.getTimeUntilClassEnds();
-    const formattedClassEnds = DomUpdate.makeReadable(classEnds);
-
-    for (let i = 1; i < formattedClassEnds.length; i++) {
-      // Subtract one because the display does not have a day output.
-      const k = i - 1;
-      if (
-        classEndTimes[k].textContent !== formattedClassEnds[i].toString() &&
-        !classEndTimes[k].hidden
-      ) {
-        classEndTimes[k].textContent = formattedClassEnds[i].toString();
-      }
-    }
-  }
-
-  const schoolEnds = day.getTimeUntilSchoolEnds();
-  const formattedSchoolEnds = DomUpdate.makeReadable(schoolEnds);
-
-  for (let i = 1; i < formattedSchoolEnds.length; i++) {
-    // Subtract one because the display does not have a day output.
-    const k = i - 1;
-    if (
-      schoolEndTimes[k].textContent !== formattedSchoolEnds[i].toString() &&
-      !schoolEndTimes[k].hidden
-    ) {
-      schoolEndTimes[k].textContent = formattedSchoolEnds[i].toString();
-    }
-  }
+  totalTimeRemaining = state.calendar.getAbsoluteTimeTo(endDate.getTime());
 }
 
 start();
