@@ -5,7 +5,6 @@ const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeun
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 
 let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
-let lastUpdatedSchoolTime: number;
 
 export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   if (schoolTimeRemaining === null) {
@@ -24,26 +23,37 @@ export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
         </div> `;
 
     return;
-  } else if (schoolTimeRemaining === lastUpdatedSchoolTime) {
-    return;
   }
-  if (!absoluteTimes[0].hidden) {
-    absoluteTimes[0].textContent = String(schoolTimeRemaining / 1000 / 60 / 60 / 24);
-  }
-  if (!absoluteTimes[1].hidden) {
-    absoluteTimes[1].textContent = String(schoolTimeRemaining / 1000 / 60 / 60);
-  }
-  if (!absoluteTimes[2].hidden) {
-    absoluteTimes[2].textContent = String(schoolTimeRemaining / 1000 / 60);
-  }
-  if (!absoluteTimes[3].hidden) {
-    absoluteTimes[3].textContent = String(schoolTimeRemaining / 1000);
-  }
-  if (!absoluteTimes[4].hidden) {
-    absoluteTimes[4].textContent = String(schoolTimeRemaining);
-  }
+  let currentComputedTime: number = schoolTimeRemaining;
 
-  lastUpdatedSchoolTime = schoolTimeRemaining;
+  // The check here must be implemented element by element and not by a global
+  // variable such as lastUpdateSchoolTime, since if the user decides to show
+  // an element like absoluteTimes[4], while there is no school, it will still
+  // retain its original value since it was not updated as it was hidden by default.
+
+  if (!absoluteTimes[4].hidden && absoluteTimes[4].textContent !== String(currentComputedTime)) {
+    absoluteTimes[4].textContent = String(currentComputedTime);
+  }
+  currentComputedTime /= 1000;
+
+  if (!absoluteTimes[3].hidden && absoluteTimes[3].textContent !== String(currentComputedTime)) {
+    absoluteTimes[3].textContent = String(currentComputedTime);
+  }
+  currentComputedTime /= 60;
+
+  if (!absoluteTimes[2].hidden && absoluteTimes[2].textContent !== String(currentComputedTime)) {
+    absoluteTimes[2].textContent = String(currentComputedTime);
+  }
+  currentComputedTime /= 60;
+
+  if (!absoluteTimes[1].hidden && absoluteTimes[1].textContent !== String(currentComputedTime)) {
+    absoluteTimes[1].textContent = String(currentComputedTime);
+  }
+  currentComputedTime /= 24;
+
+  if (!absoluteTimes[0].hidden && absoluteTimes[0].textContent !== String(currentComputedTime)) {
+    absoluteTimes[0].textContent = String(currentComputedTime);
+  }
 }
 
 export function populateSchoolDates(schoolDates: Array<number> | null) {
