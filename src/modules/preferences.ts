@@ -1,9 +1,9 @@
-import Calendar from "./calendar";
-import { state } from "./state";
-import { schoolData } from "./fetchCalendar";
-import * as App from "./app";
+import Calendar from "../core/calendar";
+import { state } from "../core/state";
+import { schoolData } from "../helpers/fetchCalendar";
+import * as App from "../core/app";
 import * as Finish from "./finish";
-import * as SlowDomUpdate from "./SlowDomUpdate";
+import * as SlowDomUpdate from "../UI/SlowDomUpdate";
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");

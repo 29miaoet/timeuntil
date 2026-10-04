@@ -1,10 +1,10 @@
 import Calendar from "./calendar";
-import Menu from "./menu";
-import * as DomUpdate from "./DomUpdate";
-import * as SlowDomUpdate from "./SlowDomUpdate";
-import * as DayActions from "./DayActions";
-import * as Preferences from "./preferences";
-import * as Finish from "./finish";
+import Menu from "../classes/menu";
+import * as DomUpdate from "../UI/DomUpdate";
+import * as SlowDomUpdate from "../UI/SlowDomUpdate";
+import * as DayActions from "../modules/DayActions";
+import * as Preferences from "../modules/preferences";
+import * as Finish from "../modules/finish";
 import { state } from "./state";
 
 const welcomeText =

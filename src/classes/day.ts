@@ -6,7 +6,7 @@
  * information from a JSON file, only used
  * when there is school right now.
  */
-import rawSchedule from "./data/schedule.json";
+import rawSchedule from "../data/schedule.json";
 
 interface Schedule {
   A: [number, number];

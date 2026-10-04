@@ -6,7 +6,7 @@
  * loaded with calendar.loadData(), the file path must be
  * provided in the constructor.
  */
-import { getCalendar } from "./fetchCalendar";
+import { getCalendar } from "../helpers/fetchCalendar";
 
 type FixedTime = readonly [number, number];
 type SchoolTimeAsDateStruct = [number, number, number, number, number];

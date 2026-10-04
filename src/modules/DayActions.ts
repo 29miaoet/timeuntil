@@ -1,7 +1,7 @@
-import Calendar from "./calendar";
-import Day from "./day";
-import { state } from "./state";
-import { makeReadable } from "./DomUpdate";
+import Calendar from "../core/calendar";
+import Day from "../classes/day";
+import { state } from "../core/state";
+import { makeReadable } from "../UI/DomUpdate";
 
 const currentDayContainer = document.getElementById("current-day-container");
 const slotElement = document.getElementById("class-slot");

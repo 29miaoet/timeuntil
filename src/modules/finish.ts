@@ -1,4 +1,4 @@
-import { state } from "./state";
+import { state } from "../core/state";
 
 const container = document.getElementById("card-container-main");
 const lastMessage = document.getElementById("last-message");

@@ -1,4 +1,4 @@
-import rawSchoolData from "./data/schools.json";
+import rawSchoolData from "../data/schools.json";
 
 interface School {
   codeName: string;

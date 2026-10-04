@@ -1,5 +1,5 @@
 import "./styles/styles.css";
 import "./styles/themes.css";
-import { run } from "./app";
+import { run } from "./core/app";
 
 run();

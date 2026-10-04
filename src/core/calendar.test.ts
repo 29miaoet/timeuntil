@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import Calendar from "./calendar";
-import calendarData from "../public/calendars/gci.json";
+import calendarData from "../../public/calendars/gci.json";
 
 const calendar = new Calendar(
   // This value will be provided by the imported json data
