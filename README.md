@@ -25,13 +25,33 @@ timeuntil/
 │   │   ├── schools.json
 │   │   └── schedule.json
 │   │ 
-│   ├── main.ts
-│   ├── calendar.ts
-│   ├── day.ts
-│   ├── menu.ts
-│   ├── fetchCalendar.ts
+│   ├── classes/
+│   │   ├── day.ts
+│   │   └── menu.ts
 │   │ 
-│   └── vite-env.d.ts
+│   ├── core/
+│   │   ├── app.ts
+│   │   ├── calendar.ts
+│   │   ├── calendar.test.ts
+│   │   └── state.ts
+│   │ 
+│   ├── modules/
+│   │   ├── DayActions.ts
+│   │   ├── finish.ts
+│   │   └── preferences.ts
+│   │ 
+│   ├── UI/
+│   │   ├── DomUpdate.ts
+│   │   └── SlowDomUpdate.ts
+│   │ 
+│   ├── helpers/
+│   │   └── fetchCalendar.ts
+│   │ 
+│   ├── types/
+│   │   ├── global.d.ts
+│   │   └── vite-env.d.ts
+│   │ 
+│   └── main.ts
 │
 ├── public/
 │   ├── calendars/
