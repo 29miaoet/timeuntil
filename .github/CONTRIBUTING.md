@@ -24,17 +24,24 @@ git add .
 git commit -m "describe your changes"
 ```
 
-3. Run testing
+3. Automated testing
 
 ```shell
 npm run typecheck
-# Fix any errors
+npm run format
+npm run test:run
+# All checks should come up clean
+```
+
+4. Run manual testing
+
+```shell
 npm run build
 npm run preview
 # Open http://localhost:4173/timeuntil/ in your browser.
 ```
 
-4. Format and push
+5. Format and push
 
 ```shell
 npm run format
@@ -48,10 +55,11 @@ git push -u origin your-branch-name
 
 - Use `Array<T>` for typing arrays instead of `T[]`.
 - Use `error` for error catching and `event` for event handling, do not use `e`.
-- Use CSS variables instead of direct values.
+- Use CSS variables instead of direct values for colors and repeated values.
 - Use LF line returns instead of CRLF or CR whenever possible, or ensure you have the correct git configurations.
 - Background color schemes should follow those of the existing `:root` elements.
 - Prefer aria-labels for accessibility over direct `<label>` tags.
+- Use PascalCase for classes or a collection of functions, use camelCase for all other cases.
 - New files or folders should be organized in the same fashion as the existing structure.
 
 ## Resources
