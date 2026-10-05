@@ -1,0 +1,91 @@
+:root {
+  --font-color-black: #03324d;
+  --font-color-white: #eeefff;
+
+  --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
+  --bg-countdown: #5095eb;
+  --light-blue: #e0f0ff;
+  --bg-day-current: #80b6f5;
+  --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
+
+  --progress-bg: #ff4d6d;
+  --progress-bar-hover: #ee3c5c;
+  --progress-bar-bg: #b1d7ff;
+  --info-bg: #e7f3ff;
+  --card-border: #cfcfcf;
+
+  --radius-classic: 10px;
+  --radius-mild: 4px;
+
+  --warning-text-color: #78350f;
+  --warning-border-color: #a41502;
+  --warning-bg-color: #f59e0b;
+  --danger-color: #b60208;
+
+  --dropdown-bg: #ffffff;
+  --dropdown-item-hover: #e2e2e2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  margin: 0;
+  color: var(--font-color-white);
+  background: var(--bg-grad);
+  min-height: 100vh;
+}
+
+h1 {
+  color: var(--font-color-black);
+}
+
+h2 {
+  color: var(--font-color-white);
+}
+
+button {
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.card {
+  padding: 20px;
+  width: 100%;
+  border: none;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #cccccc;
+  margin: 1px;
+  width: 60%;
+}
+
+footer {
+  padding: 20px;
+  opacity: 0.75;
+  color: var(--font-color-black);
+  font-style: italic;
+  font-size: 0.75rem;
+}
