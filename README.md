@@ -18,7 +18,12 @@ timeuntil/
 │
 ├── src/
 │   ├── styles/
-│   │   ├── styles.css
+│   │   ├── components/
+│   │   │   ├── countdown.css
+│   │   │   └── menu.css
+│   │   │
+│   │   ├── base.css
+│   │   ├── media.css
 │   │   └── themes.css
 │   │ 
 │   ├── data/
@@ -81,6 +86,17 @@ timeuntil/
 └── README.md
 </code></pre>
 
+## Overview
+
+Timeuntil is a project focused on counting down the exact time until school ends.
+Unlike a typical school calendar, it gives you the information you _want to know_
+at a glance, without any other distractions, so you can focus on the important
+stuff.  
+This app runs **entirely in your browser** _(because I don't have a server, not
+because I care about your privacy)_. As of the latest version, the entire website
+fits under `13.42KB` gzipped, which means it can fit into a **single** TCP
+round-trip, making page load almost unoticable.
+
 ## Attributes
 
 - ✅ Responsive UI layout
@@ -100,11 +116,12 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## Technology Stack
 
-| Layer        | Technology            | Notes                         |
-| ------------ | --------------------- | ----------------------------- |
-| **Hosting**  | GitHub Pages          | Static site deployment        |
-| **Frontend** | HTML, CSS, TypeScript | Modern language stack         |
-| **Build**    | vite.js               | Fast and efficient build step |
+| Layer        | Technology            | Notes                                 |
+| ------------ | --------------------- | ------------------------------------- |
+| **Hosting**  | GitHub Pages          | Static site deployment                |
+| **Frontend** | HTML, CSS, TypeScript | Modern language stack                 |
+| **Build**    | vite.js               | Fast and efficient build step         |
+| **DevOps**   | Github Actions        | Automated tests and formatting checks |
 
 ## Future Path
 
@@ -113,6 +130,7 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 - [x] Organize and shorten code by using more functions.
 - [x] Harden code logic.
 - [x] Add and configure vitest.
+- [x] Refactor and split source files.
 - [ ] Add and configure ESlint after TypeScript 7.1 is released.
 - ~~Migrate UI handlers to React.~~
 - ~~Transform static CSS into Sass.~~
