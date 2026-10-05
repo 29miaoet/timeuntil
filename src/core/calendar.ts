@@ -6,26 +6,7 @@
  * loaded with calendar.loadData(), the file path must be
  * provided in the constructor.
  */
-import { getCalendar } from "./fetchCalendar";
-
-interface DayInfo {
-  date: string;
-  hasSchool: boolean;
-  timeSlot: "Regular" | "Early Dismissal";
-  status: "Normal School Day" | "No School" | "Early Dismissal";
-  holidays: Array<string>;
-  dayInfo: Array<string>;
-}
-
-export interface CalendarObject {
-  [date: string]: DayInfo;
-}
-
-interface DayInfoStruct {
-  daystatus: string;
-  feature: Array<string>;
-  event: Array<string>;
-}
+import { getCalendar } from "../helpers/fetchCalendar";
 
 type FixedTime = readonly [number, number];
 type SchoolTimeAsDateStruct = [number, number, number, number, number];
@@ -157,7 +138,7 @@ export default class Calendar {
     else this.now = Date.now();
   }
 
-  strftime(timeStamp: number): string {
+  static strftime(timeStamp: number): string {
     const date = new Date(timeStamp);
     const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -167,14 +148,14 @@ export default class Calendar {
 
   contains(schoolDate: number): boolean {
     try {
-      this.getDateAt(this.strftime(schoolDate));
+      this.getDateAt(Calendar.strftime(schoolDate));
       return true;
     } catch (e) {
       return false;
     }
   }
 
-  floorTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
+  static floorTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
     const timeObj = new Date(timeStamp);
     if (timeUnit === "second") {
       timeObj.setMilliseconds(0);
@@ -196,8 +177,8 @@ export default class Calendar {
     return timeObj.getTime();
   }
 
-  modTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
-    return timeStamp - this.floorTimestamp(timeUnit, timeStamp);
+  static modTimestamp(timeUnit: TimeUnitType, timeStamp: number): number {
+    return timeStamp - Calendar.floorTimestamp(timeUnit, timeStamp);
   }
 
   formatForDateConstructor(dateStamp: string): SingleDateConstructor {
@@ -224,8 +205,8 @@ export default class Calendar {
   }
 
   schoolNow(): boolean {
-    const currentDate = this.strftime(this.now);
-    const millisecondsElapsed = this.modTimestamp("day", this.now);
+    const currentDate = Calendar.strftime(this.now);
+    const millisecondsElapsed = Calendar.modTimestamp("day", this.now);
 
     if (!this.calendar[currentDate].hasSchool) {
       return false;
@@ -295,10 +276,10 @@ export default class Calendar {
    * SECOND is the starting time.
    */
   getSchoolTimeTo(timeStamp: number, startingTime: number = this.now): number {
-    const currentDate = this.strftime(startingTime);
-    const endingDate = this.strftime(timeStamp);
-    const millisecondsAfterMidnight = this.modTimestamp("day", startingTime);
-    const millisecondsLastDay = this.modTimestamp("day", timeStamp);
+    const currentDate = Calendar.strftime(startingTime);
+    const endingDate = Calendar.strftime(timeStamp);
+    const millisecondsAfterMidnight = Calendar.modTimestamp("day", startingTime);
+    const millisecondsLastDay = Calendar.modTimestamp("day", timeStamp);
 
     let milliSeconds: number = 0;
 
@@ -404,26 +385,26 @@ export default class Calendar {
    */
   getSchoolTimeAsDate(endingTimeStamp: number): SchoolTimeAsDateStruct {
     let endDate = new Date(endingTimeStamp);
-    const endingDateObj = this.getDateAt(this.strftime(endingTimeStamp));
+    const endingDateObj = this.getDateAt(Calendar.strftime(endingTimeStamp));
 
     // Bump ending Date back a day if it is before school actually starts
     if (endingDateObj.timeSlot === "Regular") {
-      if (this.modTimestamp("day", endingTimeStamp) <= this.regularSchoolDayTime[0]) {
+      if (Calendar.modTimestamp("day", endingTimeStamp) <= this.regularSchoolDayTime[0]) {
         endDate = new Date(endingTimeStamp - 24 * 60 * 60 * 1000);
       }
     } else if (endingDateObj.timeSlot === "Early Dismissal") {
-      if (this.modTimestamp("day", endingTimeStamp) <= this.earlyDismissalTime[0]) {
+      if (Calendar.modTimestamp("day", endingTimeStamp) <= this.earlyDismissalTime[0]) {
         endDate = new Date(endingTimeStamp - 24 * 60 * 60 * 1000);
       }
     }
 
-    const endingDate = this.strftime(endDate.getTime());
+    const endingDate = Calendar.strftime(endDate.getTime());
 
     let schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
     let milliseconds: number = 0;
 
-    const currentDate = this.strftime(this.now);
-    const hoursAfterMidnight = this.modTimestamp("day", this.now);
+    const currentDate = Calendar.strftime(this.now);
+    const hoursAfterMidnight = Calendar.modTimestamp("day", this.now);
 
     for (const date in this.calendar) {
       // The current date should not be counted but the ending Date should be
@@ -501,7 +482,7 @@ export default class Calendar {
     // Rollback to previous day
     const previousDateObj = new Date(dateObj);
     previousDateObj.setDate(previousDateObj.getDate() - 1);
-    const stamp = this.strftime(previousDateObj.getTime());
+    const stamp = Calendar.strftime(previousDateObj.getTime());
 
     if (!this.calendar[stamp]) return dateObj;
 
@@ -523,7 +504,7 @@ export default class Calendar {
     // Check if there is no school today
     // Don't use this.schoolNow() since we are checking whether there is
     // school TODAY, and not RIGHT NOW.
-    const currentDatestamp = this.strftime(this.now);
+    const currentDatestamp = Calendar.strftime(this.now);
     if (!this.calendar[currentDatestamp]) {
       throw new CalendarError(`Current time ${dateNow} is not in calendar scope.`);
     } else {
@@ -551,7 +532,7 @@ export default class Calendar {
   findNextWeekend(reverse: boolean = false): number {
     const currentDate = new Date(this.now);
     const currentWeekday = currentDate.getDay();
-    const tempEnd = new Date(this.floorTimestamp("day", this.now));
+    const tempEnd = new Date(Calendar.floorTimestamp("day", this.now));
 
     if (currentWeekday === 6 || currentWeekday === 0) {
       return this.now;
@@ -582,7 +563,7 @@ export default class Calendar {
 
       const dateNow = new Date(this.now);
       const dateCandidate = new Date(...this.formatForDateConstructor(first.date));
-      const dateStampNow = this.strftime(this.now);
+      const dateStampNow = Calendar.strftime(this.now);
       if (
         (dateStampNow === first.date ||
           dateStampNow === second.date ||

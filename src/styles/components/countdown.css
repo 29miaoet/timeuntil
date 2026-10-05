@@ -1,0 +1,214 @@
+.card-container {
+  margin: 10px;
+  padding: 0;
+  width: 85%;
+  max-width: 900px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-classic);
+  box-shadow: 5px 5px 20px rgba(100, 100, 120, 0.5);
+}
+
+#last-message {
+  align-self: center;
+  color: var(--font-color-black);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  border: none;
+  border-radius: var(--radius-classic);
+  background: var(--bg-countdown);
+  text-align: center;
+  max-width: 900px;
+  padding: 5% 15%;
+  margin: auto;
+  box-shadow: 5px 5px 20px rgba(100, 100, 120, 0.5);
+}
+
+#last-message:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 7px 7px 24px rgba(100, 100, 120, 0.5);
+}
+
+.abs-time {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.times {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: stretch;
+  flex: 4;
+}
+
+.timelabels {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  text-align: left;
+  flex: 1;
+}
+
+.abs-time > .times > .timebox {
+  margin-left: 10%;
+  align-items: stretch;
+  text-align: left;
+}
+
+.countdown-container {
+  background-color: var(--bg-countdown);
+  border-radius: var(--radius-classic) var(--radius-classic) 0 0;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.remaining-time {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: var(--radius-classic);
+  flex-wrap: wrap;
+}
+
+.timebox {
+  padding: 5px 30px;
+  margin: 10px;
+  background-color: var(--light-blue);
+  border-radius: var(--radius-classic);
+  color: var(--font-color-black);
+  flex: 1 1 0;
+  min-width: 0;
+  box-shadow: var(--timebox-shadow);
+}
+
+.timelabel {
+  padding: 5px 10px;
+  margin: 10px 0;
+  font-size: 1.125rem;
+  color: var(--font-color-white);
+}
+
+.timeunit {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.day-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 0;
+  background-color: var(--info-bg);
+  color: var(--font-color-black);
+  border-radius: 0 0 var(--radius-classic) var(--radius-classic);
+}
+
+.day-card {
+  border: none;
+  padding: 10px;
+  border-radius: var(--radius-classic);
+  text-align: center;
+}
+
+.day-info hr {
+  width: 100%;
+  margin: 10px auto;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.card-content {
+  display: block;
+  white-space: pre-line;
+  font-size: 0.875rem;
+  font-style: italic;
+  padding: 10px 0;
+}
+
+.status-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.progress-bar {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-color-black);
+  background: var(--progress-bar-bg);
+}
+
+.bar {
+  height: 20px;
+  width: 100%;
+  border-radius: var(--radius-mild);
+  background: transparent;
+}
+
+.warning-box {
+  text-align: center;
+  border: 2px solid var(--warning-border-color);
+  background-color: var(--warning-bg-color);
+  color: var(--warning-text-color);
+  padding: 0 30px;
+  border-radius: var(--radius-classic);
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-mild) 0 0 var(--radius-mild);
+  background-color: var(--progress-bg);
+}
+
+.progress:hover {
+  transform: scaleY(1.05);
+  background-color: var(--progress-bar-hover);
+}
+
+.day-current {
+  background-color: var(--bg-day-current);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.daylabels-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.daylabel {
+  display: block;
+  font-size: 1.125rem;
+  line-height: 2.5;
+}
+
+.daytitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+}

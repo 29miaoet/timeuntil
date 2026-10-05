@@ -1,4 +1,4 @@
-import rawSchoolData from "./data/schools.json";
+import rawSchoolData from "../data/schools.json";
 
 interface School {
   codeName: string;
@@ -12,19 +12,6 @@ interface SchoolObj {
 }
 
 export const schoolData: SchoolObj = rawSchoolData;
-
-interface CalendarDay {
-  date: string;
-  hasSchool: boolean;
-  timeSlot: "Regular" | "Early Dismissal";
-  status: "Normal School Day" | "No School" | "Early Dismissal";
-  holidays: Array<string>;
-  dayInfo: Array<string>;
-}
-
-interface CalendarIndex {
-  [date: string]: CalendarDay;
-}
 
 interface EventItem {
   Title?: string;
@@ -66,12 +53,12 @@ function getSchoolId(schoolName: string): number {
   return schoolObj.id;
 }
 
-export async function getCalendar(schoolName: string): Promise<CalendarIndex> {
+export async function getCalendar(schoolName: string): Promise<CalendarObject> {
   const eventURL = `${DISTRICT_URL}/${schoolName}`;
 
   const siteID = getSchoolId(schoolName);
 
-  const calendar: CalendarIndex = {};
+  const calendar: CalendarObject = {};
 
   const current = new Date(`${START_DATE}T00:00:00Z`);
   const end = new Date(`${END_DATE}T00:00:00Z`);
