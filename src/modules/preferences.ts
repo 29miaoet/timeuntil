@@ -56,8 +56,15 @@ export async function loadPreferences(): Promise<void> {
 
   const preferredHiddenItems = localStorage.getItem("hiddenItems");
   if (preferredHiddenItems) {
-    const hiddenItems: Array<boolean> = JSON.parse(preferredHiddenItems);
-    toggleDisplaySettings(checkboxes, hiddenItems);
+    try {
+      const hiddenItems: Array<boolean> = JSON.parse(preferredHiddenItems);
+      toggleDisplaySettings(checkboxes, hiddenItems);
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        console.warn("Failed to parse saved display settings, using defaults.");
+        toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
+      }
+    }
   }
 
   const preferredAccuracy = localStorage.getItem("accuracy");

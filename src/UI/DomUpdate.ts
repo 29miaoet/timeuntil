@@ -1,4 +1,4 @@
-import * as Error from "./Error";
+import * as RenderError from "./RenderError";
 
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
 const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
@@ -8,7 +8,7 @@ let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   if (schoolTimeRemaining === null) {
-    Error.absoluteTimeError("Unable to fetch absolute times");
+    RenderError.absoluteTimeError("Unable to fetch absolute times");
     return;
   }
   let currentComputedTime: number = schoolTimeRemaining;
@@ -45,7 +45,7 @@ export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
 
 export function populateSchoolDates(schoolDates: Array<number> | null) {
   if (!schoolDates) {
-    Error.schoolTimeError("Unable to fetch absolute times");
+    RenderError.schoolTimeError("Unable to fetch absolute times");
     return;
   }
 

@@ -260,9 +260,14 @@ export default class Calendar {
     if (this.contains(this.now)) {
       // Use schoolTime
       const timeElapsed = schoolTimeToElapse - this.getSchoolTimeTo(endingTimeStamp);
-      return timeElapsed / schoolTimeToElapse;
+      if (schoolTimeToElapse === 0) {
+        return 1;
+      } else {
+        return timeElapsed / schoolTimeToElapse;
+      }
     } else {
       // Use absoluteTime
+      if (timeToElapse === 0) return 1;
       const timeElapsed = timeToElapse - this.getAbsoluteTimeTo(endingTimeStamp);
       return timeElapsed / timeToElapse;
     }
