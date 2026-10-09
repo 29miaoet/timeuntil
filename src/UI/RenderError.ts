@@ -23,3 +23,16 @@ export function schoolTimeError(message: string) {
   schoolTimeContainer.style.alignItems = "center";
   schoolTimeContainer.innerHTML = `<div class="warning-box"><p>${message}</p></div>`;
 }
+
+export function calendarLoadError(message: string) {
+  const cardContainer = document.getElementById("card-container-main");
+
+  if (!cardContainer) {
+    console.error("Main card container not found.");
+    return;
+  }
+
+  // Cancel default stretch style
+  // cardContainer.style.alignItems = "center";
+  cardContainer.innerHTML = `<div class="warning-box"><p>${message}</p></div>`;
+}
