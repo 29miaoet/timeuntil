@@ -31,9 +31,15 @@ export async function run() {
   );
 
   try {
+    // Put this first since it does not depend on calendar to squeeze out a bit
+    // more performance, fine to sandwich initializeMenus() inside since if
+    // calendar fails to load, we're toast anyways and it doesn't really matter
+    // if the menu works or not.
+    state.calendar.loadData();
+    initializeMenus();
     await state.calendar.loadData();
   } catch (error) {
-    RenderError.calendarLoadError("Failed to load calendar");
+    RenderError.calendarLoadError("Failed to load calendar.");
     // return since fatal
     return;
   }
@@ -46,7 +52,6 @@ export async function run() {
 
   await Preferences.loadPreferences();
 
-  initializeMenus();
   updateDOM();
   slowUpdateDOM();
   Preferences.addMoreSchools();
