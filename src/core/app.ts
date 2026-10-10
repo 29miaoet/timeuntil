@@ -5,6 +5,7 @@ import * as SlowDomUpdate from "../UI/SlowDomUpdate";
 import * as DayActions from "../modules/DayActions";
 import * as Preferences from "../modules/preferences";
 import * as Finish from "../modules/finish";
+import * as RenderError from "../UI/RenderError";
 import { state } from "./state";
 
 const welcomeText =
@@ -29,7 +30,20 @@ export async function run() {
     "font-style: italic;"
   );
 
-  await state.calendar.loadData();
+  try {
+    // Put this first since it does not depend on calendar to squeeze out a bit
+    // more performance, fine to sandwich initializeMenus() inside since if
+    // calendar fails to load, we're toast anyways and it doesn't really matter
+    // if the menu works or not.
+    state.calendar.loadData();
+    initializeMenus();
+    await state.calendar.loadData();
+  } catch (error) {
+    RenderError.calendarLoadError("Failed to load calendar.");
+    // return since fatal
+    return;
+  }
+
   DayActions.initializeSchoolDay();
 
   if (!state.calendar.contains(state.calendar.now)) {
@@ -38,7 +52,6 @@ export async function run() {
 
   await Preferences.loadPreferences();
 
-  initializeMenus();
   updateDOM();
   slowUpdateDOM();
   Preferences.addMoreSchools();
@@ -170,7 +183,9 @@ function slowUpdateDOM() {
       state.endDate.getTime()
     );
     SlowDomUpdate.updateProgressBar(fractionPercentage);
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
   const dayInfos = state.calendar.getDayInfo(Calendar.strftime(state.calendar.now));
   SlowDomUpdate.updateDayInfos(dayInfos);
 

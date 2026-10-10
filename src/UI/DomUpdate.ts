@@ -1,6 +1,6 @@
+import * as RenderError from "./RenderError";
+
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
-const absoluteTimeContainer = document.getElementById("abs-time-remaining");
-const schoolTimeContainer = document.getElementById("school-time-remaining");
 const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 
@@ -8,20 +8,7 @@ let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   if (schoolTimeRemaining === null) {
-    if (!absoluteTimeContainer) {
-      console.error("Absolute times container not found.");
-      return;
-    }
-
-    // Cancel hard width declaration and add top padding
-    absoluteTimeContainer.style.width = "auto";
-    absoluteTimeContainer.style.paddingTop = "20px";
-
-    absoluteTimeContainer.innerHTML = `
-        <div class="warning-box">
-          <p>Unable to fetch absolute times</p>
-        </div> `;
-
+    RenderError.absoluteTimeError("Unable to fetch absolute times");
     return;
   }
   let currentComputedTime: number = schoolTimeRemaining;
@@ -58,17 +45,7 @@ export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
 
 export function populateSchoolDates(schoolDates: Array<number> | null) {
   if (!schoolDates) {
-    if (!schoolTimeContainer) {
-      console.error("School times container not found.");
-      return;
-    }
-
-    // Cancel default stretch style
-    schoolTimeContainer.style.alignItems = "center";
-    schoolTimeContainer.innerHTML = `
-        <div class="warning-box">
-          <p>Unable to fetch school time</p>
-        </div> `;
+    RenderError.schoolTimeError("Unable to fetch absolute times");
     return;
   }
 

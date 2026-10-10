@@ -28,7 +28,7 @@ git commit -m "describe your changes"
 
 ```shell
 npm run typecheck
-npm run format
+npm run format:check
 npm run test:run
 # All checks should come up clean
 ```
@@ -41,12 +41,9 @@ npm run preview
 # Open http://localhost:4173/timeuntil/ in your browser.
 ```
 
-5. Format and push
+5. Push and PR on GitHub
 
 ```shell
-npm run format
-git add .
-git commit -m "Run format"
 git push -u origin your-branch-name
 # Open a pull request on GitHub
 ```
@@ -58,7 +55,7 @@ git push -u origin your-branch-name
 - Use CSS variables instead of direct values for colors and repeated values.
 - Use LF line returns instead of CRLF or CR whenever possible, or ensure you have the correct git configurations.
 - Background color schemes should follow those of the existing `:root` elements.
-- Prefer aria-labels for accessibility over direct `<label>` tags.
+- Prefer aria-labels for accessibility over direct `<label>` tags. In other words, keep accessibility-only elements hidden to regular users.
 - Use PascalCase for classes or a collection of functions, use camelCase for all other cases.
 - New files or folders should be organized in the same fashion as the existing structure.
 
@@ -66,3 +63,7 @@ git push -u origin your-branch-name
 
 - [TypeScript Docs](https://www.typescriptlang.org/docs/)
 - [More Docs](https://developer.mozilla.org/en-US/)
+
+## Issues
+
+A list of contributer-friendly issues can be found [here](https://github.com/29miaoet/timeuntil/issues?q=is%3Aissue+state%3Aopen+label%3A%22good+first+issue%22).
