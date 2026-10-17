@@ -1,5 +1,6 @@
 import Calendar from "../core/calendar";
 import { state } from "../core/state";
+import config from "../core/configReader";
 import { schoolData } from "../helpers/fetchCalendar";
 import * as App from "../core/app";
 import * as Finish from "./finish";
@@ -220,17 +221,17 @@ export function getPreferredDates(value: string) {
   switch (value) {
     case "summer":
       state.endDate = new Date(state.calendar.lastDay);
-      state.startDate = new Date(2026, 8, 9, 8, 30);
+      state.startDate = new Date(config["School Starts"]);
       state.causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
-      state.endDate = new Date(2027, 2, 25, 15, 30);
-      state.startDate = new Date(2026, 8, 9, 8, 30);
+      state.endDate = new Date(config["Spring Break"]);
+      state.startDate = new Date(config["School Starts"]);
       state.causeOfDeath = "Spring Break";
       break;
     case "winter":
-      state.endDate = new Date(2026, 11, 18, 14, 30);
-      state.startDate = new Date(2026, 8, 9, 8, 30);
+      state.endDate = new Date(config["Winter Break"]);
+      state.startDate = new Date(config["School Starts"]);
       state.causeOfDeath = "Winter Break";
       break;
     case "noschool":
@@ -254,8 +255,8 @@ export function getPreferredDates(value: string) {
       state.causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
-      state.endDate = new Date(2026, 8, 9, 8, 30);
-      state.startDate = new Date(2026, 5, 21, 3, 40);
+      state.endDate = new Date(config["School Starts"]);
+      state.startDate = new Date(config["Last Summer"]);
       state.causeOfDeath = "(Sadly) School Has Started";
       break;
   }

@@ -15,12 +15,12 @@
   ],
   "School Schedule": {
     "High School": {
-      "Regular": [31500000, 52200000],
-      "Early Dismissal": [31500000, 55800000]
+      "Regular": [31500000, 55800000],
+      "Early Dismissal": [31500000, 52200000]
     },
     "Elementary School": {
-      "Regular": [30600000, 52200000],
-      "Early Dismissal": [30600000, 55800000]
+      "Regular": [30600000, 55800000],
+      "Early Dismissal": [30600000, 52200000]
     }
   }
 }
