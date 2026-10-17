@@ -28,15 +28,8 @@ const absoluteTimeLabels = document.querySelectorAll<HTMLElement>(
 const accuracySlider = document.getElementById("accuracy") as HTMLInputElement | null;
 
 type StartEnd = [number, number];
-type DateArgs = [number, number, number, number, number];
 
-const termEnds: Array<DateArgs> = [
-  [2026, 8, 9, 15, 30],
-  [2026, 10, 18, 15, 30],
-  [2027, 1, 5, 15, 30],
-  [2027, 3, 13, 15, 30],
-  [2027, 5, 21, 15, 30],
-];
+const termEnds = config["Term Ends"];
 
 export async function loadPreferences(): Promise<void> {
   // Must be loaded before preferredEndDate
@@ -317,8 +310,8 @@ export function setPreferredAccuracy(
 
 export async function setPreferredCalendars(value: string) {
   let tempCalendar: Calendar;
-  let startingTime: StartEnd;
-  let endingTime: StartEnd;
+  let earlyDismissalTime: StartEnd;
+  let regularTime: StartEnd;
 
   const matchedSchool = Object.values(schoolData).find((school) => {
     return school.codeName === value;
@@ -330,18 +323,18 @@ export async function setPreferredCalendars(value: string) {
   }
 
   if (!matchedSchool.highSchool) {
-    startingTime = [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-    endingTime = [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
+    earlyDismissalTime = config["School Schedule"]["High School"]["Early Dismissal"];
+    regularTime = config["School Schedule"]["High School"]["Regular"];
   } else {
-    startingTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-    endingTime = [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
+    earlyDismissalTime = config["School Schedule"]["Elementary School"]["Early Dismissal"];
+    regularTime = config["School Schedule"]["Elementary School"]["Regular"];
   }
 
   if (matchedSchool.preBuilt) {
     const school_name = `./calendars/${value}.json`;
-    tempCalendar = new Calendar(school_name, startingTime, endingTime);
+    tempCalendar = new Calendar(school_name, earlyDismissalTime, regularTime);
   } else {
-    tempCalendar = new Calendar(value, startingTime, endingTime);
+    tempCalendar = new Calendar(value, earlyDismissalTime, regularTime);
   }
 
   await tempCalendar.loadData();

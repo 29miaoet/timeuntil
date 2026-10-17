@@ -1,4 +1,5 @@
 import rawSchoolData from "../data/schools.json";
+import config from "../core/configReader";
 
 interface School {
   codeName: string;
@@ -25,8 +26,8 @@ interface EventsAPIResponse {
 }
 
 // Configuration
-const START_DATE = "2026-09-05";
-const END_DATE = "2027-06-30";
+const START_DATE = config.start;
+const END_DATE = config.end;
 
 // Hijack lrsd school calendar URLs
 const DISTRICT_URL = "https://cicmsapi.azurewebsites.net/lrsd/_ci/15/ci/vsb/webservice.ashx";
