@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
-import Day from "./day";
+import Day from "../classes/day";
 
 afterEach(() => vi.useRealTimers());
 

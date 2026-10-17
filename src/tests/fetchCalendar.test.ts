@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from "vitest";
-import { getCalendar } from "./fetchCalendar";
+import { getCalendar } from "../helpers/fetchCalendar";
 
 afterEach(() => vi.unstubAllGlobals());
 
