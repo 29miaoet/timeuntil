@@ -36,8 +36,8 @@ timeuntil/
 │   │ 
 │   ├── core/
 │   │   ├── app.ts
+│   │   ├── configReader.ts
 │   │   ├── calendar.ts
-│   │   ├── calendar.test.ts
 │   │   └── state.ts
 │   │ 
 │   ├── modules/
@@ -51,6 +51,15 @@ timeuntil/
 │   │ 
 │   ├── helpers/
 │   │   └── fetchCalendar.ts
+│   │ 
+│   ├── tests/
+│   │   ├── fixtures/
+│   │   │   └── calendar.json
+│   │   │
+│   │   ├── calendar.test.ts
+│   │   ├── day.test.ts
+│   │   ├── menu.test.ts
+│   │   └── fetchCalendar.test.ts
 │   │ 
 │   ├── types/
 │   │   ├── global.d.ts
