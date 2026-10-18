@@ -6,6 +6,7 @@ import * as DayActions from "../modules/DayActions";
 import * as Preferences from "../modules/preferences";
 import * as Finish from "../modules/finish";
 import * as RenderError from "../UI/RenderError";
+import * as InitDom from "../UI/InitDom";
 import { state } from "./state";
 
 const welcomeText =
@@ -54,7 +55,8 @@ export async function run() {
 
   updateDOM();
   slowUpdateDOM();
-  Preferences.addMoreSchools();
+  InitDom.addMoreSchools();
+  InitDom.addVersion();
   // Recursive function, runs at start of every ${accuracy}th second
   watchUI();
 }
