@@ -1,5 +1,6 @@
 import Calendar from "../core/calendar";
 import { state } from "../core/state";
+import config from "../core/configReader";
 import { schoolData } from "../helpers/fetchCalendar";
 import * as App from "../core/app";
 import * as Finish from "./finish";
@@ -27,15 +28,8 @@ const absoluteTimeLabels = document.querySelectorAll<HTMLElement>(
 const accuracySlider = document.getElementById("accuracy") as HTMLInputElement | null;
 
 type StartEnd = [number, number];
-type DateArgs = [number, number, number, number, number];
 
-const termEnds: Array<DateArgs> = [
-  [2026, 8, 9, 15, 30],
-  [2026, 10, 18, 15, 30],
-  [2027, 1, 5, 15, 30],
-  [2027, 3, 13, 15, 30],
-  [2027, 5, 21, 15, 30],
-];
+const termEnds = config["Term Ends"];
 
 export async function loadPreferences(): Promise<void> {
   // Must be loaded before preferredEndDate
@@ -71,30 +65,6 @@ export async function loadPreferences(): Promise<void> {
   if (preferredAccuracy) {
     setPreferredAccuracy(Number(preferredAccuracy), accuracySlider);
   }
-}
-
-export function addMoreSchools() {
-  const dropdownList = document.getElementById("calendars");
-  if (!dropdownList) return;
-
-  const fragment = document.createDocumentFragment();
-
-  for (const obj in schoolData) {
-    if (schoolData[obj].preBuilt) continue;
-    const codeName = schoolData[obj].codeName;
-
-    const listItem = document.createElement("li");
-    listItem.dataset.calendar = codeName;
-
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = obj;
-
-    listItem.appendChild(button);
-    fragment.appendChild(listItem);
-  }
-
-  dropdownList.appendChild(fragment);
 }
 
 export function toggleDisplaySettings(
@@ -220,17 +190,17 @@ export function getPreferredDates(value: string) {
   switch (value) {
     case "summer":
       state.endDate = new Date(state.calendar.lastDay);
-      state.startDate = new Date(2026, 8, 9, 8, 30);
+      state.startDate = new Date(config["School Starts"]);
       state.causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "spring":
-      state.endDate = new Date(2027, 2, 25, 15, 30);
-      state.startDate = new Date(2026, 8, 9, 8, 30);
+      state.endDate = new Date(config["Spring Break"]);
+      state.startDate = new Date(config["School Starts"]);
       state.causeOfDeath = "Spring Break";
       break;
     case "winter":
-      state.endDate = new Date(2026, 11, 18, 14, 30);
-      state.startDate = new Date(2026, 8, 9, 8, 30);
+      state.endDate = new Date(config["Winter Break"]);
+      state.startDate = new Date(config["School Starts"]);
       state.causeOfDeath = "Winter Break";
       break;
     case "noschool":
@@ -254,8 +224,8 @@ export function getPreferredDates(value: string) {
       state.causeOfDeath = "🎉School Has Ended🎉";
       break;
     case "start":
-      state.endDate = new Date(2026, 8, 9, 8, 30);
-      state.startDate = new Date(2026, 5, 21, 3, 40);
+      state.endDate = new Date(config["School Starts"]);
+      state.startDate = new Date(config["Last Summer"]);
       state.causeOfDeath = "(Sadly) School Has Started";
       break;
   }
@@ -316,8 +286,8 @@ export function setPreferredAccuracy(
 
 export async function setPreferredCalendars(value: string) {
   let tempCalendar: Calendar;
-  let startingTime: StartEnd;
-  let endingTime: StartEnd;
+  let earlyDismissalTime: StartEnd;
+  let regularTime: StartEnd;
 
   const matchedSchool = Object.values(schoolData).find((school) => {
     return school.codeName === value;
@@ -329,18 +299,18 @@ export async function setPreferredCalendars(value: string) {
   }
 
   if (!matchedSchool.highSchool) {
-    startingTime = [8.75 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-    endingTime = [8.75 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
+    earlyDismissalTime = config["School Schedule"]["High School"]["Early Dismissal"];
+    regularTime = config["School Schedule"]["High School"]["Regular"];
   } else {
-    startingTime = [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000];
-    endingTime = [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000];
+    earlyDismissalTime = config["School Schedule"]["Elementary School"]["Early Dismissal"];
+    regularTime = config["School Schedule"]["Elementary School"]["Regular"];
   }
 
   if (matchedSchool.preBuilt) {
     const school_name = `./calendars/${value}.json`;
-    tempCalendar = new Calendar(school_name, startingTime, endingTime);
+    tempCalendar = new Calendar(school_name, earlyDismissalTime, regularTime);
   } else {
-    tempCalendar = new Calendar(value, startingTime, endingTime);
+    tempCalendar = new Calendar(value, earlyDismissalTime, regularTime);
   }
 
   await tempCalendar.loadData();

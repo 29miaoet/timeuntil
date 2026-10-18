@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, beforeEach } from "vitest";
-import Menu from "./menu";
+import Menu from "../classes/menu";
 
 describe("Menu class", () => {
   let button: HTMLElement;

@@ -1,4 +1,5 @@
 import Calendar from "./calendar";
+import config from "./configReader";
 
 interface State {
   calendar: Calendar;
@@ -12,12 +13,12 @@ interface State {
 export const state: State = {
   calendar: new Calendar(
     "./calendars/gci.json",
-    [8.5 * 60 * 60 * 1000, 14.5 * 60 * 60 * 1000],
-    [8.5 * 60 * 60 * 1000, 15.5 * 60 * 60 * 1000]
+    config["School Schedule"]["High School"]["Early Dismissal"],
+    config["School Schedule"]["High School"]["Regular"]
   ),
   accuracy: 100,
   lastUpdate: undefined,
   causeOfDeath: null,
-  endDate: new Date(2027, 5, 21, 15, 30),
-  startDate: new Date(2026, 8, 9, 8, 30),
+  endDate: new Date(config["Summer"]),
+  startDate: new Date(config["School Starts"]),
 };

@@ -26,12 +26,42 @@
 }
 
 .github-icon {
-  width: 25px;
-  height: 25px;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  padding: 3px;
+  margin: 5px;
+  display: inline-flex;
+  text-decoration: none;
 }
 
-.github-icon:hover {
-  transform: scale(1.05);
+.github-img {
+  transition: transform 0.3s linear;
+}
+
+.github-icon:hover > .github-img {
+  transform: rotate(45deg) scale(1.05);
+}
+
+.version-text {
+  position: relative;
+  left: 10px;
+  top: 2px;
+  font-weight: 400;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--font-color-black);
+  opacity: 0;
+  transform: translateX(-6px);
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.github-icon:hover > .version-text {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .dropdown {
