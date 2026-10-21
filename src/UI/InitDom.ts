@@ -1,5 +1,4 @@
 import { schoolData } from "../helpers/fetchCalendar";
-import { version } from "../core/configReader";
 
 export function addMoreSchools() {
   const dropdownList = document.getElementById("calendars");
@@ -26,15 +25,4 @@ export function addMoreSchools() {
   }
 
   dropdownList.appendChild(fragment);
-}
-
-export async function addVersion() {
-  const versionDisplay = document.getElementById("version");
-  if (!versionDisplay) {
-    console.error("Version display not found.");
-    return;
-  }
-
-  const resolvedVersion: string = await version;
-  versionDisplay.textContent = resolvedVersion;
 }

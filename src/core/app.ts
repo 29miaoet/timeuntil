@@ -57,7 +57,6 @@ export async function run() {
   updateDOM();
   slowUpdateDOM();
   InitDom.addMoreSchools();
-  InitDom.addVersion();
   listenBugReport();
   // Recursive function, runs at start of every ${accuracy}th second
   watchUI();

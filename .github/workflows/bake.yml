@@ -1,0 +1,71 @@
+name: Bake Version
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Version to bake into index.html
+        required: true
+        type: string
+
+jobs:
+  bake-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - name: Update version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          node --input-type=module <<'JS'
+          import { readFile, writeFile } from "node:fs/promises";
+
+          const file = "index.html";
+          const html = await readFile(file, "utf8");
+
+          const pattern = /(<([a-z][\w:-]*)\b(?=[^>]*\bid="version")[^>]*>)[\s\S]*?(<\/\2>)/i;
+
+          if (!pattern.test(html)) {
+            throw new Error('Could not find the element with id="version"');
+          }
+
+          const updated = html.replace(
+            pattern,
+            (_, open, _tag, close) =>
+              `${open}${process.env.VERSION.replaceAll("&", "&amp;").replaceAll("<", "&lt;")}${close}`,
+          );
+
+          await writeFile(file, updated);
+          JS
+
+      - name: Commit and push
+        env:
+          VERSION: ${{ inputs.version }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          git remote set-url origin "git@github.com:${GITHUB_REPOSITORY}.git"
+          git add index.html
+
+          if git diff --cached --quiet; then
+            echo "Version unchanged."
+            exit 0
+          fi
+
+          git commit -m "chore: bake version ${VERSION}"
+          git push origin HEAD:main
