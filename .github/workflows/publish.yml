@@ -1,3 +1,23 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. v1.2.3)"
+        required: true
+        type: string
+      prerelease:
+        description: "Mark as a pre-release"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   bake:
     uses: ./.github/workflows/bake.yml
@@ -7,8 +27,13 @@ jobs:
 
   release:
     needs: bake
-    # Build release assets and create the GitHub Release here.
+    uses: ./.github/workflows/release.yml
+    with:
+      version: ${{ inputs.version }}
+      prerelease: ${{ inputs.prerelease }}
 
   deploy:
     needs: release
     uses: ./.github/workflows/deploy.yml
+    with:
+      version: ${{ inputs.version }}
