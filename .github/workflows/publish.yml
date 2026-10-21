@@ -1,0 +1,14 @@
+jobs:
+  bake:
+    uses: ./.github/workflows/bake.yml
+    with:
+      version: ${{ inputs.version }}
+    secrets: inherit
+
+  release:
+    needs: bake
+    # Build release assets and create the GitHub Release here.
+
+  deploy:
+    needs: release
+    uses: ./.github/workflows/deploy.yml
