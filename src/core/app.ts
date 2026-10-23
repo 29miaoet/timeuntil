@@ -8,6 +8,7 @@ import * as Finish from "../modules/finish";
 import * as RenderError from "../UI/RenderError";
 import * as InitDom from "../UI/InitDom";
 import listenBugReport from "../helpers/bugReport";
+import listenCountdownSettings from "../UI/countdownSetter";
 import { state } from "./state";
 
 const welcomeText =
@@ -58,6 +59,7 @@ export async function run() {
   slowUpdateDOM();
   InitDom.addMoreSchools();
   listenBugReport();
+  listenCountdownSettings();
   // Recursive function, runs at start of every ${accuracy}th second
   watchUI();
 }
