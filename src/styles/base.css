@@ -24,6 +24,9 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
+
+  --timing-button-bg: #d3f0ff;
+  --timing-button-selected: #f0ffff;
 }
 
 * {
