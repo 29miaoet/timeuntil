@@ -177,7 +177,7 @@
     </header>
 
     <main class="card-container" id="card-container-main">
-      <section class="card countdown-container">
+      <section class="card countdown-container" id="school-time-card">
         <h2>School Time Remaining</h2>
         <hr />
         <div class="school-time remaining-time" id="school-time-remaining">
@@ -208,7 +208,7 @@
         </div>
       </section>
 
-      <section class="card countdown-container" hidden>
+      <section class="card countdown-container" id="total-time-card" hidden>
         <h2>Total Time Remaining</h2>
         <hr />
         <div class="total-time remaining-time">
@@ -239,7 +239,7 @@
         </div>
       </section>
 
-      <section class="card countdown-container" hidden>
+      <section class="card countdown-container" id="absolute-time-card" hidden>
         <h2>Absolute Time Remaining</h2>
         <hr />
         <div class="abs-time" id="abs-time-remaining">
@@ -302,9 +302,9 @@
 
       <section class="timing">
         <div class="timing-buttons-container" id="timing-container">
-          <button class="selected">School Time</button>
-          <button>Total Time</button>
-          <button>Absolute Time</button>
+          <button data-target="schoolTime" class="selected">School Time</button>
+          <button data-target="totalTime">Total Time</button>
+          <button data-target="absoluteTime">Absolute Time</button>
           <button>Day Time</button>
         </div>
       </section>
