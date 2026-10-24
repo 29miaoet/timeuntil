@@ -2,6 +2,7 @@ interface Containers {
   schoolTime: HTMLElement | null;
   totalTime: HTMLElement | null;
   absoluteTime: HTMLElement | null;
+  dayTime: HTMLElement | null;
 }
 
 const countdownSettingsElements = document.querySelectorAll<HTMLElement>(
@@ -12,6 +13,7 @@ const containers: Containers = {
   schoolTime: document.getElementById("school-time-card"),
   totalTime: document.getElementById("total-time-card"),
   absoluteTime: document.getElementById("absolute-time-card"),
+  dayTime: document.getElementById("current-day-card"),
 };
 
 export default function listenCountdownSettings() {
@@ -43,13 +45,14 @@ function resetContainerState() {
 }
 
 function setContainer(target: keyof Containers) {
+  const targetElement = containers[target];
   Object.values(containers).forEach((element: HTMLElement | null) => {
-    if (element && !element.hidden) {
+    if (element && !element.hidden && element !== targetElement) {
       element.hidden = true;
     }
   });
 
-  if (containers[target]) {
-    containers[target].hidden = false;
+  if (targetElement) {
+    targetElement.hidden = false;
   }
 }

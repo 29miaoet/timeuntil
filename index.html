@@ -260,7 +260,7 @@
         </div>
       </section>
 
-      <section class="card day-current" id="current-day-container" hidden>
+      <section class="card countdown-container" id="current-day-card" hidden>
         <h2>Day Time Remaining</h2>
         <hr />
         <div class="daylabels-container">
@@ -282,6 +282,9 @@
             <span class="daytime-unit"><output class="timebox">0</output>seconds</span>
             <span class="daytime-unit" hidden><output class="timebox">0</output>milliseconds</span>
           </p>
+        </div>
+        <div id="noschool-message" hidden>
+          <p>No School Right Now</p>
         </div>
       </section>
 
@@ -305,7 +308,7 @@
           <button data-target="schoolTime" class="selected">School Time</button>
           <button data-target="totalTime">Total Time</button>
           <button data-target="absoluteTime">Absolute Time</button>
-          <button>Day Time</button>
+          <button data-target="dayTime">Day Time</button>
         </div>
       </section>
 
