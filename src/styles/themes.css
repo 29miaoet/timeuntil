@@ -5,7 +5,6 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
-  --bg-day-current: #80b6f5;
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
 
   --progress-bg: #ff4d6d;
@@ -33,7 +32,6 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #eeefff);
   --bg-countdown: #cdf0fe;
   --light-blue: #e0f0ff;
-  --bg-day-current: #a8d0f7;
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.18);
 
   --progress-bg: #ffb9b9;
@@ -61,7 +59,6 @@
   --bg-grad: linear-gradient(to bottom, #18202b, #0b1118);
   --bg-countdown: #101010;
   --light-blue: #1d2b3a;
-  --bg-day-current: #29415b;
   --timebox-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
 
   --progress-bg: #ff4d6d;
@@ -89,7 +86,6 @@
   --bg-grad: linear-gradient(135deg, #dff6ff 0%, #b9ddff 35%, #dee3ff 100%);
   --bg-countdown: rgba(80, 149, 235, 0.1);
   --light-blue: rgba(255, 255, 255, 0.5);
-  --bg-day-current: rgba(128, 182, 245, 0.45);
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.2);
 
   --progress-bg: #ff5f7a;
@@ -117,7 +113,6 @@
   --bg-grad: linear-gradient(to bottom, #f4f4f4, #d8d8d8);
   --bg-countdown: #666666;
   --light-blue: #eeeeee;
-  --bg-day-current: #cccccc;
   --timebox-shadow: 0 0 20px rgba(50, 50, 50, 0.25);
 
   --progress-bg: #555555;
@@ -145,7 +140,6 @@
   --bg-grad: linear-gradient(to bottom, #ffe5e5, #ff9f9f);
   --bg-countdown: #d94141;
   --light-blue: #ffe1e1;
-  --bg-day-current: #f28b8b;
   --timebox-shadow: 0 0 20px rgba(150, 30, 30, 0.25);
 
   --progress-bg: #b91c1c;
@@ -173,7 +167,6 @@
   --bg-grad: linear-gradient(to bottom, #f0f9ff, #bae6fd);
   --bg-countdown: #075985;
   --light-blue: #e0f2fe;
-  --bg-day-current: #0779b5;
   --timebox-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
 
   --progress-bg: #b91c1c;

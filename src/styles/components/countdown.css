@@ -220,14 +220,6 @@
   background-color: var(--timing-button-selected);
 }
 
-.day-current {
-  background-color: var(--bg-day-current);
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .daylabels-container {
   display: flex;
   flex-direction: column;
@@ -243,4 +235,16 @@
 .daytitle {
   font-size: 1.25rem;
   font-weight: 700;
+}
+
+#noschool-message {
+  margin: 5px;
+}
+
+#noschool-message > p {
+  font-size: 1.25rem;
+  border-radius: var(--radius-classic);
+  background-color: var(--light-blue);
+  color: var(--font-color-black);
+  padding: 15px;
 }
