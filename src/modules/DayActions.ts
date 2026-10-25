@@ -11,11 +11,23 @@ const schoolEndTimes = document.querySelectorAll<HTMLElement>("#school-end .time
 
 let day: Day;
 
-export function initializeSchoolDay() {
+export function initializeSchoolDay(): void {
   if (!state.calendar.schoolNow()) return;
   const currentDateStamp = Calendar.strftime(state.calendar.now);
   const currentTimeSlot = state.calendar.calendar[currentDateStamp].timeSlot;
   day = new Day(currentTimeSlot);
+}
+
+export function getDayBounds(): { start: number; end: number } | undefined {
+  // If day is not initialized yet, return undefined
+  if (day === undefined) {
+    return undefined;
+  } else {
+    return {
+      start: day.start,
+      end: day.end,
+    };
+  }
 }
 
 export function updateSchoolDay() {

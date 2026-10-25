@@ -5,6 +5,7 @@ import { schoolData } from "../helpers/fetchCalendar";
 import * as App from "../core/app";
 import * as Finish from "./finish";
 import * as SlowDomUpdate from "../UI/SlowDomUpdate";
+import setProgress from "./setProgress";
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
@@ -231,13 +232,7 @@ export function getPreferredDates(value: string) {
   }
   if (!Finish.checkFinish()) Finish.undoFinish();
 
-  try {
-    const fractionPercentage = state.calendar.getPercentCompletion(
-      state.startDate.getTime(),
-      state.endDate.getTime()
-    );
-    SlowDomUpdate.updateProgressBar(fractionPercentage);
-  } catch (error) {}
+  setProgress(state.startDate.getTime(), state.endDate.getTime());
 
   if (Finish.checkFinish()) Finish.triggerFinish();
   else App.updateDOM();
