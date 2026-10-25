@@ -183,6 +183,10 @@
   background-color: var(--progress-bg);
 }
 
+.progress.completed {
+  border-radius: var(--radius-mild);
+}
+
 .progress:hover {
   transform: scaleY(1.05);
   background-color: var(--progress-bar-hover);
@@ -216,7 +220,7 @@
   border-radius: 0 25px 25px 0;
 }
 
-.timing-buttons-container > .selected {
+.timing-buttons-container > button.selected {
   background-color: var(--timing-button-selected);
 }
 
@@ -242,7 +246,7 @@
 }
 
 #noschool-message > p {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   border-radius: var(--radius-classic);
   background-color: var(--light-blue);
   color: var(--font-color-black);
