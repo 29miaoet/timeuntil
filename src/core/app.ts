@@ -7,8 +7,8 @@ import * as Preferences from "../modules/preferences";
 import * as Finish from "../modules/finish";
 import * as RenderError from "../UI/RenderError";
 import * as InitDom from "../UI/InitDom";
+import * as CountdownSetter from "../UI/countdownSetter";
 import listenBugReport from "../helpers/bugReport";
-import listenCountdownSettings from "../UI/countdownSetter";
 import setProgress from "../modules/setProgress";
 import { state } from "./state";
 
@@ -60,7 +60,7 @@ export async function run() {
   slowUpdateDOM();
   InitDom.addMoreSchools();
   listenBugReport();
-  listenCountdownSettings();
+  CountdownSetter.listenCountdownSettings();
   // Recursive function, runs at start of every ${accuracy}th second
   watchUI();
 }
@@ -155,20 +155,27 @@ function initializeMenus() {
   if (restoreButton) {
     restoreButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      // Get rid of stored items 1 by 1
-      localStorage.removeItem("accuracy");
-      localStorage.removeItem("hiddenItems");
-      localStorage.removeItem("calendar");
-      localStorage.removeItem("themes");
-      localStorage.removeItem("date");
-
-      Preferences.setPreferredCalendars("gci");
-      Preferences.setPreferredThemes("default");
-      Preferences.getPreferredDates("summer");
-      Preferences.toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
-      Preferences.setPreferredAccuracy(100, accuracySlider);
+      restoreDefaults();
     });
   }
+}
+
+function restoreDefaults() {
+  // Get rid of stored items 1 by 1
+  localStorage.removeItem("accuracy");
+  localStorage.removeItem("hiddenItems");
+  localStorage.removeItem("calendar");
+  localStorage.removeItem("themes");
+  localStorage.removeItem("date");
+  localStorage.removeItem("countdown");
+
+  Preferences.setPreferredCalendars("gci");
+  Preferences.setPreferredThemes("default");
+  Preferences.getPreferredDates("summer");
+  Preferences.toggleDisplaySettings(checkboxes, [false, false, false, false, true]);
+  Preferences.setPreferredAccuracy(100, accuracySlider);
+  CountdownSetter.setToggleMenu("schoolTime");
+  CountdownSetter.setContainer("schoolTime");
 }
 
 export function updateDOM() {
@@ -195,9 +202,7 @@ function slowUpdateDOM() {
 
   const delay = tomorrow.getTime() - Date.now();
 
-  setTimeout(() => {
-    slowUpdateDOM();
-  }, delay);
+  setTimeout(slowUpdateDOM, delay);
 }
 
 function updateTimer() {

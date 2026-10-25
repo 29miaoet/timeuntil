@@ -19,7 +19,7 @@ const containers: Containers = {
   dayTime: document.getElementById("current-day-card"),
 };
 
-export default function listenCountdownSettings() {
+export function listenCountdownSettings() {
   const countdownSettingsContainer = document.getElementById("timing-container");
 
   if (!countdownSettingsContainer) {
@@ -35,9 +35,21 @@ export default function listenCountdownSettings() {
     selectedOption.classList.add("selected");
 
     const targetContainer = selectedOption.dataset.target;
-    if (!targetContainer || !(targetContainer in containers)) return;
-    // Already checked above so assert
-    setContainer(targetContainer as keyof Containers);
+    setContainer(targetContainer);
+  });
+}
+
+export function setToggleMenu(target: string) {
+  if (!target || !(target in containers)) {
+    console.error(`${target} is not a valid countdown option.`);
+    return;
+  }
+  countdownSettingsElements.forEach((element) => {
+    if (element.dataset.target === target) {
+      element.classList.add("selected");
+    } else {
+      element.classList.remove("selected");
+    }
   });
 }
 
@@ -47,8 +59,12 @@ function resetContainerState() {
   }
 }
 
-function setContainer(target: keyof Containers) {
-  const targetElement = containers[target];
+export function setContainer(target: string | undefined) {
+  if (!target || !(target in containers)) {
+    console.error(`${target} is not a valid countdown option.`);
+    return;
+  }
+  const targetElement = containers[target as keyof Containers];
   Object.values(containers).forEach((element: HTMLElement | null) => {
     if (element && !element.hidden && element !== targetElement) {
       element.hidden = true;
@@ -59,6 +75,7 @@ function setContainer(target: keyof Containers) {
     targetElement.hidden = false;
   }
 
-  state.countdown = target;
+  state.countdown = target as keyof Containers;
   setProgress(state.startDate.getTime(), state.endDate.getTime());
+  localStorage.setItem("countdown", target);
 }
