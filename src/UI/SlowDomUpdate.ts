@@ -7,6 +7,11 @@ export function updateProgressBar(fractionPercentage: number) {
   const ariaAmountFinished = String(fractionPercentage * 100);
 
   if (progressBar) {
+    if (fractionPercentage === 1) {
+      progressBar.classList.add("completed");
+    } else {
+      progressBar.classList.remove("completed");
+    }
     progressBar.style.width = percentFinished;
     progressBar.setAttribute("aria-valuenow", ariaAmountFinished);
   } else {

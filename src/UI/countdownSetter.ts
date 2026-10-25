@@ -1,3 +1,6 @@
+import { state } from "../core/state";
+import setProgress from "../modules/setProgress";
+
 interface Containers {
   schoolTime: HTMLElement | null;
   totalTime: HTMLElement | null;
@@ -55,4 +58,7 @@ function setContainer(target: keyof Containers) {
   if (targetElement) {
     targetElement.hidden = false;
   }
+
+  state.countdown = target;
+  setProgress(state.startDate.getTime(), state.endDate.getTime());
 }

@@ -8,6 +8,7 @@ interface State {
   causeOfDeath: string | null;
   startDate: Date;
   endDate: Date;
+  countdown: "schoolTime" | "totalTime" | "absoluteTime" | "dayTime";
 }
 
 export const state: State = {
@@ -21,4 +22,5 @@ export const state: State = {
   causeOfDeath: null,
   endDate: new Date(config["Summer"]),
   startDate: new Date(config["School Starts"]),
+  countdown: "schoolTime",
 };

@@ -9,6 +9,7 @@ import * as RenderError from "../UI/RenderError";
 import * as InitDom from "../UI/InitDom";
 import listenBugReport from "../helpers/bugReport";
 import listenCountdownSettings from "../UI/countdownSetter";
+import setProgress from "../modules/setProgress";
 import { state } from "./state";
 
 const welcomeText =
@@ -182,15 +183,8 @@ export function updateDOM() {
 // Only runs once a day to conserve resources
 function slowUpdateDOM() {
   DayActions.initializeSchoolDay();
-  try {
-    const fractionPercentage = state.calendar.getPercentCompletion(
-      state.startDate.getTime(),
-      state.endDate.getTime()
-    );
-    SlowDomUpdate.updateProgressBar(fractionPercentage);
-  } catch (error) {
-    console.error(error);
-  }
+  setProgress(state.startDate.getTime(), state.endDate.getTime());
+
   const dayInfos = state.calendar.getDayInfo(Calendar.strftime(state.calendar.now));
   SlowDomUpdate.updateDayInfos(dayInfos);
 
