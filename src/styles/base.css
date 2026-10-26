@@ -26,6 +26,8 @@
 
   --timing-button-bg: #d3f0ff;
   --timing-button-selected: #f0ffff;
+
+  --dropdown-transition-style: 0.4s ease;
 }
 
 * {
