@@ -43,10 +43,14 @@ timeuntil/
 │   ├── modules/
 │   │   ├── DayActions.ts
 │   │   ├── finish.ts
+│   │   ├── setProgress.ts
 │   │   └── preferences.ts
 │   │ 
 │   ├── UI/
 │   │   ├── DomUpdate.ts
+│   │   ├── InitDom.ts
+│   │   ├── RenderError.ts
+│   │   ├── countdownSetter.ts
 │   │   └── SlowDomUpdate.ts
 │   │ 
 │   ├── helpers/
@@ -79,6 +83,7 @@ timeuntil/
 │   └── github.svg
 │
 ├── scripts/
+│   ├── fetchVersion.ts
 │   ├── fetch_calendar.py
 │   └── scrape_id.py
 │
