@@ -1,21 +1,26 @@
 :root {
-  --font-color-black: #03324d;
-  --font-color-white: #eeefff;
+  --font-color-sec: #03324d;
+  --font-color-prim: #ffffff;
+  --font-color-ter: var(--font-color-prim);
 
-  --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
-  --bg-countdown: #5095eb;
-  --light-blue: #e0f0ff;
-  --bg-day-current: #80b6f5;
-  --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
+  --bg: #eeefff;
+  --bg-secundary: #03324d;
+  --bg-countdown: #03324d4e;
+  --bg-day-current: #ffffff;
 
   --progress-bg: #ff4d6d;
+  --progress-track-bg: #ff4d6e30;
   --progress-bar-hover: #ee3c5c;
-  --progress-bar-bg: #b1d7ff;
-  --info-bg: #e7f3ff;
-  --card-border: #cfcfcf;
+  --progress-bar-section-bg: #03324d18;
+  
+  --info-bg: #03324d4e;
 
-  --radius-classic: 10px;
-  --radius-mild: 4px;
+  --border-prim: #03324d;
+  --border-thik: 3px;
+  --border-thin: 2px;
+  --radius-classic: 20px;
+  --radius-medium: 10px;
+  --radius-mild: 5px;
 
   --warning-text-color: #78350f;
   --warning-border-color: #a41502;
@@ -23,7 +28,8 @@
   --danger-color: #b60208;
 
   --dropdown-bg: #ffffff;
-  --dropdown-item-hover: #e2e2e2;
+  --dropdown-item-hover: #03324d4e;
+
 }
 
 * {
@@ -42,19 +48,18 @@ body {
   justify-content: top;
   align-items: center;
   margin: 0;
-  color: var(--font-color-white);
-  background: var(--bg-grad);
+  color: var(--font-color-sec);
+  background: var(--bg);
   min-height: 100vh;
 }
 
 h1 {
-  color: var(--font-color-black);
+  color: var(--font-color-sec);
 }
 
 h2 {
-  color: var(--font-color-white);
+  color: var(--font-color-sec);
 }
-
 button {
   border: 0;
   background: none;
@@ -85,7 +90,7 @@ hr {
 footer {
   padding: 20px;
   opacity: 0.75;
-  color: var(--font-color-black);
+  color: var(--font-color-sec);
   font-style: italic;
   font-size: 0.75rem;
 }

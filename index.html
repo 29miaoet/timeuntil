@@ -16,6 +16,8 @@
     <link rel="canonical" href="https://29miaoet.github.io/timeuntil/" />
     <link rel="preload" href="calendars/gci.json" as="fetch" crossorigin />
 
+    <script src="https://kit.fontawesome.com/cc14d7e575.js" crossorigin="anonymous"></script>
+
     <title>Time Until</title>
   </head>
   <body>
@@ -28,7 +30,7 @@
         aria-expanded="false"
         aria-controls="settings"
       >
-        ⚙️
+        <i class="fa-solid fa-gear"></i>
       </button>
       <div class="dropdown" id="settings" hidden>
         <ul>
@@ -46,9 +48,6 @@
               <li data-theme="light">
                 <button type="button">Light</button>
               </li>
-              <li data-theme="liquid-glass">
-                <button type="button">Liquid Glass</button>
-              </li>
               <li data-theme="antique">
                 <button type="button">Antique</button>
               </li>
@@ -57,6 +56,9 @@
               </li>
               <li data-theme="accessible">
                 <button type="button">Accessible</button>
+              </li>
+              <li data-theme="salmon">
+                <button type="button">Salmon</button>
               </li>
             </ul>
           </li>
@@ -144,16 +146,16 @@
       </div>
       <button
         type="button"
-        class="option settings"
+        class="option time-settings"
         id="time-toggle"
         aria-label="Time Until Settings"
         aria-expanded="false"
         aria-controls="time-menu"
       >
-        ⏳
+        <i class="fa-solid fa-hourglass-start"></i>
       </button>
       <div class="dropdown" id="time-menu" hidden>
-        <p>Show time until...</p>
+        <p>Time until...</p>
         <ul>
           <li data-value="summer"><button type="button">Summer</button></li>
           <li data-value="spring"><button type="button">Spring Break</button></li>
@@ -166,7 +168,7 @@
         </ul>
       </div>
       <a class="option github-icon" href="https://github.com/29miaoet/timeuntil" target="_blank">
-        <img class="github-img" src="github.svg" alt="GitHub logo" width="25" height="25" />
+        <i class="fa-brands fa-github"></i>
         <!-- This value is baked in on publish -->
         <span class="version-text" id="version">v2.1.2</span>
       </a>
@@ -291,6 +293,11 @@
             aria-valuemin="0"
             aria-valuemax="100"
             aria-valuenow="0"
+          ></div>
+          <div
+          class="progress-track"
+          id="progress-bar-track"
+          role="progress-bar-track"
           ></div>
         </div>
         <p><span id="percentage">0%</span> percent finished</p>

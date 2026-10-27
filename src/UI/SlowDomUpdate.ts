@@ -1,13 +1,16 @@
+const progressBarTrack = document.getElementById('progress-bar-track');
 const progressBar = document.getElementById("progress-bar-element");
 const progressText = document.getElementById("percentage");
 const dayStatuses = document.querySelectorAll<HTMLElement>(".day-info > .day-card > .card-content");
 
 export function updateProgressBar(fractionPercentage: number) {
   const percentFinished = `${fractionPercentage * 100}%`;
+  const percentLeft = `${100 - fractionPercentage * 100}%`
   const ariaAmountFinished = String(fractionPercentage * 100);
 
-  if (progressBar) {
+  if (progressBar && progressBarTrack) {
     progressBar.style.width = percentFinished;
+    progressBarTrack.style.width = percentLeft;
     progressBar.setAttribute("aria-valuenow", ariaAmountFinished);
   } else {
     console.error("Progress bar not found");

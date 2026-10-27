@@ -5,13 +5,13 @@
   max-width: 900px;
   background: transparent;
   border: none;
-  border-radius: var(--radius-classic);
-  box-shadow: 5px 5px 20px rgba(100, 100, 120, 0.5);
+  border-radius: var(--border-);
+  /*box-shadow: 5px 5px 20px rgba(100, 100, 120, 0.5);*/
 }
 
 #last-message {
   align-self: center;
-  color: var(--font-color-black);
+  color: var(--font-color-sec);
   font-size: 1.5rem;
   font-weight: 700;
   font-style: italic;
@@ -63,12 +63,15 @@
 .countdown-container {
   background-color: var(--bg-countdown);
   border-radius: var(--radius-classic) var(--radius-classic) 0 0;
+  border: var(--border-thik) solid var(--border-prim);
+  border-bottom: none;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+
 }
 
 .remaining-time {
@@ -85,19 +88,18 @@
 .timebox {
   padding: 5px 30px;
   margin: 10px;
-  background-color: var(--light-blue);
+  background-color: var(--bg-secundary);
   border-radius: var(--radius-classic);
-  color: var(--font-color-black);
+  color: var(--font-color-ter) !important;
   flex: 1 1 0;
   min-width: 0;
-  box-shadow: var(--timebox-shadow);
 }
 
 .timelabel {
   padding: 5px 10px;
   margin: 10px 0;
   font-size: 1.125rem;
-  color: var(--font-color-white);
+  color: var(--font-color-sec) !important;
 }
 
 .timeunit {
@@ -113,8 +115,10 @@
   align-items: center;
   margin-top: 0;
   background-color: var(--info-bg);
-  color: var(--font-color-black);
+  color: var(--font-color-sec);
   border-radius: 0 0 var(--radius-classic) var(--radius-classic);
+  border: var(--border-thik) solid var(--border-prim);
+  border-width: 0 var(--border-thik) var(--border-thik) var(--border-thik);
 }
 
 .day-card {
@@ -154,15 +158,29 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--font-color-black);
-  background: var(--progress-bar-bg);
+  gap: 20px;
+  color: var(--font-color-sec);
+  background: var(--progress-bar-section-bg);
+  border: var(--border-thik) solid var(--border-prim);
+  border-width: 0 var(--border-thik) 0 var(--border-thik);
+}
+.progress-bar > p{
+  margin: 0;
 }
 
 .bar {
+  display: flex;
+  flex-direction: row;
   height: 20px;
   width: 100%;
   border-radius: var(--radius-mild);
   background: transparent;
+}
+.progress-track{
+  height: 100%;
+  width: 0%;
+  border-radius: 0 var(--radius-mild)  var(--radius-mild) 0;
+  background-color: var(--progress-track-bg);
 }
 
 .warning-box {
