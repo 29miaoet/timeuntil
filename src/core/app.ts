@@ -121,7 +121,6 @@ function initializeMenus() {
   const settingsMenu = new Menu("#settings-button", "#settings");
   settingsMenu.addExpandCollapse();
 
-
   // DisplaySelectionMenu
   const displayMenu = new Menu("#display-button", "#displays");
   displayMenu.addExpandCollapseForCheckbox();

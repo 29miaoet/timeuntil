@@ -71,7 +71,6 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-
 }
 
 .remaining-time {
@@ -164,7 +163,7 @@
   border: var(--border-thik) solid var(--border-prim);
   border-width: 0 var(--border-thik) 0 var(--border-thik);
 }
-.progress-bar > p{
+.progress-bar > p {
   margin: 0;
 }
 
@@ -176,10 +175,10 @@
   border-radius: var(--radius-mild);
   background: transparent;
 }
-.progress-track{
+.progress-track {
   height: 100%;
   width: 0%;
-  border-radius: 0 var(--radius-mild)  var(--radius-mild) 0;
+  border-radius: 0 var(--radius-mild) var(--radius-mild) 0;
   background-color: var(--progress-track-bg);
 }
 

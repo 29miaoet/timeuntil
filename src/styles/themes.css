@@ -12,7 +12,7 @@
   --progress-track-bg: #ff4d6e30;
   --progress-bar-hover: #ee3c5c;
   --progress-bar-section-bg: #03324d18;
-  
+
   --info-bg: #03324d4e;
 
   --border-prim: #03324d;
@@ -29,7 +29,6 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #03324d4e;
-
 }
 :root[data-theme="light"] {
   --font-color-sec: #03324d;
@@ -45,7 +44,7 @@
   --progress-track-bg: #ff4d6e30;
   --progress-bar-hover: #ee3c5c;
   --progress-bar-section-bg: #03324d18;
-  
+
   --info-bg: #03324d18;
 
   --border-prim: #03324d;
@@ -78,7 +77,7 @@
   --progress-track-bg: #ff4d6e30;
   --progress-bar-hover: #ee3c5c;
   --progress-bar-section-bg: #03324d18;
-  
+
   --info-bg: #03324d4e;
 
   --border-prim: #ffffff;
@@ -127,7 +126,6 @@
   */
 
 :root[data-theme="antique"] {
-
   --font-color-prim: #ffffff;
   --font-color-sec: #222222;
   --font-color-ter: var(--font-color-sec);
@@ -141,7 +139,7 @@
   --progress-track-bg: #55555529;
   --progress-bar-hover: #444444;
   --progress-bar-section-bg: #bbbbbb;
-  
+
   --info-bg: #eeeeee;
 
   --border-prim: #222222;
@@ -162,7 +160,6 @@
 }
 
 :root[data-theme="red"] {
-
   --font-color-prim: #eeefff;
   --font-color-sec: #ff0000a8;
   --font-color-ter: var(--font-color-prim);
@@ -176,7 +173,7 @@
   --progress-track-bg: #ff00003d;
   --progress-bar-hover: #ff4242a8;
   --progress-bar-section-bg: #ffffff;
-  
+
   --info-bg: #ffe8e8;
 
   --border-prim: #ff0000a8;
@@ -193,10 +190,6 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #ffeaea;
-
-
-
-
 }
 
 :root[data-theme="accessible"] {
@@ -213,7 +206,7 @@
   --progress-track-bg: #0000007c;
   --progress-bar-hover: #ffffffb4;
   --progress-bar-section-bg: #353535;
-  
+
   --info-bg: #000000;
 
   --border-prim: #ffffff;
@@ -231,8 +224,7 @@
   --dropdown-bg: #000000;
   --dropdown-item-hover: #ffffff3c;
 }
-:root[data-theme="salmon"]{
-
+:root[data-theme="salmon"] {
   --font-color-prim: #eeefff;
   --font-color-sec: #ff6a00a8;
   --font-color-ter: var(--font-color-prim);
@@ -242,11 +234,11 @@
   --bg-countdown: #ffe8e8;
   --bg-day-current: #ff6a005e;
 
-  --progress-bg:  #ff9900ac;
+  --progress-bg: #ff9900ac;
   --progress-track-bg: #ffc40061;
   --progress-bar-hover: #ffc400cc;
   --progress-bar-section-bg: #ffffff;
-  
+
   --info-bg: #ffe8e8;
 
   --border-prim: #ff6a00a8;
@@ -263,6 +255,4 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #ff6a0037;
-
-
 }

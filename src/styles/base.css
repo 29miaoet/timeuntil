@@ -12,7 +12,7 @@
   --progress-track-bg: #ff4d6e30;
   --progress-bar-hover: #ee3c5c;
   --progress-bar-section-bg: #03324d18;
-  
+
   --info-bg: #03324d4e;
 
   --border-prim: #03324d;
@@ -29,7 +29,6 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #03324d4e;
-
 }
 
 * {

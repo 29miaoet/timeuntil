@@ -6,7 +6,7 @@
   position: absolute;
 }
 
-.option{
+.option {
   margin: 5px 10px;
   padding: 0;
   background: transparent;
@@ -15,21 +15,21 @@
   display: inline-block;
   transition: transform 0.3s linear;
 }
-.option > svg{
+.option > svg {
   transition: transform 0.3s linear;
 }
 
 .option:hover:not(.github-icon),
-.option.open:not(.github-icon){
+.option.open:not(.github-icon) {
   transform: rotate(45deg) scale(1.05);
 }
-svg{
+svg {
   color: var(--font-color-sec);
 }
 
 .github-icon {
   text-decoration: none;
-  color: var(--font-color-sec)
+  color: var(--font-color-sec);
 }
 
 .github-icon:hover > svg {
@@ -70,7 +70,7 @@ svg{
   max-width: 200px;
   padding: 0 10px;
 }
-#time-menu{
+#time-menu {
   left: 69px !important;
 }
 
