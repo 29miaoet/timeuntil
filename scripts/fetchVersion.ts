@@ -24,6 +24,6 @@ function fetchVersion() {
   return version;
 }
 
-(async function () {
+(async () => {
   console.log(await fetchVersion());
 })();

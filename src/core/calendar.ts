@@ -291,10 +291,8 @@ export default class Calendar {
     for (const date in this.calendar) {
       // Smaller or equal to & greater than or equal to
       if (date < currentDate || date > endingDate) {
-        continue;
       } else {
         if (!this.calendar[date].hasSchool) {
-          continue;
         } else if (this.calendar[date].timeSlot === "Early Dismissal") {
           milliSeconds += this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
         } else if (this.calendar[date].timeSlot === "Regular") {
@@ -405,7 +403,7 @@ export default class Calendar {
 
     const endingDate = Calendar.strftime(endDate.getTime());
 
-    let schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
+    const schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
     let milliseconds: number = 0;
 
     const currentDate = Calendar.strftime(this.now);
@@ -414,10 +412,8 @@ export default class Calendar {
     for (const date in this.calendar) {
       // The current date should not be counted but the ending Date should be
       if (date <= currentDate || date > endingDate) {
-        continue;
       } else {
         if (!this.calendar[date].hasSchool) {
-          continue;
         } else {
           schoolDateRemaining[0]++;
         }
@@ -602,7 +598,7 @@ export default class Calendar {
    * and arranged in chronological order.
    */
   findEndTerm(...termEnds: Array<TermEndSpecification>): number {
-    let termEndDates: Array<Date> = [];
+    const termEndDates: Array<Date> = [];
     for (const arr of termEnds) {
       const date = new Date(...arr);
       termEndDates.push(date);
@@ -620,7 +616,7 @@ export default class Calendar {
 
   getCurrentTerm(...termEnds: Array<TermEndSpecification>): number {
     const now = new Date(this.now);
-    let termEndDates: Array<Date> = [];
+    const termEndDates: Array<Date> = [];
     for (const arr of termEnds) {
       const date = new Date(...arr);
       termEndDates.push(date);

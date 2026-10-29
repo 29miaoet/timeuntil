@@ -4,7 +4,7 @@ const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times
 const totalTimes = document.querySelectorAll<HTMLElement>(".total-time > .timeunit > .timebox");
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 
-let lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
+const lastUpdatedSchoolDates: Array<number> = [0, 0, 0, 0, 0];
 
 export function populateAbsoluteTimes(schoolTimeRemaining: number | null) {
   if (schoolTimeRemaining === null) {

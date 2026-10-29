@@ -78,14 +78,14 @@ export function toggleDisplaySettings(
   checkboxes: NodeListOf<HTMLInputElement>,
   hiddenItems: null | Array<boolean> = null
 ): void {
-  let allTimeLabels: Array<Array<HTMLElement>> = [];
+  const allTimeLabels: Array<Array<HTMLElement>> = [];
   allTimeLabels[0] = [schoolTimeLabels[0], totalTimeLabels[0], absoluteTimeLabels[0]]; // Days
   allTimeLabels[1] = [schoolTimeLabels[1], totalTimeLabels[1], absoluteTimeLabels[1]]; // Hours
   allTimeLabels[2] = [schoolTimeLabels[2], totalTimeLabels[2], absoluteTimeLabels[2]]; // Minutes
   allTimeLabels[3] = [schoolTimeLabels[3], totalTimeLabels[3], absoluteTimeLabels[3]]; // Seconds
   allTimeLabels[4] = [schoolTimeLabels[4], totalTimeLabels[4], absoluteTimeLabels[4]]; // Milliseconds
 
-  let allTimeUnits: Array<Array<HTMLElement>> = [];
+  const allTimeUnits: Array<Array<HTMLElement>> = [];
   allTimeUnits[0] = [schoolTimes[0], totalTimes[0], absoluteTimes[0]]; // Days
   allTimeUnits[1] = [
     schoolTimes[1],
@@ -308,8 +308,8 @@ export async function setPreferredCalendars(value: string) {
   }
 
   if (matchedSchool.preBuilt) {
-    const school_name = `./calendars/${value}.json`;
-    tempCalendar = new Calendar(school_name, earlyDismissalTime, regularTime);
+    const schoolName = `./calendars/${value}.json`;
+    tempCalendar = new Calendar(schoolName, earlyDismissalTime, regularTime);
   } else {
     tempCalendar = new Calendar(value, earlyDismissalTime, regularTime);
   }
