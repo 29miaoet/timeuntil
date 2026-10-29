@@ -2,8 +2,8 @@
   "name": "timeuntil",
   "type": "module",
   "devDependencies": {
+    "@biomejs/biome": "2.6.4",
     "happy-dom": "^21.0.4",
-    "prettier": "^3.9.10",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"
@@ -13,8 +13,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
+    "format": "biome format --write",
+    "format:check": "biome format",
+    "lint": "biome lint --write",
+    "lint:check": "biome lint",
+    "check": "biome check --write",
+    "ci": "biome ci",
     "test": "vitest",
     "test:run": "vitest run"
   }
