@@ -19,6 +19,7 @@
   "linter": {
     "rules": {
       "style": {
+        "noDescendingSpecificity": "off",
         "useConsistentArrayType": {
           "level": "error",
           "options": {
@@ -71,12 +72,13 @@
         "noDoubleEquals": "error",
         "noShadow": "error",
         "noShadowRestrictedNames": "error"
+      },
+      "complexity": {
+        "useLiteralKeys": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off"
       }
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "semicolons": "always"
     }
   },
   "javascript": {

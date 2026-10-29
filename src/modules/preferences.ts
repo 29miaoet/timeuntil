@@ -75,7 +75,7 @@ export async function loadPreferences(): Promise<void> {
 }
 
 export function toggleDisplaySettings(
-  checkboxes: NodeListOf<HTMLInputElement>,
+  checkboxList: NodeListOf<HTMLInputElement>,
   hiddenItems: null | Array<boolean> = null
 ): void {
   const allTimeLabels: Array<Array<HTMLElement>> = [];
@@ -121,7 +121,7 @@ export function toggleDisplaySettings(
     for (let i = 0; i < hiddenItems.length; i++) {
       if (hiddenItems[i] === true) {
         hiddenItems[i] = true;
-        checkboxes[i].checked = false;
+        checkboxList[i].checked = false;
         allTimeUnits[i].forEach((item) => {
           if (!item.hidden) {
             item.hidden = true;
@@ -134,7 +134,7 @@ export function toggleDisplaySettings(
         });
       } else if (hiddenItems[i] === false) {
         hiddenItems[i] = false;
-        checkboxes[i].checked = true;
+        checkboxList[i].checked = true;
         allTimeUnits[i].forEach((item) => {
           if (item.hidden) {
             item.hidden = false;
@@ -155,8 +155,8 @@ export function toggleDisplaySettings(
     if (!hiddenItems[4]) setPreferredAccuracy(0, accuracySlider, false);
   } else {
     hiddenItems = [false, false, false, false, true];
-    for (let i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked === false) {
+    for (let i = 0; i < checkboxList.length; i++) {
+      if (checkboxList[i].checked === false) {
         hiddenItems[i] = true;
         allTimeUnits[i].forEach((item) => {
           if (!item.hidden) {
@@ -168,7 +168,7 @@ export function toggleDisplaySettings(
             item.hidden = true;
           }
         });
-      } else if (checkboxes[i].checked === true) {
+      } else if (checkboxList[i].checked === true) {
         hiddenItems[i] = false;
         allTimeUnits[i].forEach((item) => {
           if (item.hidden) {

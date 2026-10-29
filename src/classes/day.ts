@@ -42,7 +42,7 @@ export default class Day {
 
     try {
       this.schedule = rawSchedule[dayType] as Schedule;
-    } catch (error) {
+    } catch (_error) {
       throw new DayError(`Day type "${dayType}" definition not found in schedule.`);
     }
 
@@ -60,7 +60,7 @@ export default class Day {
 
   getCurrentSlot(): keyof Schedule | undefined {
     const slot = // Assert this directly since TypeScript won't infer it
-      (Object.entries(this.schedule) as [keyof Schedule, Schedule[keyof Schedule]][]).find(
+      (Object.entries(this.schedule) as Array<[keyof Schedule, Schedule[keyof Schedule]]>).find(
         ([_, item]) => {
           return item[0] < this.milliseconds && item[1] > this.milliseconds;
         }

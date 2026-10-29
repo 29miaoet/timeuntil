@@ -120,7 +120,7 @@ export async function getCalendar(schoolName: string): Promise<CalendarObject> {
   const events = data.Events;
 
   // Keyword matching via regex
-  const noSchoolPatterns: RegExp[] = [
+  const noSchoolPatterns: Array<RegExp> = [
     /\bno school\b/,
     /\bno classes\b/,
     /\b(winter|spring|christmas|fall) break\b/,
@@ -167,16 +167,16 @@ export async function getCalendar(schoolName: string): Promise<CalendarObject> {
     }
 
     // Date-only ISO strings parse as UTC midnight
-    const startDate = new Date(startStr);
-    let endDate = endStr ? new Date(endStr) : new Date(startDate.getTime());
+    const eventStartDate = new Date(startStr);
+    let eventEndDate = endStr ? new Date(endStr) : new Date(eventStartDate.getTime());
 
     // If EndTime is somehow before StartTime, just use StartTime
-    if (endDate.getTime() < startDate.getTime()) {
-      endDate = new Date(startDate.getTime());
+    if (eventEndDate.getTime() < eventStartDate.getTime()) {
+      eventEndDate = new Date(eventStartDate.getTime());
     }
 
-    const curDate = new Date(startDate.getTime());
-    while (curDate.getTime() <= endDate.getTime()) {
+    const curDate = new Date(eventStartDate.getTime());
+    while (curDate.getTime() <= eventEndDate.getTime()) {
       const dateStr = toISODate(curDate);
 
       const entry = calendar[dateStr];

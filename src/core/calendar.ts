@@ -58,14 +58,14 @@ export default class Calendar {
         try {
           this.calendar = await getCalendar(this.dbPath);
           this.lastDay = this.getLastDay(-1);
-        } catch (error) {
+        } catch (_error) {
           throw new CalendarError(`Calendar ${this.dbPath} not found`);
         }
       } else if (response.ok) {
         this.calendar = await response.json();
         this.lastDay = this.getLastDay(-1);
       } else {
-        throw new CalendarError("Network response error" + response.statusText);
+        throw new CalendarError(`Network response error ${response.statusText}`);
       }
     } catch (error) {
       console.error(error);
@@ -150,7 +150,7 @@ export default class Calendar {
     try {
       this.getDateAt(Calendar.strftime(schoolDate));
       return true;
-    } catch (e) {
+    } catch (_error) {
       return false;
     }
   }
@@ -516,10 +516,10 @@ export default class Calendar {
 
     const calendarArray = Object.values(this.calendar);
     if (reverse) calendarArray.reverse();
-    const day = calendarArray.find((day) => {
-      const dateCandidate = new Date(...this.formatForDateConstructor(day.date));
+    const day = calendarArray.find((possibleDay) => {
+      const dateCandidate = new Date(...this.formatForDateConstructor(possibleDay.date));
       const inTheFuture = reverse ? dateCandidate < dateNow : dateCandidate > dateNow;
-      return !day.hasSchool && inTheFuture;
+      return !possibleDay.hasSchool && inTheFuture;
     });
 
     if (!day) {
@@ -623,12 +623,12 @@ export default class Calendar {
     }
 
     const currentTerm = termEndDates.find((_value, index, array) => {
-      const currentTerm = index;
+      const candidateCurrentTerm = index;
       const nextTerm = ++index;
       if (!nextTerm) {
-        return array[currentTerm] < now;
+        return array[candidateCurrentTerm] < now;
       }
-      return array[currentTerm] < now && array[nextTerm] > now;
+      return array[candidateCurrentTerm] < now && array[nextTerm] > now;
     });
 
     if (!currentTerm) return this.now;

@@ -42,7 +42,7 @@ export async function run() {
     state.calendar.loadData();
     initializeMenus();
     await state.calendar.loadData();
-  } catch (error) {
+  } catch (_error) {
     RenderError.calendarLoadError("Failed to load calendar.");
     // return since fatal
     return;
@@ -132,8 +132,8 @@ function initializeMenus() {
     const target = event.target as HTMLElement;
     const ul = target.closest("ul");
     if (!ul) return;
-    const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
-    Preferences.toggleDisplaySettings(checkboxes);
+    const checkboxesFromList = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
+    Preferences.toggleDisplaySettings(checkboxesFromList);
     // Immediately update dom since elements are not changed if they are hidden
     // Also clear the previous timeout so function calls don't pile up
     clearTimeout(state.lastUpdate);

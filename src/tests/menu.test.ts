@@ -72,7 +72,7 @@ describe("Menu class", () => {
   it("executes registered callback on menu interaction", () => {
     let clicked = false;
     const menuInstance = new Menu("#test-btn", "#test-menu");
-    menuInstance.addFunction((event) => {
+    menuInstance.addFunction((_event) => {
       clicked = true;
     });
 
