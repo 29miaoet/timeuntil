@@ -91,6 +91,7 @@
   flex: 1 1 0;
   min-width: 0;
   box-shadow: var(--timebox-shadow);
+  font-variant-numeric: tabular-nums;
 }
 
 .timelabel {
@@ -158,6 +159,11 @@
   background: var(--progress-bar-bg);
 }
 
+.progress-bar > p {
+  text-align: center;
+  text-wrap: balance;
+}
+
 .bar {
   height: 20px;
   width: 100%;
@@ -193,8 +199,7 @@
 }
 
 .timing {
-  margin: 10px;
-  padding: 15px;
+  padding: 30px 15px;
 }
 
 .timing-buttons-container {
@@ -209,6 +214,7 @@
   text-align: center;
   padding: 10px;
   flex: 1;
+  min-width: 0;
   background-color: var(--timing-button-bg);
 }
 
