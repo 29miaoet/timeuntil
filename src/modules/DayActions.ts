@@ -3,33 +3,48 @@ import Day from "../classes/day";
 import { state } from "../core/state";
 import { makeReadable } from "../UI/DomUpdate";
 
-const currentDayContainer = document.getElementById("current-day-container");
+const daylabelsContainer = document.querySelector<HTMLElement>(".daylabels-container");
+const noSchoolMessage = document.getElementById("noschool-message");
 const slotElement = document.getElementById("class-slot");
 const classEndTimes = document.querySelectorAll<HTMLElement>("#class-end .timebox");
 const schoolEndTimes = document.querySelectorAll<HTMLElement>("#school-end .timebox");
 
 let day: Day;
 
-export function initializeSchoolDay() {
+export function initializeSchoolDay(): void {
   if (!state.calendar.schoolNow()) return;
   const currentDateStamp = Calendar.strftime(state.calendar.now);
   const currentTimeSlot = state.calendar.calendar[currentDateStamp].timeSlot;
   day = new Day(currentTimeSlot);
 }
 
+export function getDayBounds(): { start: number; end: number } | undefined {
+  // If day is not initialized yet, return undefined
+  if (day === undefined) {
+    return undefined;
+  } else {
+    return {
+      start: day.start,
+      end: day.end,
+    };
+  }
+}
+
 export function updateSchoolDay() {
-  if (!currentDayContainer) {
-    console.error("Current day container not found.");
+  if (!daylabelsContainer || !noSchoolMessage) {
+    console.error("Current day labels container or no school message not found.");
     return;
   }
 
   if (state.calendar.schoolNow()) {
-    if (currentDayContainer.hidden) {
-      currentDayContainer.hidden = false;
+    if (daylabelsContainer.hidden) {
+      daylabelsContainer.hidden = false;
+      if (!noSchoolMessage.hidden) noSchoolMessage.hidden = true;
     }
   } else {
-    if (!currentDayContainer.hidden) {
-      currentDayContainer.hidden = true;
+    if (!daylabelsContainer.hidden) {
+      daylabelsContainer.hidden = true;
+      if (noSchoolMessage.hidden) noSchoolMessage.hidden = false;
     }
     return;
   }

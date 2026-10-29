@@ -177,7 +177,7 @@
     </header>
 
     <main class="card-container" id="card-container-main">
-      <section class="card countdown-container">
+      <section class="card countdown-container" id="school-time-card">
         <h2>School Time Remaining</h2>
         <hr />
         <div class="school-time remaining-time" id="school-time-remaining">
@@ -206,7 +206,9 @@
             <span class="timelabel" hidden>milliseconds</span>
           </div>
         </div>
+      </section>
 
+      <section class="card countdown-container" id="total-time-card" hidden>
         <h2>Total Time Remaining</h2>
         <hr />
         <div class="total-time remaining-time">
@@ -235,7 +237,9 @@
             <span class="timelabel" hidden>milliseconds</span>
           </div>
         </div>
+      </section>
 
+      <section class="card countdown-container" id="absolute-time-card" hidden>
         <h2>Absolute Time Remaining</h2>
         <hr />
         <div class="abs-time" id="abs-time-remaining">
@@ -256,7 +260,7 @@
         </div>
       </section>
 
-      <section class="card day-current" id="current-day-container" hidden>
+      <section class="card countdown-container" id="current-day-card" hidden>
         <h2>Day Time Remaining</h2>
         <hr />
         <div class="daylabels-container">
@@ -279,6 +283,9 @@
             <span class="daytime-unit" hidden><output class="timebox">0</output>milliseconds</span>
           </p>
         </div>
+        <div id="noschool-message" hidden>
+          <p>No School Right Now</p>
+        </div>
       </section>
 
       <section class="card progress-bar">
@@ -294,6 +301,15 @@
           ></div>
         </div>
         <p><span id="percentage">0%</span> percent finished</p>
+      </section>
+
+      <section class="card timing">
+        <div class="timing-buttons-container" id="timing-container">
+          <button data-target="schoolTime" class="selected">School Time</button>
+          <button data-target="totalTime">Total Time</button>
+          <button data-target="absoluteTime">Absolute Time</button>
+          <button data-target="dayTime">Day Time</button>
+        </div>
       </section>
 
       <section class="card day-info" id="day-information">

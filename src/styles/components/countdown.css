@@ -91,6 +91,7 @@
   flex: 1 1 0;
   min-width: 0;
   box-shadow: var(--timebox-shadow);
+  font-variant-numeric: tabular-nums;
 }
 
 .timelabel {
@@ -158,6 +159,11 @@
   background: var(--progress-bar-bg);
 }
 
+.progress-bar > p {
+  text-align: center;
+  text-wrap: balance;
+}
+
 .bar {
   height: 20px;
   width: 100%;
@@ -183,17 +189,45 @@
   background-color: var(--progress-bg);
 }
 
+.progress.completed {
+  border-radius: var(--radius-mild);
+}
+
 .progress:hover {
   transform: scaleY(1.05);
   background-color: var(--progress-bar-hover);
 }
 
-.day-current {
-  background-color: var(--bg-day-current);
-  width: 100%;
+.timing {
+  padding: 30px 15px;
+}
+
+.timing-buttons-container {
   display: flex;
-  flex-direction: column;
+  align-items: column;
+  justify-content: stretch;
   align-items: center;
+}
+
+.timing-buttons-container > button {
+  color: var(--font-color-black);
+  text-align: center;
+  padding: 10px;
+  flex: 1;
+  min-width: 0;
+  background-color: var(--timing-button-bg);
+}
+
+.timing-buttons-container > *:first-child {
+  border-radius: 25px 0 0 25px;
+}
+
+.timing-buttons-container > *:last-child {
+  border-radius: 0 25px 25px 0;
+}
+
+.timing-buttons-container > button.selected {
+  background-color: var(--timing-button-selected);
 }
 
 .daylabels-container {
@@ -211,4 +245,16 @@
 .daytitle {
   font-size: 1.25rem;
   font-weight: 700;
+}
+
+#noschool-message {
+  margin: 5px;
+}
+
+#noschool-message > p {
+  font-size: 1.05rem;
+  border-radius: var(--radius-classic);
+  background-color: var(--light-blue);
+  color: var(--font-color-black);
+  padding: 15px;
 }

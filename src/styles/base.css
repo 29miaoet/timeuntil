@@ -5,7 +5,6 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
-  --bg-day-current: #80b6f5;
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
 
   --progress-bg: #ff4d6d;
@@ -24,6 +23,12 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
+
+  --timing-button-bg: #d3f0ff;
+  --timing-button-selected: #f0ffff;
+
+  --dropdown-transition-style: 0.4s ease;
+  --font: "Segoe UI", Arial, sans-serif;
 }
 
 * {
@@ -35,7 +40,7 @@
 }
 
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: var(--font);
   font-weight: 600;
   display: flex;
   flex-direction: column;
@@ -44,6 +49,7 @@ body {
   margin: 0;
   color: var(--font-color-white);
   background: var(--bg-grad);
+  line-height: 1.5;
   min-height: 100vh;
 }
 
@@ -67,6 +73,11 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+.flex-container > * {
+  min-width: 0;
+  min-height: 0;
 }
 
 .card {

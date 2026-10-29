@@ -4,7 +4,8 @@ import config from "../core/configReader";
 import { schoolData } from "../helpers/fetchCalendar";
 import * as App from "../core/app";
 import * as Finish from "./finish";
-import * as SlowDomUpdate from "../UI/SlowDomUpdate";
+import * as CountdownSetter from "../UI/countdownSetter";
+import setProgress from "./setProgress";
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
 const absoluteTimes = document.querySelectorAll<HTMLElement>(".abs-time > .times > .timebox");
@@ -64,6 +65,12 @@ export async function loadPreferences(): Promise<void> {
   const preferredAccuracy = localStorage.getItem("accuracy");
   if (preferredAccuracy) {
     setPreferredAccuracy(Number(preferredAccuracy), accuracySlider);
+  }
+
+  const preferredCountdown = localStorage.getItem("countdown");
+  if (preferredCountdown) {
+    CountdownSetter.setToggleMenu(preferredCountdown);
+    CountdownSetter.setContainer(preferredCountdown);
   }
 }
 
@@ -231,13 +238,7 @@ export function getPreferredDates(value: string) {
   }
   if (!Finish.checkFinish()) Finish.undoFinish();
 
-  try {
-    const fractionPercentage = state.calendar.getPercentCompletion(
-      state.startDate.getTime(),
-      state.endDate.getTime()
-    );
-    SlowDomUpdate.updateProgressBar(fractionPercentage);
-  } catch (error) {}
+  setProgress(state.startDate.getTime(), state.endDate.getTime());
 
   if (Finish.checkFinish()) Finish.triggerFinish();
   else App.updateDOM();

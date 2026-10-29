@@ -5,7 +5,6 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #9cd6ff);
   --bg-countdown: #5095eb;
   --light-blue: #e0f0ff;
-  --bg-day-current: #80b6f5;
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.3);
 
   --progress-bg: #ff4d6d;
@@ -24,6 +23,11 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
+
+  --timing-button-bg: #d3f0ff;
+  --timing-button-selected: #f0ffff;
+  --dropdown-transition-style: 0.4s ease;
+  --font: "Segoe UI", Arial, sans-serif;
 }
 
 :root[data-theme="light"] {
@@ -33,7 +37,6 @@
   --bg-grad: linear-gradient(to bottom, #e8f6ff, #eeefff);
   --bg-countdown: #cdf0fe;
   --light-blue: #e0f0ff;
-  --bg-day-current: #a8d0f7;
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.18);
 
   --progress-bg: #ffb9b9;
@@ -52,6 +55,11 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #e2e2e2;
+
+  --timing-button-bg: #d2e9ff;
+  --timing-button-selected: #f0ffff;
+  --dropdown-transition-style: 0.4s ease;
+  --font: "Segoe UI", Arial, sans-serif;
 }
 
 :root[data-theme="dark"] {
@@ -61,7 +69,6 @@
   --bg-grad: linear-gradient(to bottom, #18202b, #0b1118);
   --bg-countdown: #101010;
   --light-blue: #1d2b3a;
-  --bg-day-current: #29415b;
   --timebox-shadow: 0 0 20px rgba(0, 0, 0, 0.45);
 
   --progress-bg: #ff4d6d;
@@ -80,6 +87,11 @@
 
   --dropdown-bg: #363636;
   --dropdown-item-hover: #293541;
+
+  --timing-button-bg: #26384b;
+  --timing-button-selected: #3b526c;
+  --dropdown-transition-style: 0.4s ease;
+  --font: "Segoe UI", Arial, sans-serif;
 }
 
 :root[data-theme="liquid-glass"] {
@@ -89,7 +101,6 @@
   --bg-grad: linear-gradient(135deg, #dff6ff 0%, #b9ddff 35%, #dee3ff 100%);
   --bg-countdown: rgba(80, 149, 235, 0.1);
   --light-blue: rgba(255, 255, 255, 0.5);
-  --bg-day-current: rgba(128, 182, 245, 0.45);
   --timebox-shadow: 0 0 20px rgba(50, 50, 150, 0.2);
 
   --progress-bg: #ff5f7a;
@@ -108,6 +119,11 @@
 
   --dropdown-bg: rgba(255, 255, 255, 0.7);
   --dropdown-item-hover: rgba(255, 255, 255, 0.5);
+
+  --timing-button-bg: rgba(255, 255, 255, 0.35);
+  --timing-button-selected: rgba(255, 255, 255, 0.7);
+  --dropdown-transition-style: 0.4s ease;
+  --font: "Segoe UI", Arial, sans-serif;
 }
 
 :root[data-theme="antique"] {
@@ -117,7 +133,6 @@
   --bg-grad: linear-gradient(to bottom, #f4f4f4, #d8d8d8);
   --bg-countdown: #666666;
   --light-blue: #eeeeee;
-  --bg-day-current: #cccccc;
   --timebox-shadow: 0 0 20px rgba(50, 50, 50, 0.25);
 
   --progress-bg: #555555;
@@ -136,6 +151,11 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #dcdcdc;
+
+  --timing-button-bg: #e5dccb;
+  --timing-button-selected: #f7f0e3;
+  --dropdown-transition-style: 0.4s ease;
+  --font: Georgia, "Times New Roman", serif;
 }
 
 :root[data-theme="red"] {
@@ -145,7 +165,6 @@
   --bg-grad: linear-gradient(to bottom, #ffe5e5, #ff9f9f);
   --bg-countdown: #d94141;
   --light-blue: #ffe1e1;
-  --bg-day-current: #f28b8b;
   --timebox-shadow: 0 0 20px rgba(150, 30, 30, 0.25);
 
   --progress-bg: #b91c1c;
@@ -164,6 +183,11 @@
 
   --dropdown-bg: #fffafa;
   --dropdown-item-hover: #f5d1d1;
+
+  --timing-button-bg: #ffcaca;
+  --timing-button-selected: #fff0f0;
+  --dropdown-transition-style: 0.4s ease;
+  --font: "Segoe UI", Arial, sans-serif;
 }
 
 :root[data-theme="accessible"] {
@@ -173,7 +197,6 @@
   --bg-grad: linear-gradient(to bottom, #f0f9ff, #bae6fd);
   --bg-countdown: #075985;
   --light-blue: #e0f2fe;
-  --bg-day-current: #0779b5;
   --timebox-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
 
   --progress-bg: #b91c1c;
@@ -192,4 +215,9 @@
 
   --dropdown-bg: #ffffff;
   --dropdown-item-hover: #dbeafe;
+
+  --timing-button-bg: #dbeafe;
+  --timing-button-selected: #bfdbfe;
+  --dropdown-transition-style: 0.4s ease;
+  --font: Arial, Helvetica, sans-serif;
 }
