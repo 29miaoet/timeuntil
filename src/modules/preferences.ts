@@ -1,10 +1,10 @@
-import Calendar from "../core/calendar";
-import { state } from "../core/state";
-import config from "../core/configReader";
-import { schoolData } from "../helpers/fetchCalendar";
 import * as App from "../core/app";
-import * as Finish from "./finish";
+import Calendar from "../core/calendar";
+import config from "../core/configReader";
+import { state } from "../core/state";
+import { schoolData } from "../helpers/fetchCalendar";
 import * as CountdownSetter from "../UI/countdownSetter";
+import * as Finish from "./finish";
 import setProgress from "./setProgress";
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");
@@ -75,17 +75,17 @@ export async function loadPreferences(): Promise<void> {
 }
 
 export function toggleDisplaySettings(
-  checkboxes: NodeListOf<HTMLInputElement>,
+  checkboxList: NodeListOf<HTMLInputElement>,
   hiddenItems: null | Array<boolean> = null
 ): void {
-  let allTimeLabels: Array<Array<HTMLElement>> = [];
+  const allTimeLabels: Array<Array<HTMLElement>> = [];
   allTimeLabels[0] = [schoolTimeLabels[0], totalTimeLabels[0], absoluteTimeLabels[0]]; // Days
   allTimeLabels[1] = [schoolTimeLabels[1], totalTimeLabels[1], absoluteTimeLabels[1]]; // Hours
   allTimeLabels[2] = [schoolTimeLabels[2], totalTimeLabels[2], absoluteTimeLabels[2]]; // Minutes
   allTimeLabels[3] = [schoolTimeLabels[3], totalTimeLabels[3], absoluteTimeLabels[3]]; // Seconds
   allTimeLabels[4] = [schoolTimeLabels[4], totalTimeLabels[4], absoluteTimeLabels[4]]; // Milliseconds
 
-  let allTimeUnits: Array<Array<HTMLElement>> = [];
+  const allTimeUnits: Array<Array<HTMLElement>> = [];
   allTimeUnits[0] = [schoolTimes[0], totalTimes[0], absoluteTimes[0]]; // Days
   allTimeUnits[1] = [
     schoolTimes[1],
@@ -121,7 +121,7 @@ export function toggleDisplaySettings(
     for (let i = 0; i < hiddenItems.length; i++) {
       if (hiddenItems[i] === true) {
         hiddenItems[i] = true;
-        checkboxes[i].checked = false;
+        checkboxList[i].checked = false;
         allTimeUnits[i].forEach((item) => {
           if (!item.hidden) {
             item.hidden = true;
@@ -134,7 +134,7 @@ export function toggleDisplaySettings(
         });
       } else if (hiddenItems[i] === false) {
         hiddenItems[i] = false;
-        checkboxes[i].checked = true;
+        checkboxList[i].checked = true;
         allTimeUnits[i].forEach((item) => {
           if (item.hidden) {
             item.hidden = false;
@@ -155,8 +155,8 @@ export function toggleDisplaySettings(
     if (!hiddenItems[4]) setPreferredAccuracy(0, accuracySlider, false);
   } else {
     hiddenItems = [false, false, false, false, true];
-    for (let i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked === false) {
+    for (let i = 0; i < checkboxList.length; i++) {
+      if (checkboxList[i].checked === false) {
         hiddenItems[i] = true;
         allTimeUnits[i].forEach((item) => {
           if (!item.hidden) {
@@ -168,7 +168,7 @@ export function toggleDisplaySettings(
             item.hidden = true;
           }
         });
-      } else if (checkboxes[i].checked === true) {
+      } else if (checkboxList[i].checked === true) {
         hiddenItems[i] = false;
         allTimeUnits[i].forEach((item) => {
           if (item.hidden) {
@@ -308,8 +308,8 @@ export async function setPreferredCalendars(value: string) {
   }
 
   if (matchedSchool.preBuilt) {
-    const school_name = `./calendars/${value}.json`;
-    tempCalendar = new Calendar(school_name, earlyDismissalTime, regularTime);
+    const schoolName = `./calendars/${value}.json`;
+    tempCalendar = new Calendar(schoolName, earlyDismissalTime, regularTime);
   } else {
     tempCalendar = new Calendar(value, earlyDismissalTime, regularTime);
   }

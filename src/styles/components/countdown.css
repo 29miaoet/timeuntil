@@ -54,12 +54,6 @@
   flex: 1;
 }
 
-.abs-time > .times > .timebox {
-  margin-left: 10%;
-  align-items: stretch;
-  text-align: left;
-}
-
 .countdown-container {
   background-color: var(--bg-countdown);
   border-radius: var(--radius-classic) var(--radius-classic) 0 0;
@@ -92,6 +86,12 @@
   min-width: 0;
   box-shadow: var(--timebox-shadow);
   font-variant-numeric: tabular-nums;
+}
+
+.abs-time > .times > .timebox {
+  margin-left: 10%;
+  align-items: stretch;
+  text-align: left;
 }
 
 .timelabel {
@@ -204,7 +204,6 @@
 
 .timing-buttons-container {
   display: flex;
-  align-items: column;
   justify-content: stretch;
   align-items: center;
 }

@@ -58,14 +58,14 @@ export default class Calendar {
         try {
           this.calendar = await getCalendar(this.dbPath);
           this.lastDay = this.getLastDay(-1);
-        } catch (error) {
+        } catch (_error) {
           throw new CalendarError(`Calendar ${this.dbPath} not found`);
         }
       } else if (response.ok) {
         this.calendar = await response.json();
         this.lastDay = this.getLastDay(-1);
       } else {
-        throw new CalendarError("Network response error" + response.statusText);
+        throw new CalendarError(`Network response error ${response.statusText}`);
       }
     } catch (error) {
       console.error(error);
@@ -150,7 +150,7 @@ export default class Calendar {
     try {
       this.getDateAt(Calendar.strftime(schoolDate));
       return true;
-    } catch (e) {
+    } catch (_error) {
       return false;
     }
   }
@@ -291,10 +291,8 @@ export default class Calendar {
     for (const date in this.calendar) {
       // Smaller or equal to & greater than or equal to
       if (date < currentDate || date > endingDate) {
-        continue;
       } else {
         if (!this.calendar[date].hasSchool) {
-          continue;
         } else if (this.calendar[date].timeSlot === "Early Dismissal") {
           milliSeconds += this.earlyDismissalTime[1] - this.earlyDismissalTime[0];
         } else if (this.calendar[date].timeSlot === "Regular") {
@@ -405,7 +403,7 @@ export default class Calendar {
 
     const endingDate = Calendar.strftime(endDate.getTime());
 
-    let schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
+    const schoolDateRemaining: SchoolDateTuple = [0, 0, 0, 0, 0];
     let milliseconds: number = 0;
 
     const currentDate = Calendar.strftime(this.now);
@@ -414,10 +412,8 @@ export default class Calendar {
     for (const date in this.calendar) {
       // The current date should not be counted but the ending Date should be
       if (date <= currentDate || date > endingDate) {
-        continue;
       } else {
         if (!this.calendar[date].hasSchool) {
-          continue;
         } else {
           schoolDateRemaining[0]++;
         }
@@ -520,10 +516,10 @@ export default class Calendar {
 
     const calendarArray = Object.values(this.calendar);
     if (reverse) calendarArray.reverse();
-    const day = calendarArray.find((day) => {
-      const dateCandidate = new Date(...this.formatForDateConstructor(day.date));
+    const day = calendarArray.find((possibleDay) => {
+      const dateCandidate = new Date(...this.formatForDateConstructor(possibleDay.date));
       const inTheFuture = reverse ? dateCandidate < dateNow : dateCandidate > dateNow;
-      return !day.hasSchool && inTheFuture;
+      return !possibleDay.hasSchool && inTheFuture;
     });
 
     if (!day) {
@@ -602,7 +598,7 @@ export default class Calendar {
    * and arranged in chronological order.
    */
   findEndTerm(...termEnds: Array<TermEndSpecification>): number {
-    let termEndDates: Array<Date> = [];
+    const termEndDates: Array<Date> = [];
     for (const arr of termEnds) {
       const date = new Date(...arr);
       termEndDates.push(date);
@@ -620,19 +616,19 @@ export default class Calendar {
 
   getCurrentTerm(...termEnds: Array<TermEndSpecification>): number {
     const now = new Date(this.now);
-    let termEndDates: Array<Date> = [];
+    const termEndDates: Array<Date> = [];
     for (const arr of termEnds) {
       const date = new Date(...arr);
       termEndDates.push(date);
     }
 
     const currentTerm = termEndDates.find((_value, index, array) => {
-      const currentTerm = index;
+      const candidateCurrentTerm = index;
       const nextTerm = ++index;
       if (!nextTerm) {
-        return array[currentTerm] < now;
+        return array[candidateCurrentTerm] < now;
       }
-      return array[currentTerm] < now && array[nextTerm] > now;
+      return array[candidateCurrentTerm] < now && array[nextTerm] > now;
     });
 
     if (!currentTerm) return this.now;

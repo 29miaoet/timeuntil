@@ -203,7 +203,6 @@
 }
 
 .accuracy-slider {
-  display: block;
   position: absolute;
   top: 10px;
   left: calc(100% + 5px);

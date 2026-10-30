@@ -28,14 +28,14 @@ export function updateProgressBar(fractionPercentage: number) {
 export function updateDayInfos(dayInfos: DayInfoStruct) {
   const daystatus = dayInfos.daystatus;
 
-  let feature;
+  let feature: string;
   if (dayInfos.feature.length !== 0) {
     feature = dayInfos.feature.join("\n");
   } else {
     feature = "Nothing Interesting";
   }
 
-  let event;
+  let event: string;
   if (dayInfos.event.length !== 0) {
     event = dayInfos.event.join("\n");
   } else {

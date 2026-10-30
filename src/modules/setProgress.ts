@@ -1,19 +1,19 @@
 import { state } from "../core/state";
-import { getDayBounds } from "./DayActions";
 import { updateProgressBar } from "../UI/SlowDomUpdate";
+import { getDayBounds } from "./DayActions";
 
 export default function setProgress(start: number, end: number) {
   try {
     let percentCompletion: number;
     switch (state.countdown) {
       case "schoolTime":
+      case "absoluteTime":
         percentCompletion = state.calendar.getPercentCompletion(start, end);
         break;
-      case "absoluteTime":
       case "totalTime":
         percentCompletion = (state.calendar.now - start) / (end - start);
         break;
-      case "dayTime":
+      case "dayTime": {
         const dayBounds = getDayBounds();
         if (dayBounds === undefined) {
           percentCompletion = 1;
@@ -28,6 +28,7 @@ export default function setProgress(start: number, end: number) {
         percentCompletion =
           (millisecondsAfterMidnight - dayBounds.start) / (dayBounds.end - dayBounds.start);
         break;
+      }
       default:
         throw new TypeError("Read invalid input from state countdown.");
     }

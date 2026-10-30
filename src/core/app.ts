@@ -1,15 +1,15 @@
-import Calendar from "./calendar";
 import Menu from "../classes/menu";
-import * as DomUpdate from "../UI/DomUpdate";
-import * as SlowDomUpdate from "../UI/SlowDomUpdate";
-import * as DayActions from "../modules/DayActions";
-import * as Preferences from "../modules/preferences";
-import * as Finish from "../modules/finish";
-import * as RenderError from "../UI/RenderError";
-import * as InitDom from "../UI/InitDom";
-import * as CountdownSetter from "../UI/countdownSetter";
 import listenBugReport from "../helpers/bugReport";
+import * as DayActions from "../modules/DayActions";
+import * as Finish from "../modules/finish";
+import * as Preferences from "../modules/preferences";
 import setProgress from "../modules/setProgress";
+import * as CountdownSetter from "../UI/countdownSetter";
+import * as DomUpdate from "../UI/DomUpdate";
+import * as InitDom from "../UI/InitDom";
+import * as RenderError from "../UI/RenderError";
+import * as SlowDomUpdate from "../UI/SlowDomUpdate";
+import Calendar from "./calendar";
 import { state } from "./state";
 
 const welcomeText =
@@ -42,7 +42,7 @@ export async function run() {
     state.calendar.loadData();
     initializeMenus();
     await state.calendar.loadData();
-  } catch (error) {
+  } catch (_error) {
     RenderError.calendarLoadError("Failed to load calendar.");
     // return since fatal
     return;
@@ -132,8 +132,8 @@ function initializeMenus() {
     const target = event.target as HTMLElement;
     const ul = target.closest("ul");
     if (!ul) return;
-    const checkboxes = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
-    Preferences.toggleDisplaySettings(checkboxes);
+    const checkboxesFromList = ul.querySelectorAll<HTMLInputElement>('li > input[type="checkbox"]');
+    Preferences.toggleDisplaySettings(checkboxesFromList);
     // Immediately update dom since elements are not changed if they are hidden
     // Also clear the previous timeout so function calls don't pile up
     clearTimeout(state.lastUpdate);

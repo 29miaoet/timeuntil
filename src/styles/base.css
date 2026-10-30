@@ -36,6 +36,7 @@
 }
 
 [hidden] {
+  /* biome-ignore lint/complexity/noImportantStyles: Ensure the hidden attribute overrides display declarations. */
   display: none !important;
 }
 

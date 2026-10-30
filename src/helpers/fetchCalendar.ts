@@ -1,5 +1,5 @@
-import rawSchoolData from "../data/schools.json";
 import config from "../core/configReader";
+import rawSchoolData from "../data/schools.json";
 
 interface School {
   codeName: string;
@@ -26,13 +26,13 @@ interface EventsAPIResponse {
 }
 
 // Configuration
-const START_DATE = config.start;
-const END_DATE = config.end;
+const startDate = config.start;
+const endDate = config.end;
 
 // Hijack lrsd school calendar URLs
-const DISTRICT_URL = "https://cicmsapi.azurewebsites.net/lrsd/_ci/15/ci/vsb/webservice.ashx";
+const districtUrl = "https://cicmsapi.azurewebsites.net/lrsd/_ci/15/ci/vsb/webservice.ashx";
 
-const HEADERS = {
+const headers = {
   Accept: "*/*",
   "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
   Origin: "https://www.lrsd.net",
@@ -55,14 +55,14 @@ function getSchoolId(schoolName: string): number {
 }
 
 export async function getCalendar(schoolName: string): Promise<CalendarObject> {
-  const eventURL = `${DISTRICT_URL}/${schoolName}`;
+  const eventUrl = `${districtUrl}/${schoolName}`;
 
-  const siteID = getSchoolId(schoolName);
+  const siteId = getSchoolId(schoolName);
 
   const calendar: CalendarObject = {};
 
-  const current = new Date(`${START_DATE}T00:00:00Z`);
-  const end = new Date(`${END_DATE}T00:00:00Z`);
+  const current = new Date(`${startDate}T00:00:00Z`);
+  const end = new Date(`${endDate}T00:00:00Z`);
 
   while (current.getTime() <= end.getTime()) {
     const date = toISODate(current);
@@ -85,14 +85,14 @@ export async function getCalendar(schoolName: string): Promise<CalendarObject> {
   const search = {
     Keyword: "",
     Category: "",
-    StartDate: START_DATE,
-    EndDate: END_DATE,
+    StartDate: startDate,
+    EndDate: endDate,
     SelectedChildren: [],
     SelectedCalendars: [],
     SchoolClasses: [],
     ForMonthView: true,
     NoRecurExpand: false,
-    SiteId: siteID,
+    SiteId: siteId,
     CategoryGuids: [],
   };
 
@@ -104,9 +104,9 @@ export async function getCalendar(schoolName: string): Promise<CalendarObject> {
     },
   };
 
-  const eventsResponse = await fetch(eventURL, {
+  const eventsResponse = await fetch(eventUrl, {
     method: "POST",
-    headers: HEADERS,
+    headers: headers,
     body: new URLSearchParams({
       ansp: JSON.stringify(eventPayload),
     }),
@@ -120,7 +120,7 @@ export async function getCalendar(schoolName: string): Promise<CalendarObject> {
   const events = data.Events;
 
   // Keyword matching via regex
-  const noSchoolPatterns: RegExp[] = [
+  const noSchoolPatterns: Array<RegExp> = [
     /\bno school\b/,
     /\bno classes\b/,
     /\b(winter|spring|christmas|fall) break\b/,
@@ -167,16 +167,16 @@ export async function getCalendar(schoolName: string): Promise<CalendarObject> {
     }
 
     // Date-only ISO strings parse as UTC midnight
-    const startDate = new Date(startStr);
-    let endDate = endStr ? new Date(endStr) : new Date(startDate.getTime());
+    const eventStartDate = new Date(startStr);
+    let eventEndDate = endStr ? new Date(endStr) : new Date(eventStartDate.getTime());
 
     // If EndTime is somehow before StartTime, just use StartTime
-    if (endDate.getTime() < startDate.getTime()) {
-      endDate = new Date(startDate.getTime());
+    if (eventEndDate.getTime() < eventStartDate.getTime()) {
+      eventEndDate = new Date(eventStartDate.getTime());
     }
 
-    const curDate = new Date(startDate.getTime());
-    while (curDate.getTime() <= endDate.getTime()) {
+    const curDate = new Date(eventStartDate.getTime());
+    while (curDate.getTime() <= eventEndDate.getTime()) {
       const dateStr = toISODate(curDate);
 
       const entry = calendar[dateStr];
