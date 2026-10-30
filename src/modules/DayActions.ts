@@ -1,5 +1,5 @@
-import Calendar from "../core/calendar";
 import Day from "../classes/day";
+import Calendar from "../core/calendar";
 import { state } from "../core/state";
 import { makeReadable } from "../UI/DomUpdate";
 

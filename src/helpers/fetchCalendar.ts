@@ -1,5 +1,5 @@
-import rawSchoolData from "../data/schools.json";
 import config from "../core/configReader";
+import rawSchoolData from "../data/schools.json";
 
 interface School {
   codeName: string;

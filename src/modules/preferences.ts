@@ -1,10 +1,10 @@
-import Calendar from "../core/calendar";
-import { state } from "../core/state";
-import config from "../core/configReader";
-import { schoolData } from "../helpers/fetchCalendar";
 import * as App from "../core/app";
-import * as Finish from "./finish";
+import Calendar from "../core/calendar";
+import config from "../core/configReader";
+import { state } from "../core/state";
+import { schoolData } from "../helpers/fetchCalendar";
 import * as CountdownSetter from "../UI/countdownSetter";
+import * as Finish from "./finish";
 import setProgress from "./setProgress";
 
 const schoolTimes = document.querySelectorAll<HTMLElement>(".school-time > .timeunit > .timebox");

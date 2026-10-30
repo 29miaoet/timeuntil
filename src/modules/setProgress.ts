@@ -1,6 +1,6 @@
 import { state } from "../core/state";
-import { getDayBounds } from "./DayActions";
 import { updateProgressBar } from "../UI/SlowDomUpdate";
+import { getDayBounds } from "./DayActions";
 
 export default function setProgress(start: number, end: number) {
   try {

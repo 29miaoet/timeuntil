@@ -1,15 +1,15 @@
-import Calendar from "./calendar";
 import Menu from "../classes/menu";
-import * as DomUpdate from "../UI/DomUpdate";
-import * as SlowDomUpdate from "../UI/SlowDomUpdate";
-import * as DayActions from "../modules/DayActions";
-import * as Preferences from "../modules/preferences";
-import * as Finish from "../modules/finish";
-import * as RenderError from "../UI/RenderError";
-import * as InitDom from "../UI/InitDom";
-import * as CountdownSetter from "../UI/countdownSetter";
 import listenBugReport from "../helpers/bugReport";
+import * as DayActions from "../modules/DayActions";
+import * as Finish from "../modules/finish";
+import * as Preferences from "../modules/preferences";
 import setProgress from "../modules/setProgress";
+import * as CountdownSetter from "../UI/countdownSetter";
+import * as DomUpdate from "../UI/DomUpdate";
+import * as InitDom from "../UI/InitDom";
+import * as RenderError from "../UI/RenderError";
+import * as SlowDomUpdate from "../UI/SlowDomUpdate";
+import Calendar from "./calendar";
 import { state } from "./state";
 
 const welcomeText =
