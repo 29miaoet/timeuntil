@@ -8,10 +8,12 @@
 timeuntil/
 ├── .github/
 │   ├── workflows/
+│   │   ├── publish.yml
+│   │   ├── bake.yml
+│   │   ├── release.yml
 │   │   ├── deploy.yml
-│   │   ├── format.yml
-│   │   ├── test.yml
-│   │   └── release.yml
+│   │   ├── check.yml
+│   │   └── test.yml
 │   │ 
 │   ├── dependabot.yml
 │   └── CONTRIBUTING.md
@@ -27,6 +29,7 @@ timeuntil/
 │   │   └── themes.css
 │   │ 
 │   ├── data/
+│   │   ├── config.json
 │   │   ├── schools.json
 │   │   └── schedule.json
 │   │ 
@@ -107,9 +110,8 @@ Unlike a typical school calendar, it gives you the information you _want to know
 at a glance, without any other distractions, so you can focus on the important
 stuff.  
 This app runs **entirely in your browser** _(because I don't have a server, not
-because I care about your privacy)_. As of the latest version, the entire website
-fits under `13.42KB` gzipped, which means it can fit into a **single** TCP
-round-trip, making page load almost unoticable.
+because I care about your privacy)_. Gzipped, the website takes up only around `15KB`,
+making loading, even on a slow 3G network, lightning fast.
 
 ## Attributes
 
@@ -137,7 +139,7 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 | **Build**    | vite.js               | Fast and efficient build step         |
 | **DevOps**   | Github Actions        | Automated tests and formatting checks |
 
-## Future Path
+## Future Path (complete)
 
 - [x] Add functionality to UI buttons.
 - [x] Finish basic website UI.
@@ -145,9 +147,8 @@ Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 - [x] Harden code logic.
 - [x] Add and configure vitest.
 - [x] Refactor and split source files.
-- [ ] Add and configure ESlint after TypeScript 7.1 is released.
-- ~~Migrate UI handlers to React.~~
-- ~~Transform static CSS into Sass.~~
+- [x] Migrate prettier to biome.
+- [x] Add linting with biome.
 
 ## Stats
 

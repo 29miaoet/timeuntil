@@ -29,6 +29,7 @@ git commit -m "describe your changes"
 ```shell
 npm run typecheck
 npm run format:check
+npm run lint:check
 npm run test:run
 # All checks should come up clean
 ```
@@ -50,13 +51,22 @@ git push -u origin your-branch-name
 
 ## Guidelines
 
+### Linted
+
 - Use `Array<T>` for typing arrays instead of `T[]`.
+- Use PascalCase for classes or a collection of functions.
+- Use camelCase for variables, including constants.
+- Use `===` strict equality instead of `==` loose equality.
+- Don't shadow global variables or functions.
+
+### Unlinted
+
+- Organize CSS rules by element or class, instead of specifity
 - Use `error` for error catching and `event` for event handling, do not use `e`.
 - Use CSS variables instead of direct values for colors and repeated values.
 - Use LF line returns instead of CRLF or CR whenever possible, or ensure you have the correct git configurations.
-- Background color schemes should follow those of the existing `:root` elements.
 - Prefer aria-labels for accessibility over direct `<label>` tags. In other words, keep accessibility-only elements hidden to regular users.
-- Use PascalCase for classes or a collection of functions, use camelCase for all other cases.
+- Background color schemes should follow those of the existing `:root` elements.
 - New files or folders should be organized in the same fashion as the existing structure.
 
 ## Resources
